@@ -1,0 +1,22 @@
+# Data — keep the repo light; raw/large files stay local
+data/raw/
+data/interim/
+data/external/
+*.parquet
+*.csv
+!data/processed/.gitkeep
+# hand-curated Stage-2 dataset — authored content, not a reproducible artifact
+!data/stage2/*.csv
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.python-version
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

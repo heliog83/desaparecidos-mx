@@ -1,0 +1,25 @@
+# Core data
+pandas>=2.0
+numpy>=1.24
+pyarrow>=14.0          # fast parquet I/O for processed/
+openpyxl>=3.1          # read/write xlsx sources
+
+# Acquisition
+requests>=2.31          # also drives the live RNPDNO dashboard API (src/fetch_flow.py)
+beautifulsoup4>=4.12
+lxml>=4.9
+
+# Visualization
+altair>=5.2            # interactive/declarative charts
+plotnine>=0.13         # ggplot2-style charts for the report
+matplotlib>=3.8
+plotly>=5.18
+
+# Geospatial (state/municipality maps)
+geopandas>=0.14
+
+# Dashboard
+streamlit>=1.31
+
+# Notebooks
+jupyterlab>=4.0
