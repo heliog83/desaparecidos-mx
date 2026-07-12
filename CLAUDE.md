@@ -99,6 +99,20 @@ palette/typography/captions in `src/article_style.py` — restyle the whole set 
 figure refs updated. Decide EN/ES before publishing. Stage-2 (10 find-events, one state) is the
 follow-up article.
 
+**VERSION AUDIT (2026-07-11) — memo test #1 EXECUTED, claim CONFIRMED:** `src/version_audit.py`
+rebuilds a 10-snapshot monthly panel (Apr–Dec 2025) from the lapanquecita mirror's git history
+(SHAs pinned in script; snapshots cached in `data/external/mirror_history/`, panel committed at
+`data/processed/confidencial_panel.csv`). National: confidential 44,035→49,136 (+5,101 = 77% of
+net registry growth; share 34.7%→36.8%). Movement is BATCHED: Tamaulipas +2,537 in 2 months w/
+flat totals (share 20%→39% — fig C/D would've looked different in April!); Jalisco −1,367 conf in
+Q4-2025 as totals fell (purge PRECEDES Jan-2026 recount announcement); Tabasco deleted ⅓ of records
+in Nov; Guanajuato catch-up load ~60% confidential. Fig 23 / article fig H ("The redaction flag
+moves in batches"), draft §5b added. **Mirror snapshot date PINNED: data.csv = 2025-12-02 upstream
+commit (max FECHA_REGISTRO 2025-12-01)** — draft placeholders closed. Also downloaded (scratchpad,
+not yet analyzed): Data Cívica Sep-2023 named CSV (116,945 named vs mirror's 84,430 — context in
+opacity-mechanism.md), 2017-2024 person panel, borrados list — person-level long-horizon test is
+the natural deepening.
+
 **STAGE 2 STARTED:** `docs/stage2-schema.md` (coding schema, one-row-per-find-event, body≠remains,
 led_by attribution), `data/stage2/clandestine_finds.csv` (5 LOW-confidence illustrative seeds from
 journalism — NOT a census), `src/stage2_validate.py` (schema/enum validator). Anchor: 22,621 found dead.

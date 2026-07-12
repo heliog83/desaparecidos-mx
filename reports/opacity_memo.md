@@ -60,8 +60,15 @@ data — it may mean the missing were never counted.
 
 ## What would test it next
 
-1. **Data Cívica's Aug-2023 vs Dec-2023 person-level snapshots** — measure whether
-   confidentialization grew per state across versions (tests growth + composition).
+1. **Version audit — EXECUTED 2026-07-11, claim CONFIRMED** (`src/version_audit.py`,
+   fig 23/H): across ten monthly mirror snapshots (Apr–Dec 2025), confidential
+   records grew +5,101 nationally — 77% of the registry's net growth — and the
+   movement is batched, not gradual: Tamaulipas reclassified ~2,500 existing records
+   in two months (share 20%→39%, totals flat); Jalisco removed ~1,400 confidential
+   records in Q4 2025 (before the recount announcement); Tabasco batch-deleted a
+   third of its records in November. Batch signatures are administrative, not
+   family decisions. Data Cívica's Aug/Dec-2023 person-level bases (downloaded, in
+   scratch) remain available for a longer-horizon person-level version of this test.
 2. **Targeted transparency requests** replicating ZonaDocs' method for our six case
    states: ask each fiscalía how many consent declarations it holds vs records
    submitted (tests the paperwork-default hypothesis directly).

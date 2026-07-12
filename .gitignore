@@ -7,6 +7,8 @@ data/external/
 !data/processed/.gitkeep
 # hand-curated Stage-2 dataset — authored content, not a reproducible artifact
 !data/stage2/*.csv
+# tiny committed audit artifact — upstream git history could vanish
+!data/processed/confidencial_panel.csv
 
 # Python
 .venv/

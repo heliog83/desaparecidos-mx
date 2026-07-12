@@ -23,7 +23,7 @@ ways a person can go missing from the data itself.*
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
 *Caption: Every year of reported disappearances in Mexico, 2000–2025, decomposed into
 people found alive, found dead, and still missing. Two panels: absolute counts and
-shares. Source: RNPDNO dashboard API, consulted [date]; ~212,900 found alive, ~19,900
+shares. Source: RNPDNO dashboard API, consulted 2026-06-19; ~212,900 found alive, ~19,900
 found dead, ~118,600 still missing across the period.*
 
 Start with the honest version of the number, because almost nobody publishes it.
@@ -120,6 +120,31 @@ signed anything and wants maximum visibility. Her son's record is confidential.
 requests, missing paperwork defaulting to silence, and at least one blanket state
 policy — and no public field distinguishes them.**
 
+
+### 5b. And the flag moves in batches
+
+**[FIG H — `figures/article/H_confidencial_batches.png`]**
+*Caption: CONFIDENCIAL records per state across ten monthly snapshots of the public
+registry, April–December 2025, recovered from the mirror's version history.
+Nationally, confidential records grew 44,035 → 49,136 (+5,101) — 77% of the
+registry's entire net growth in those eight months.*
+
+If confidentiality reflected family choices, it would drift — a few records at a
+time, in every state. Instead it jumps. Tamaulipas reclassified ~2,500 existing
+records to confidential in two months (May–July 2025) while its total barely moved;
+its redaction share went from 20% to 39%, and every chart in this piece would have
+looked different had we pulled the data in April. Jalisco's confidential count was
+flat all year, then fell by ~1,400 in the last quarter as records left the federal
+registry entirely — months before the new recount was announced. Tabasco deleted a
+third of its records in a single month.
+
+Step changes, flat totals during reclassifications, batch deletions: these are the
+signatures of administrative operations, not of thousands of families changing
+their minds in the same week. This is the version-history evidence for the claim in
+section 5 — and it means the registry's most basic public property, *how much of it
+you can see*, is being rewritten in bulk, state by state, with no public log of who
+decided or why.
+
 ## 6. Jalisco: opacity by redaction
 
 **[FIG F — `figures/article/F_jalisco_divergence.png`]**
@@ -190,10 +215,11 @@ That is the subject of the next piece.
 ## Methods note (publish as expandable box or footer)
 
 Data: RNPDNO public microdata via the [lapanquecita mirror] (133,566 records,
-snapshot [verify date]), cross-checked against the live RNPDNO dashboard API
+snapshot 2025-12-02, upstream mirror commit 666b3e7; max FECHA_REGISTRO 2025-12-01), cross-checked against the live RNPDNO dashboard API
 (national drift −0.7%; Jalisco the volatile outlier) and category-sensitivity
 tested (DESAPARECIDA vs +NO LOCALIZADA: national +6.1%). Outcome flows pulled
-directly from the registry API. All figures reproducible from `src/` in [repo
+directly from the registry API. Redaction-over-time: ten pinned monthly snapshots
+of the mirror (Apr–Dec 2025, upstream commit SHAs in `src/version_audit.py`). All figures reproducible from `src/` in [repo
 link]. Confidential records are counted as unresolved people but excluded from any
 field-level analysis. Full methodology: [link docs/methodology.md]. Key primary
 sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A dónde van los

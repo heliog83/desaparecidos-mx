@@ -95,9 +95,14 @@ información." Reporting shows this is often false:
   be controlled away as noise.
 - Jalisco's 67% share now has a documented candidate explanation dating to at least 2020
   (blanket fiscalía policy) — see [cases/jalisco.md](cases/jalisco.md).
-- Whether CONFIDENCIAL *grew* across registry versions remains open; Data Cívica's
-  version snapshots (Aug 2023 vs Dec 2023) are the data to test it. Parked per scope
-  guardrail.
+- Whether CONFIDENCIAL *grew* across registry versions: **RESOLVED (2026-07-11)** —
+  yes, and in batches. See `src/version_audit.py` + fig 23: +5,101 confidential
+  records Apr–Dec 2025 (77% of net registry growth), with month-datable batch
+  reclassifications (Tamaulipas May–Jul), batch deletions (Tabasco Nov) and the
+  Jalisco Q4 purge. Longer-horizon context: the Sep-2023 CNB public CSV held
+  116,945 named unresolved records; the Dec-2025 mirror holds 84,430 named
+  (+49,136 confidential) — names left public view at scale between versions
+  (located/erased/confidentialized; person-level split not yet computed).
 
 ## Remaining open sub-questions
 
