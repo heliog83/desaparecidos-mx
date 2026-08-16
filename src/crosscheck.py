@@ -1,66 +1,114 @@
 """
-Option 3 — Cross-check our community mirror against official RNPDNO figures, to bound snapshot drift.
+Option 3 — Bound the drift between our record-level mirror and the live registry.
 
-Our data is a community-scraped snapshot; the official dashboard revises retroactively. We compare
-our computed totals to officially reported figures (hand-collected from press citing the RNPDNO,
-with dates) to see how stale/divergent the mirror is. We can't expect an exact match — the goal is
-to bound the drift and flag any state where it's large.
+Our field-level analysis rests on the lapanquecita mirror, a community-scraped snapshot that
+FROZE at 2025-12-02 (upstream stopped publishing; see docs/data-refresh-2026-08-15.md). The
+live RNPDNO dashboard keeps moving and revises retroactively. This script bounds how far the
+mirror has drifted, so every state-level claim in the article can be checked against it.
 
-Reference figures (still-missing / "no localizadas"), source + date recorded inline:
-  National 134,481 as of 2026-05-27  — sdpnoticias citing RNPDNO.
-  Per-state (May 2026) from the same RNPDNO consultation.
+Reference is now OUR OWN API pull (src/fetch_flow.py -> data/processed/flow_by_state.csv),
+which supersedes the hand-collected press figures this script used to compare against. That
+matters for three reasons: it covers all 32 states instead of 5, it is a like-for-like
+definition (idEstatusVictima=7, desaparecidas + no localizadas — the mirror's universe), and
+it carries a consultation date we control rather than one inferred from a news article. The
+press figures are kept below as a historical provenance check, not as the reference.
+
+Inputs:
+  data/processed/rnpdno_clean.parquet   (mirror, snapshot 2025-12-02)
+  data/processed/flow_by_state.csv      (live API, see API_PULL_DATE)
+Output: printed report (no files written)
 
 Run:  python src/crosscheck.py
 """
 from __future__ import annotations
 
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 PARQUET = ROOT / "data" / "processed" / "rnpdno_clean.parquet"
+FLOW_STATE = ROOT / "data" / "processed" / "flow_by_state.csv"
 
-# Officially reported still-missing counts (RNPDNO via press, 2026-05-27 consultation).
-OFFICIAL_NATIONAL = 134_481
-OFFICIAL_BY_STATE = {            # state name (as in our ENTIDAD) -> official count
-    "Estado de México": 14_660,
-    "Tamaulipas": 13_810,
-    "Jalisco": 12_780,           # NOTE: highly volatile across sources (March 12,698; June >15,000)
-    "Michoacán": 7_793,
-    "Nuevo León": 7_462,
-}
+MIRROR_DATE = "2025-12-02"   # upstream commit 666b3e7605; mirror has not moved since
+API_PULL_DATE = "2026-08-15"  # update when src/fetch_flow.py is re-run
+API_COL = "desap_y_nollocal"  # still-missing = the mirror's universe
+UNKNOWN = "SE DESCONOCE"      # API-only bucket: no state attributed
+FLAG_PCT = 5.0                # |drift| at or above this gets flagged...
+MIN_BASE = 1_000              # ...but only for states big enough for a % to mean anything.
+                              # Campeche (n=148) swinging +24 records is 16% and is noise;
+                              # CDMX moving -1,327 is 18% and is the finding. Without this
+                              # guard the flag list ranks them identically.
+
+# Historical provenance only — press figures we previously cross-checked against.
+# Superseded by the API pull; retained so the earlier verdict stays auditable.
+PRESS_NATIONAL = (134_481, "2026-05-27", "sdpnoticias citing RNPDNO")
 
 
-def main():
-    df = pd.read_parquet(PARQUET)
-    ours_total = len(df)
-    drift = ours_total - OFFICIAL_NATIONAL
-    print("NATIONAL")
-    print(f"  ours:     {ours_total:,}")
-    print(f"  official: {OFFICIAL_NATIONAL:,}  (2026-05-27)")
-    print(f"  drift:    {drift:+,}  ({drift / OFFICIAL_NATIONAL:+.1%})  "
-          f"-> mirror is a slightly EARLIER snapshot\n")
+def _norm(s: str) -> str:
+    """Fold to ASCII uppercase so 'Ciudad de México' == 'CIUDAD DE MEXICO'."""
+    return (unicodedata.normalize("NFKD", str(s))
+            .encode("ascii", "ignore").decode().upper().strip())
 
-    # Per-state. Our ENTIDAD is uppercase; official keys are title-case.
-    ours_state = df["ENTIDAD"].str.title().value_counts()
-    ours_state.index = ours_state.index.str.replace("De", "de").str.replace("Méxic0", "México")
-    rows = []
-    for state, off in OFFICIAL_BY_STATE.items():
-        # match case-insensitively
-        match = ours_state[ours_state.index.str.lower() == state.lower()]
-        ours = int(match.iloc[0]) if len(match) else None
-        d = (ours - off) if ours is not None else None
-        rows.append((state, ours, off, d, (d / off if d is not None else None)))
-    tab = pd.DataFrame(rows, columns=["state", "ours", "official", "drift", "drift_pct"])
-    print("PER-STATE (top 5 by official count)")
-    with pd.option_context("display.float_format", lambda x: f"{x:+.1%}"):
-        print(tab.to_string(index=False))
 
-    print("\nVERDICT: national drift < 1% -> mirror is recent and trustworthy as a snapshot.")
-    print("Per-state drift is 0-7% and mostly NEGATIVE (mirror slightly behind the latest official).")
-    print("Jalisco is the outlier: ours sits BETWEEN wildly disagreeing sources (12.7k-15k+),")
-    print("confirming it as the most volatile/disputed state count — handle its figure with care.")
+def build() -> tuple[pd.DataFrame, int, int, int]:
+    mirror = pd.read_parquet(PARQUET)["ENTIDAD"].map(_norm).value_counts()
+    api = pd.read_csv(FLOW_STATE, index_col=0)[API_COL]
+    api.index = [_norm(i) for i in api.index]
+
+    api_unknown = int(api.get(UNKNOWN, 0))
+    api_states = api.drop(index=UNKNOWN, errors="ignore")
+
+    cmp = pd.DataFrame({"mirror": mirror, "live_api": api_states}).dropna()
+    cmp["live_api"] = cmp.live_api.astype(int)
+    cmp["drift"] = (cmp.live_api - cmp.mirror).astype(int)
+    cmp["drift_pct"] = (cmp.drift / cmp.mirror * 100).round(1)
+    return cmp.sort_index(), int(mirror.sum()), int(api_states.sum()), api_unknown
+
+
+def main() -> None:
+    cmp, mirror_total, api_total, api_unknown = build()
+
+    print(f"MIRROR {MIRROR_DATE}  vs  LIVE API {API_PULL_DATE}")
+    print("=" * 62)
+    print("\nNATIONAL (state-attributable records)")
+    d = api_total - mirror_total
+    print(f"  mirror:   {mirror_total:,}")
+    print(f"  live API: {api_total:,}   (+{api_unknown:,} more with no state attributed)")
+    print(f"  drift:    {d:+,}  ({d / mirror_total * 100:+.2f}%)")
+    print(f"  headline totals: {mirror_total:,} vs {api_total + api_unknown:,} "
+          f"({(api_total + api_unknown - mirror_total) / mirror_total * 100:+.2f}%)")
+
+    big = cmp[cmp.mirror >= MIN_BASE]
+    flagged = big[big.drift_pct.abs() >= FLAG_PCT].sort_values("drift_pct")
+    print(f"\nPER-STATE — flagged (|drift| >= {FLAG_PCT}% on a base of {MIN_BASE:,}+)")
+    print(flagged.to_string() if len(flagged) else "  (none)")
+
+    small = cmp[(cmp.mirror < MIN_BASE) & (cmp.drift_pct.abs() >= FLAG_PCT)]
+    if len(small):
+        print(f"\n  small-base states excluded from the flag (n < {MIN_BASE:,}) — "
+              "large % on few records:")
+        print("   " + "; ".join(f"{s} {int(r.drift):+,} on {int(r.mirror):,} ({r.drift_pct:+.1f}%)"
+                                for s, r in small.sort_values("mirror").iterrows()))
+
+    print("\nPER-STATE — full table (by drift)")
+    print(cmp.sort_values("drift_pct").to_string())
+
+    print("\nHISTORICAL CHECK (superseded, kept for provenance)")
+    pn, pd_date, psrc = PRESS_NATIONAL
+    print(f"  press figure {pn:,} ({pd_date}, {psrc}) vs mirror "
+          f"{mirror_total:,}: {(mirror_total - pn) / pn:+.1%}")
+
+    print("\nVERDICT")
+    print(f"  National drift is {abs(d / mirror_total) * 100:.2f}% — the mirror remains sound as a")
+    print("  national cross-section despite being frozen at " + MIRROR_DATE + ".")
+    if len(flagged):
+        worst = flagged.reindex(flagged.drift_pct.abs().sort_values(ascending=False).index)
+        names = ", ".join(f"{s} ({r.drift_pct:+.1f}%)" for s, r in worst.head(4).iterrows())
+        print(f"  Drift is NOT uniform by state. Largest movers: {names}.")
+        print("  Any per-state claim from the mirror must be labelled to its snapshot date;")
+        print("  a flagged state should carry its live figure in the caption.")
 
 
 if __name__ == "__main__":
