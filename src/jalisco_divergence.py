@@ -8,8 +8,10 @@ measured series. Sources (all consulted 2026-07-06):
 - SISOVID (state) 13,976 at 2023-03-31: El Informador 2023-05-09.
 - REPD 15,426 at 2025-02-28 vs RNPDNO 15,015 at 2025-03-13: SinEmbargo / press.
 - REPD 16,064 through end 2025: Grupo Animal (ex Animal Político) verification.
-- RNPDNO 12,776 unresolved at 2026-06-19: our own dashboard-API pull
-  (data/processed/flow_by_state.csv, desap_y_nollocal).
+- RNPDNO 12,776 unresolved at 2026-06-19 and 12,964 at 2026-08-15: our own
+  dashboard-API pulls (data/processed/flow_by_state.csv, desap_y_nollocal).
+  The two federal pulls bracket the post-recount trough: the count is edging
+  back up (+188 in ~8 weeks) while the state registry stays ~3,000 higher.
 Events: CNB oficio 1349/2020 p.11 n.3; Informador/Animal Político (2022 stop);
 Data Cívica (Dec 2023 censo/borrados); Proceso 2024-01-23 (denial); ZonaDocs
 (Teuchitlán 2025-03-05); A dónde van los desaparecidos 2026-01-08 (new recount).
@@ -24,7 +26,8 @@ st.apply()
 C_FED, C_STATE, C_EVENT = st.RED, st.BLUE, st.INK
 
 fed = [(date(2022, 4, 15), 14944), (date(2023, 5, 6), 15012),
-       (date(2025, 3, 13), 15015), (date(2026, 6, 19), 12776)]
+       (date(2025, 3, 13), 15015), (date(2026, 6, 19), 12776),
+       (date(2026, 8, 15), 12964)]
 sta = [(date(2023, 3, 31), 13976), (date(2025, 2, 28), 15426),
        (date(2025, 12, 31), 16064)]
 
@@ -47,8 +50,10 @@ ax.plot(*zip(*fed), color=C_FED, marker="o", ms=7, lw=1.5, ls="--", zorder=3,
 ax.plot(*zip(*sta), color=C_STATE, marker="s", ms=7, lw=1.5, ls="--", zorder=3,
         label="Jalisco state registry (SISOVID/REPD)")
 
-for d, v in fed:
-    ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=(0, -16),
+# the last two federal pulls are only ~8 weeks apart: stagger so labels don't collide
+fed_offsets = [(0, -16)] * (len(fed) - 2) + [(-16, -18), (14, 6)]
+for (d, v), off in zip(fed, fed_offsets):
+    ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=off,
                 ha="center", fontsize=8.5, color=C_FED, weight="bold")
 for d, v in sta:
     ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=(0, 9),
@@ -76,8 +81,8 @@ ax.set_title("One state, two registries: Jalisco's federal and state counts of t
 ax.legend(loc="lower left", frameon=False, fontsize=9)
 ax.text(0, -0.13,
         "Markers are documented snapshots, not a continuous series; registry definitions differ. "
-        "Sources: El Informador (2023-05-09), SinEmbargo (2025), Grupo Animal (2025), RNPDNO API pull "
-        "(2026-06-19). Consulted 2026-07-06.",
+        "Sources: El Informador (2023-05-09), SinEmbargo (2025), Grupo Animal (2025), RNPDNO API pulls "
+        "(2026-06-19 and 2026-08-15). Consulted 2026-08-15.",
         transform=ax.transAxes, fontsize=7.5, color="#666666")
 
 fig.tight_layout()

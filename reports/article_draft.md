@@ -1,6 +1,7 @@
 # DRAFT — The Redacted Crisis: How Mexico's Registry of the Disappeared Hides What It Counts
 
-Draft v1, 2026-07-06. Visual-led web article. ~2,800 words + 7 figures.
+Draft v1.1, 2026-08-15 (data refreshed; see `docs/data-refresh-2026-08-15.md`).
+Visual-led web article. ~2,900 words + 8 figures.
 Language: drafted in English; decide EN/ES (or both) before publication — the natural
 home for this piece (and its sources) is Spanish-language.
 Every figure is reproducible from `src/`; every number carries a consultation date in
@@ -23,16 +24,16 @@ ways a person can go missing from the data itself.*
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
 *Caption: Every year of reported disappearances in Mexico, 2000–2025, decomposed into
 people found alive, found dead, and still missing. Two panels: absolute counts and
-shares. Source: RNPDNO dashboard API, consulted 2026-06-19; ~212,900 found alive, ~19,900
-found dead, ~118,600 still missing across the period.*
+shares. Source: RNPDNO dashboard API, consulted 2026-08-15; ~214,600 found alive, ~20,600
+found dead, ~117,100 still missing across the period.*
 
 Start with the honest version of the number, because almost nobody publishes it.
 Mexico's National Registry of Disappeared and Missing Persons (RNPDNO) is usually
 quoted as a single figure — 132,000+ disappeared. But the registry is a *stock*, not a
 history: it counts people missing *right now*. The fuller accounting, pulled from the
 registry's own API, is that since 2000 roughly 350,000 disappearances have been
-reported; most people were found alive, about 20,000 were found dead, and nearly
-120,000 have never been found.
+reported; most people were found alive, about 20,600 were found dead, and roughly
+117,000 have never been found.
 
 Two things in this chart survive every methodological caveat we could throw at them
 (and we threw several — see methods note):
@@ -47,9 +48,12 @@ Two things in this chart survive every methodological caveat we could throw at t
 ## 2. Where people disappear — once you divide by population
 
 **[FIG B — `figures/article/B_rate_map.png`]**
-*Caption: Unresolved disappearances per 100,000 residents by state. Tamaulipas
-(359), Zacatecas (226) and Sinaloa (211) lead by rate; Estado de México and CDMX,
-the leaders in absolute counts, fall to ~80.*
+*Caption: Unresolved disappearances per 100,000 residents by state, from the
+record-level registry snapshot of 2025-12-02. Tamaulipas (359), Zacatecas (226)
+and Sinaloa (211) lead by rate; Estado de México (82) and CDMX (79), the leaders
+in absolute counts, fall to around 80. Note: on the live registry consulted
+2026-08-15, CDMX's unresolved count has since fallen by ~1,300 (a rate of ~64) —
+see §5b.*
 
 One paragraph of geography, because it sets up the puzzle: the map of disappearance
 is not the map of population. Per-capita, the northeastern corridor and the
@@ -138,6 +142,14 @@ flat all year, then fell by ~1,400 in the last quarter as records left the feder
 registry entirely — months before the new recount was announced. Tabasco deleted a
 third of its records in a single month.
 
+The reversals do not stop at the edge of the panel. Mexico City's unresolved count
+climbed steadily all through 2025, from 6,025 in April to 7,242 in December — and
+then gave the entire increase back. By June 2026 the live registry showed 6,086;
+by August, 5,915. A capital that had been adding cases for a year shed 1,327 of
+them in eight months, roughly one in five. We can see the direction and the size of
+that reversal but not its mechanism: the registry does not say whether those
+records were deleted, reclassified, resolved, or moved.
+
 Step changes, flat totals during reclassifications, batch deletions: these are the
 signatures of administrative operations, not of thousands of families changing
 their minds in the same week. This is the version-history evidence for the claim in
@@ -214,14 +226,27 @@ That is the subject of the next piece.
 
 ## Methods note (publish as expandable box or footer)
 
-Data: RNPDNO public microdata via the [lapanquecita mirror] (133,566 records,
-snapshot 2025-12-02, upstream mirror commit 666b3e7; max FECHA_REGISTRO 2025-12-01), cross-checked against the live RNPDNO dashboard API
-(national drift −0.7%; Jalisco the volatile outlier) and category-sensitivity
-tested (DESAPARECIDA vs +NO LOCALIZADA: national +6.1%). Outcome flows pulled
-directly from the registry API. Redaction-over-time: ten pinned monthly snapshots
-of the mirror (Apr–Dec 2025, upstream commit SHAs in `src/version_audit.py`). All figures reproducible from `src/` in [repo
+Data: this piece draws on **two vintages, and says so deliberately.** Aggregate
+outcome flows (fig A) come from the live RNPDNO dashboard API, consulted
+**2026-08-15**. Everything field-level — redaction shares, per-capita rates, the
+state rankings in figs B, C, D — comes from the registry's public *record-level*
+microdata via the [lapanquecita mirror] (133,566 records, snapshot **2025-12-02**,
+upstream commit 666b3e7; max FECHA_REGISTRO 2025-12-01). The two cannot be
+aligned: the mirror stopped updating after 2025-12-02, having published monthly
+since April 2025, and no comparable record-level extract has been released since.
+The gap is measurable and small — the mirror's national total sits within 0.5% of
+the live registry (0.1% across state-attributable records) — but it is not uniform
+by state, and §5b is in part about exactly that. Where a state's live figure has
+since moved materially (Ciudad de México, Jalisco), we say so in the caption.
+
+Cross-checks: category-sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA:
+national +6.1%, but Zacatecas +42%); Jalisco remains the volatile outlier across
+sources. Redaction-over-time: ten pinned monthly snapshots of the mirror
+(Apr–Dec 2025, upstream commit SHAs in `src/version_audit.py`). All figures
+reproducible from `src/` in [repo
 link]. Confidential records are counted as unresolved people but excluded from any
-field-level analysis. Full methodology: [link docs/methodology.md]. Key primary
+field-level analysis. Full methodology: [link docs/methodology.md]; refresh audit
+and full number-by-number diff: [link docs/data-refresh-2026-08-15.md]. Key primary
 sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A dónde van los
 desaparecidos (2021-04-08); Data Cívica, Volver a desaparecer; Tlachinollan; HRW
 (2019-01-14). All web sources consulted 2026-07-06 unless noted.
@@ -262,7 +287,9 @@ New figures — ALL BUILT (baseline styling; restyle pass pending):
   → `figures/21_jalisco_registry_divergence.png`. Documented snapshots (markers, not
   a series): federal 14,944 (Apr 2022) → 15,012 (May 2023, i.e. +68 in 13 months
   while the state issued 1,260 bulletins — annotated as "the freeze") → 15,015
-  (Mar 2025) → 12,776 (our API pull, 2026-06-19, after the new federal recount);
+  (Mar 2025) → 12,776 (our API pull, 2026-06-19, after the new federal recount)
+  → 12,964 (second API pull, 2026-08-15: the count is edging back up, +188 in ~8
+  weeks, while the state registry stays ~3,000 higher);
   state 13,976 (SISOVID Mar 2023) → 15,426 (REPD Feb 2025) → 16,064 (end 2025).
   Six event markers 2020–2026. CAVEAT kept in footer: registry definitions differ;
   the 2026 federal drop coincides with the announced recount (A dónde van los
