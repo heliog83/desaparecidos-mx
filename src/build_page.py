@@ -93,6 +93,22 @@ def parse_body(md: str) -> str:
             )
             continue
 
+        # bullet list: items start with "- " and may wrap over several lines
+        if b.startswith("- "):
+            items, cur = [], []
+            for line in b.split("\n"):
+                if line.lstrip().startswith("- "):
+                    if cur:
+                        items.append(" ".join(cur))
+                    cur = [line.lstrip()[2:].strip()]
+                else:
+                    cur.append(line.strip())
+            if cur:
+                items.append(" ".join(cur))
+            lis = "\n".join(f"<li>{inline(' '.join(i.split()))}</li>" for i in items)
+            out.append(f"<ul>\n{lis}\n</ul>")
+            continue
+
         out.append(f"<p>{inline(' '.join(b.split()))}</p>")
 
     hchunks = "\n".join(out)
@@ -229,6 +245,15 @@ TEMPLATE = """<title>{title}</title>
     font-weight:600; letter-spacing:-.01em; max-width:20ch; text-wrap:balance;
   }}
   .sec p {{ max-width:34em; margin:0 0 21px; }}
+  .sec ul {{
+    max-width:34em; margin:0 0 24px; padding:0; list-style:none;
+    display:flex; flex-direction:column; gap:15px;
+  }}
+  .sec li {{ position:relative; padding-left:22px; }}
+  .sec li::before {{
+    content:""; position:absolute; left:0; top:.62em;
+    width:9px; height:1.5px; background:var(--redact);
+  }}
   em {{ font-style:italic; }}
   strong {{ font-weight:600; }}
   code {{ font-family:var(--mono); font-size:.86em; letter-spacing:.02em; }}

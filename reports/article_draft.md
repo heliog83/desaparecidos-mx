@@ -35,15 +35,26 @@ registry's own API, is that since 2000 roughly 350,000 disappearances have been
 reported; most people were found alive, about 20,600 were found dead, and roughly
 117,000 have never been found.
 
-Two things in this chart survive every methodological caveat we could throw at them
+Three things in this chart survive every methodological caveat we could throw at them
 (and we threw several — see methods note):
 
 - **The growth is real incidence, not an artifact of accumulation.** Reported
   disappearances rose from ~100/year in 2000 to ~3,000 at the drug-war onset in
   2007 to ~37,000 in 2025.
-- **The unresolved share behaves the opposite of intuition:** older cohorts are *less*
-  resolved (~16–27%) than recent ones (~65–70%). Time does not find people; it
-  buries the cases.
+- **The share who are found has barely moved in eighteen years.** From 2008 onward,
+  close to two-thirds of each year's reported disappearances end with the person
+  located — 65% of the 2008 cohort, 75% of 2014, 68% of 2025. The rate holds steady
+  while the annual volume more than triples. So the number of people left missing
+  grows with the size of the caseload, not because finding them got harder.
+- **But once a case is about a year old, it very rarely resolves.** Of everyone who
+  disappeared before 2016 and is still missing — 32,102 people — just 123 were
+  located in the eight weeks between our two consultations of the registry. That is
+  roughly 2.5% a year. At that rate it would take some three decades to account for
+  half of them. Searching finds people quickly or it does not find them.
+
+(The bars for 2000–2005 look dramatic in the lower panel — almost entirely
+unresolved — but each covers only a few hundred people, so we do not lean on them.
+The eighteen-year plateau rests on cohorts of tens of thousands.)
 
 ## 2. Where people disappear — once you divide by population
 

@@ -87,6 +87,15 @@
     font-weight:600; letter-spacing:-.01em; max-width:20ch; text-wrap:balance;
   }
   .sec p { max-width:34em; margin:0 0 21px; }
+  .sec ul {
+    max-width:34em; margin:0 0 24px; padding:0; list-style:none;
+    display:flex; flex-direction:column; gap:15px;
+  }
+  .sec li { position:relative; padding-left:22px; }
+  .sec li::before {
+    content:""; position:absolute; left:0; top:.62em;
+    width:9px; height:1.5px; background:var(--redact);
+  }
   em { font-style:italic; }
   strong { font-weight:600; }
   code { font-family:var(--mono); font-size:.86em; letter-spacing:.02em; }
@@ -169,8 +178,13 @@
 <figcaption><span class="figlabel">Fig. A</span> Every year of reported disappearances in Mexico, 2000&#8211;2025, decomposed into people found alive, found dead, and still missing. Two panels: absolute counts and shares. Source: RNPDNO dashboard API, consulted 2026-08-15; ~214,600 found alive, ~20,600 found dead, ~117,100 still missing across the period.</figcaption>
 </figure>
 <p>Start with the honest version of the number, because almost nobody publishes it. Mexico&#x27;s National Registry of Disappeared and Missing Persons (RNPDNO) is usually quoted as a single figure &#8212; 132,000+ disappeared. But the registry is a <em>stock</em>, not a history: it counts people missing <em>right now</em>. The fuller accounting, pulled from the registry&#x27;s own API, is that since 2000 roughly 350,000 disappearances have been reported; most people were found alive, about 20,600 were found dead, and roughly 117,000 have never been found.</p>
-<p>Two things in this chart survive every methodological caveat we could throw at them (and we threw several &#8212; see methods note):</p>
-<p>- <strong>The growth is real incidence, not an artifact of accumulation.</strong> Reported disappearances rose from ~100/year in 2000 to ~3,000 at the drug-war onset in 2007 to ~37,000 in 2025. - <strong>The unresolved share behaves the opposite of intuition:</strong> older cohorts are <em>less</em> resolved (~16&#8211;27%) than recent ones (~65&#8211;70%). Time does not find people; it buries the cases.</p>
+<p>Three things in this chart survive every methodological caveat we could throw at them (and we threw several &#8212; see methods note):</p>
+<ul>
+<li><strong>The growth is real incidence, not an artifact of accumulation.</strong> Reported disappearances rose from ~100/year in 2000 to ~3,000 at the drug-war onset in 2007 to ~37,000 in 2025.</li>
+<li><strong>The share who are found has barely moved in eighteen years.</strong> From 2008 onward, close to two-thirds of each year&#x27;s reported disappearances end with the person located &#8212; 65% of the 2008 cohort, 75% of 2014, 68% of 2025. The rate holds steady while the annual volume more than triples. So the number of people left missing grows with the size of the caseload, not because finding them got harder.</li>
+<li><strong>But once a case is about a year old, it very rarely resolves.</strong> Of everyone who disappeared before 2016 and is still missing &#8212; 32,102 people &#8212; just 123 were located in the eight weeks between our two consultations of the registry. That is roughly 2.5% a year. At that rate it would take some three decades to account for half of them. Searching finds people quickly or it does not find them.</li>
+</ul>
+<p>(The bars for 2000&#8211;2005 look dramatic in the lower panel &#8212; almost entirely unresolved &#8212; but each covers only a few hundred people, so we do not lean on them. The eighteen-year plateau rests on cohorts of tens of thousands.)</p>
 </section>
 <section class="sec">
 <p class="eyebrow"><span class="idx">2</span></p>
@@ -262,7 +276,12 @@
 <p class="eyebrow"><span class="idx">8</span></p>
 <h2>What this means &#8212; and what we cannot claim</h2>
 <p>No chart in this piece supports the sentence &quot;the state deliberately hides its disappeared.&quot; What the evidence supports is narrower and, for data users, more important:</p>
-<p>- The public registry&#x27;s confidentiality flag is <strong>unexplained, unaudited, and in thousands of documented cases contradicted by the authorities&#x27; own public search notices</strong>. - Cross-state comparisons of registry data measure <em>institutional publication practice</em> as much as they measure disappearance. - Opacity has two modes &#8212; <strong>redacting what is recorded, and never recording</strong> &#8212; and a state can look clean on one axis while failing badly on the other. - In both modes, the gap is being filled by the same people: the families and collectives searching, counting, and digging where the record ends.</p>
+<ul>
+<li>The public registry&#x27;s confidentiality flag is <strong>unexplained, unaudited, and in thousands of documented cases contradicted by the authorities&#x27; own public search notices</strong>.</li>
+<li>Cross-state comparisons of registry data measure <em>institutional publication practice</em> as much as they measure disappearance.</li>
+<li>Opacity has two modes &#8212; <strong>redacting what is recorded, and never recording</strong> &#8212; and a state can look clean on one axis while failing badly on the other.</li>
+<li>In both modes, the gap is being filled by the same people: the families and collectives searching, counting, and digging where the record ends.</li>
+</ul>
 <p>That is the subject of the next piece.</p>
 <p>---</p>
 </section>
