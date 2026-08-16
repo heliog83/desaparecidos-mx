@@ -44,27 +44,36 @@ Across those cohorts the registry currently records roughly 214,600 found alive,
 headline totals consists mainly of records without a usable year and records outside
 the chart's period.
 
-Three things can be read from the chart, provided its limits stay visible:
+Three things stand out.
 
-- **Recent recorded cohorts are much larger.** The registry assigns roughly 3,000
-  reports to 2007 and 37,124 to 2025 [1]. Unlike a cumulative line, each bar
-  represents one recorded year-of-disappearance cohort. Delayed reporting and later
-  registry revisions still mean the bars are not a perfect measure of annual
-  incidence — three new 2014 records appeared inside a single eight-week window in
-  2026.
-- **Most post-2008 cohorts are currently recorded as roughly two-thirds located.**
-  The shares include 65% of the 2008 cohort, 75% of 2014 and 68% of 2025. Because
-  those cohorts have had radically different follow-up periods, this is a descriptive
-  registry pattern — not a measure of search effectiveness.
-- **The chart cannot show when a status changed.** A person assigned to the 2014
-  cohort may have been located in 2014 or years later. Nor can the public aggregate
-  data distinguish a confirmed recovery from an administrative correction or
-  reclassification: "located" is a registry category, not a verified outcome, and it
-  includes the contested 2023 *censo*. Nothing here credits any institution with
-  finding people.
+- **The registry has grown more than tenfold in eighteen years.** It holds about
+  3,000 records for 2007, the year the militarised drug war began, and 37,124 for
+  2025 [1].
+- **A third of the people in it are still missing.** 134,268 of 407,253 — and the
+  still-missing share of each year's cohort has barely shifted since 2008, while the
+  cohorts themselves kept growing.
+- **The registry's red band never really empties.** Roughly two-thirds of every
+  post-2008 cohort now sits in a "located" category — 65% of 2008, 75% of 2014, 68%
+  of 2025 — and the remaining third stays where it is, year after year.
 
-(The bars for 2000–2005 look dramatic in percentage form, but each covers only a few
-hundred people. The article does not use those small cohorts to infer a trend.)
+Now the limits, because they change what those numbers mean.
+
+Each bar counts **records the state holds**, not disappearances that happened. Over
+25 years, reporting rates, prosecutorial practice and registry coverage all changed
+enormously, and cases still arrive late: three new 2014 records appeared inside a
+single eight-week window in 2026. The cohorts have also had wildly unequal time to
+resolve — 2008 has been observed for eighteen years, 2025 for months — so the
+two-thirds figure describes where the register stands today, not how effectively
+anyone searched.
+
+And "located" is a **registry category, not a verified outcome**. It mixes people
+found alive, people found dead, and records reclassified in administrative batches,
+including the contested 2023 *censo*. The public data cannot tell you when a status
+changed or why: someone recorded in the 2014 cohort may have been found that year or
+a decade later. Nothing here credits any institution with finding anyone.
+
+(The 2000–2005 bars look dramatic in percentage form but cover only a few hundred
+records each, so the piece draws no trend from them.)
 
 ## 2. Where unresolved stock is greatest per resident
 
@@ -320,21 +329,40 @@ and collective lists have not been linked person by person.
 ## 8. What this means — and what we cannot claim
 
 No chart in this piece supports the sentence "the state deliberately hides its
-disappeared." What the evidence supports is narrower and, for data users, more
-important:
+disappeared." I looked for it and could not find it, and the honest reason is that
+the public data are not built to answer questions about intent. Every explanation
+that could be tested from outside — that redaction protects families in danger, that
+it tracks corruption, that it tracks state poverty — failed. What is left is not
+proof of a motive. It is the absence of an account.
 
-- The public registry's confidentiality flag is **unexplained, unaudited, and in
-  thousands of documented cases contradicted by the authorities' own public search
-  notices**.
-- Cross-state comparisons of registry data measure *institutional publication
-  practice* as much as they measure disappearance.
-- There are two distinct visibility problems: **fields redacted inside the registry,
-  and disappearances documented by families outside it**. Their overlap must be
-  measured before the second can be called an undercount.
-- Families and collectives provide an essential parallel record, but the registry does
-  not provide the identifiers needed to reconcile the two systems publicly.
+That absence is the finding, and it is specific. The confidentiality flag is
+**unexplained, unaudited, and contradicted in thousands of documented cases by the
+authorities' own search posters**. It moves in batches, on administrative schedules,
+with no published log of who authorised a change or why. And no public field
+distinguishes a redaction a family requested from one produced by a missing form —
+which means the state cannot demonstrate that the humane version of its own rule is
+what is happening, even where it is.
 
-That is the subject of the next piece.
+The practical consequence for anyone using this data: **a cross-state comparison of
+the RNPDNO measures institutional publication practice at least as much as it
+measures disappearance.** Jalisco and Guerrero differ by a factor of seven in what
+they publish and barely at all in what the violence looks like. Any map, ranking or
+model built on those numbers without saying so is describing bureaucracies while
+appearing to describe victims.
+
+And there are two different ways to vanish from the record, which the same chart
+cannot show at once: **fields redacted inside the registry, and people never entered
+into it.** The first is measurable — we measured it. The second is visible only
+where families have done the counting themselves, and the registry publishes no
+identifiers that would let anyone reconcile the two. Guerrero's 623 documented Iguala
+cases and its ~3,800 official records cannot be added, subtracted, or matched. That
+is not a gap in our method. It is a gap the state maintains.
+
+Which leaves the part no dataset in this piece can reach. Behind 134,268 records is a
+number of families who learned that the search would be theirs to run — and who, in
+Iguala and Teuchitlán and dozens of places with no reporters in them, went out with
+rods and shovels and found what the registry does not contain. Counting what they
+have found, and at what cost, is the subject of the next piece.
 
 ---
 

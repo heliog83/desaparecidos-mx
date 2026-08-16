@@ -152,14 +152,27 @@ def national_status(totals: dict[str, int]) -> str:
     dead = totals["TotalLocalizadosSV"]
     missing = totals["TotalDesaparecidos"]
     total = totals["TotalGlobal"]
+    # Percentages and segment widths are derived, never written by hand: a hard-coded
+    # 61/6/33 silently stops matching the moment the capture changes.
+    pct = {k: v / total * 100 for k, v in (("alive", alive), ("dead", dead), ("missing", missing))}
+    # The found-dead band is ~6% wide, too narrow to hold a label. Rather than hide the
+    # label (which left "6%" on the page with nothing saying what it counted), it is
+    # called out above the bar, centred on the band.
+    dead_centre = pct["alive"] + pct["dead"] / 2
     return f"""
     <section class="status-snapshot" aria-labelledby="status-title">
       <h2 id="status-title">One in three remains missing</h2>
       <p class="asof">Current RNPDNO registry status, 15 August 2026</p>
-      <div class="status-track" role="img" aria-label="Of {total:,} registry records, {alive:,} are found alive, {dead:,} found dead and {missing:,} still missing">
-        <div class="status-segment status-alive"><strong>61%</strong><span>found alive</span></div>
-        <div class="status-segment status-dead"><strong>6%</strong><span>found dead</span></div>
-        <div class="status-segment status-missing"><strong>33%</strong><span>still missing</span></div>
+      <div class="status-callout-row">
+        <div class="status-callout" style="left:{dead_centre:.2f}%">
+          <span class="callout-text">{pct['dead']:.1f}% found dead &middot; {dead:,}</span>
+          <span class="callout-stem"></span>
+        </div>
+      </div>
+      <div class="status-track" role="img" aria-label="Of {total:,} registry records, {alive:,} are recorded found alive, {dead:,} found dead and {missing:,} still missing">
+        <div class="status-segment status-alive" style="width:{pct['alive']:.2f}%" title="Found alive — {alive:,} records ({pct['alive']:.1f}%)"><strong>{pct['alive']:.0f}%</strong><span>found alive</span></div>
+        <div class="status-segment status-dead" style="width:{pct['dead']:.2f}%" title="Found dead — {dead:,} records ({pct['dead']:.1f}%)"></div>
+        <div class="status-segment status-missing" style="width:{pct['missing']:.2f}%" title="Still missing — {missing:,} records ({pct['missing']:.1f}%)"><strong>{pct['missing']:.0f}%</strong><span>still missing</span></div>
       </div>
       <div class="status-key">
         <span><b>{alive:,}</b> found alive</span>
