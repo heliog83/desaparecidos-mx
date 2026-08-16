@@ -4,8 +4,8 @@
     {
       "name": "article-preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8791", "--directory", "reports"],
-      "port": 8791
+      "runtimeArgs": ["-m", "http.server", "8794", "--directory", "reports"],
+      "port": 8794
     }
   ]
 }
