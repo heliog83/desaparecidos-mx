@@ -9,6 +9,9 @@ requests>=2.31          # also drives the live RNPDNO dashboard API (src/fetch_f
 beautifulsoup4>=4.12
 lxml>=4.9
 
+# Statistics
+scipy>=1.11             # correlation tests in src/stat_correlations.py
+
 # Visualization
 altair>=5.2            # interactive/declarative charts
 plotnine>=0.13         # ggplot2-style charts for the report
