@@ -87,6 +87,36 @@ Consequences:
 - **Single snapshot.** This is one community mirror at one date; RNPDNO revises retroactively, so
   totals here will not exactly match the live dashboard. Treat every figure as "as of <date>".
 
+## 7. Opacity vs. State Capacity/Corruption (Negative Control)
+
+To investigate whether the high rates of redaction (`CONFIDENCIAL`) are simply a byproduct of low state capacity or general administrative corruption, we ran a negative control test. We merged the state-level redaction rates with the INEGI ENCIG 2025 (Corruption Prevalence) and PIBE 2024 (Economic Capacity/GDP per capita) datasets.
+
+The statistical correlations demonstrate that redaction rates are **not driven by baseline economic size or citizens' experience with general corruption**:
+- **Corruption Prevalence:** Very weak negative correlation (Pearson *r* = -0.1917, p-value = 0.2933; Spearman ρ = -0.2416, p-value = 0.1829). The relationship is not statistically significant.
+- **Economic Capacity:** Very weak positive correlation with Pearson (*r* = 0.2237, p-value = 0.2184) and essentially zero rank correlation (Spearman ρ = 0.0517, p-value = 0.7788). Both are statistically insignificant.
+
+**Conclusion:** Neither general corruption experience nor economic capacity explains how much
+of a state's registry is published. Together with the homicide-rate result (Pearson *r* = −0.38
+across all 32 states), this rules out the three most obvious structural explanations — violence,
+corruption, and state wealth — for why publication practice varies so widely between states.
+
+Two limits on what that licenses:
+
+- **These are null results, and a null result does not identify a cause.** Ruling out three
+  explanations does not establish that redaction is deliberate, or that any particular record was
+  redacted for any particular reason. The evidence for administrative rather than family-driven
+  redaction comes from the documentary record (CNB oficio 1349/2020; the Jalisco blanket
+  declaration; active search notices on confidential cases) and from the batch movement visible
+  across snapshots — not from these correlations.
+- **The variation is concentrated at the state level**, which is consistent with publication
+  practice being set per *fiscalía*. The clearest contrast is Jalisco at 66.9% against Guerrero
+  at 9.1% and Chihuahua at 8.8% — note that the extremes run in both directions, and that the
+  least-redacted states include some of the most violent. Guerrero's low share is not
+  transparency; see [cases/guerrero.md](cases/guerrero.md) on under-registration.
+
+All correlations reproduce from `src/stat_correlations.py` against
+`data/processed/state_correlations.csv` (n = 32).
+
 ---
 
 ## What each existing figure is safe to claim
