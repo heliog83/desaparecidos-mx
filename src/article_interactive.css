@@ -59,6 +59,7 @@
 .chart-heading { margin:0 0 3px; font-size:20px; line-height:1.25; font-weight:600; }
 .chart-subtitle { margin:0 0 14px; color:#666b67; font-size:13.5px; line-height:1.4; }
 .chart-controls { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px; align-items:center; }
+.chart-control-label { font-size:12px; font-weight:600; color:#4f5450; text-transform:uppercase; letter-spacing:.05em; margin-right:2px; }
 .chart-controls label { font-size:13px; color:#4f5450; }
 .chart-controls button, .chart-controls select {
   border:1px solid var(--rule); background:var(--plate); color:var(--ink); font:inherit;
@@ -87,6 +88,20 @@
 }
 .chart-summary { margin-top:8px; color:#555a56; font-size:13px; min-height:1.4em; }
 .chart-summary strong { color:var(--ink); }
+.map-canvas { width:100%; min-height:320px; position:relative; }
+.map-canvas svg { display:block; width:100%; height:auto; max-height:560px; }
+.map-state { stroke:#fff; stroke-width:1.1; vector-effect:non-scaling-stroke; cursor:pointer; transition:filter .12s ease,stroke-width .12s ease; }
+.map-state:hover, .map-state:focus { filter:brightness(.86); stroke:#22201e; stroke-width:2.2; outline:none; }
+.map-state.is-selected { stroke:#22201e; stroke-width:3; }
+.map-legend { display:flex; flex-wrap:wrap; gap:7px 15px; margin:6px 0 10px; color:#555a56; font-size:12px; }
+.map-legend span { display:inline-flex; align-items:center; gap:5px; }
+.map-legend i { display:inline-block; width:13px; height:13px; border:1px solid rgb(0 0 0 / .08); }
+.map-detail {
+  border-top:1px solid #d9dcd8; margin-top:8px; padding-top:10px; font-size:13px;
+  display:flex; flex-wrap:wrap; gap:7px 18px;
+}
+.map-detail b { font-variant-numeric:tabular-nums; }
+.tooltip-vintage { color:#d4d4d4; }
 .static-fallback { margin-top:11px; font:13px var(--sans); color:var(--muted); }
 .static-fallback summary { cursor:pointer; }
 .static-fallback img { margin-top:10px; display:block; width:100%; height:auto; background:#fff; }
@@ -116,6 +131,7 @@
   .status-alive span, .status-missing span { font-size:11px; }
   .chart-shell { padding:14px 10px 11px; margin-inline:-10px; }
   .chart-canvas { min-height:330px; }
+  .map-canvas { min-height:230px; }
   .state-row { grid-template-columns:105px 1fr 54px; gap:6px; font-size:12px; }
   .state-bars { min-height:380px; }
 }

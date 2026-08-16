@@ -164,6 +164,91 @@
     draw();
   }
 
+  function initMap(root) {
+    const canvas = root.querySelector(".map-canvas");
+    const legend = root.querySelector(".map-legend");
+    const detail = root.querySelector(".map-detail");
+    const tip = tooltipFor(root);
+    const stateByCode = new Map(DATA.states.map((d) => [d.cve, d]));
+    const colors = ["#f5e4dc", "#e5bfae", "#cf8d78", "#b25545", "#7a1f1f"];
+    const specs = {
+      rate: {
+        key: "rate", thresholds: [50, 100, 150, 225],
+        labels: ["0-50", "50-100", "100-150", "150-225", "225+"],
+        title: "unresolved records per 100,000",
+      },
+      count: {
+        key: "count", thresholds: [500, 2000, 5000, 10000],
+        labels: ["0-500", "500-2k", "2k-5k", "5k-10k", "10k+"],
+        title: "unresolved records",
+      },
+      confidential: {
+        key: "confidential_share", thresholds: [0.15, 0.30, 0.45, 0.60],
+        labels: ["0-15%", "15-30%", "30-45%", "45-60%", "60%+"],
+        title: "share confidential",
+      },
+    };
+    let metric = "rate";
+    let selected = "28";
+
+    const colorFor = (value, thresholds) => {
+      const index = thresholds.findIndex((limit) => value < limit);
+      return colors[index === -1 ? colors.length - 1 : index];
+    };
+    const stateHtml = (d) => `<strong>${d.label}</strong><br>`
+      + `Unresolved <strong>${fmt.format(d.count)}</strong><br>`
+      + `Rate ${d.rate.toFixed(1)} per 100,000<br>`
+      + `Confidential ${fmt.format(d.confidential_count)} (${pct.format(d.confidential_share)})<br>`
+      + `<span class="tooltip-vintage">Snapshot: 2 Dec 2025</span>`;
+    const stateAria = (d) => `${d.label}: ${fmt.format(d.count)} unresolved records, `
+      + `${d.rate.toFixed(1)} per 100,000, ${pct.format(d.confidential_share)} confidential`;
+
+    function draw() {
+      canvas.querySelectorAll("svg").forEach((n) => n.remove());
+      hideTip(tip);
+      const spec = specs[metric];
+      const svg = svgNode("svg", {
+        viewBox: "0 0 900 520", role: "img", "aria-label": `Map of Mexico coloured by ${spec.title}`,
+      });
+      svg.append(svgNode("title", {}, `Mexico: ${spec.title}`));
+      svg.append(svgNode("desc", {}, "Each state can be focused or pointed to for unresolved count, rate and confidential share."));
+      DATA.map_paths.forEach((feature) => {
+        const d = stateByCode.get(feature.cve);
+        if (!d) return;
+        const path = svgNode("path", {
+          d: feature.d, fill: colorFor(d[spec.key], spec.thresholds),
+          class: `map-state${selected === feature.cve ? " is-selected" : ""}`,
+          tabindex: 0, "fill-rule": "evenodd",
+        });
+        path.setAttribute("aria-label", stateAria(d));
+        path.addEventListener("mouseenter", (event) => {
+          const [x, y] = pointerIn(event, canvas);
+          showTip(tip, stateHtml(d), x, y);
+        });
+        path.addEventListener("mousemove", (event) => {
+          const [x, y] = pointerIn(event, canvas);
+          showTip(tip, stateHtml(d), x, y);
+        });
+        path.addEventListener("mouseleave", () => hideTip(tip));
+        path.addEventListener("focus", () => showTip(tip, stateHtml(d), 12, 12));
+        path.addEventListener("blur", () => hideTip(tip));
+        path.addEventListener("click", () => { selected = feature.cve; draw(); });
+        svg.append(path);
+      });
+      canvas.append(svg);
+      legend.innerHTML = spec.labels.map((label, i) =>
+        `<span><i style="background:${colors[i]}"></i>${label}</span>`).join("");
+      const d = stateByCode.get(selected);
+      detail.innerHTML = d ? `<strong>${d.label}</strong><span><b>${fmt.format(d.count)}</b> unresolved</span><span><b>${d.rate.toFixed(1)}</b> per 100,000</span><span><b>${fmt.format(d.confidential_count)}</b> confidential (${pct.format(d.confidential_share)})</span><span>Snapshot: 2 Dec 2025</span>` : "";
+    }
+    root.querySelectorAll("button[data-mode]").forEach((button) => button.addEventListener("click", () => {
+      metric = button.dataset.mode;
+      buttonMode(root, metric);
+      draw();
+    }));
+    draw();
+  }
+
   function initStates(root) {
     const bars = root.querySelector(".state-bars");
     const detail = root.querySelector(".state-detail");
@@ -290,6 +375,7 @@
   }
 
   document.querySelectorAll('[data-chart="outcomes"]').forEach(initOutcomes);
+  document.querySelectorAll('[data-chart="map"]').forEach(initMap);
   document.querySelectorAll('[data-chart="states"]').forEach(initStates);
   document.querySelectorAll('[data-chart="snapshots"]').forEach(initSnapshots);
 })();

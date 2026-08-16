@@ -28,7 +28,9 @@ INTERACTIVE_JS = ROOT / "src" / "article_interactive.js"
 FLOW_YEAR = ROOT / "data" / "processed" / "flow_by_year.csv"
 FLOW_TOTALS = ROOT / "data" / "processed" / "flow_totales.csv"
 STATE_DATA = ROOT / "data" / "processed" / "state_opacity_enriched.csv"
+STATE_RATES = ROOT / "data" / "processed" / "state_rates.csv"
 SNAPSHOT_DATA = ROOT / "data" / "processed" / "confidencial_panel.csv"
+MEXICO_GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
 
 TITLE = "The Redacted Crisis"
 SUBTITLE = "What Mexico's public registry leaves unseen"
@@ -64,6 +66,72 @@ def _state_label(name: str) -> str:
     return label
 
 
+def _rdp(points: list[list[float]], epsilon: float) -> list[list[float]]:
+    """Simplify one geographic ring with the Ramer-Douglas-Peucker algorithm."""
+    if len(points) <= 3:
+        return points
+    x1, y1 = points[0]
+    x2, y2 = points[-1]
+    dx, dy = x2 - x1, y2 - y1
+    denom = dx * dx + dy * dy
+    best_i, best_d = 0, -1.0
+    for i, (x, y) in enumerate(points[1:-1], 1):
+        if denom == 0:
+            dist = (x - x1) ** 2 + (y - y1) ** 2
+        else:
+            t = max(0.0, min(1.0, ((x - x1) * dx + (y - y1) * dy) / denom))
+            px, py = x1 + t * dx, y1 + t * dy
+            dist = (x - px) ** 2 + (y - py) ** 2
+        if dist > best_d:
+            best_i, best_d = i, dist
+    if best_d > epsilon * epsilon:
+        left = _rdp(points[:best_i + 1], epsilon)
+        right = _rdp(points[best_i:], epsilon)
+        return left[:-1] + right
+    return [points[0], points[-1]]
+
+
+def map_paths() -> list[dict[str, str]]:
+    """Convert the large GeoJSON into compact, dependency-free SVG state paths."""
+    geo = json.loads(MEXICO_GEO.read_text(encoding="utf-8"))
+    all_points: list[list[float]] = []
+    for feature in geo["features"]:
+        coords = feature["geometry"]["coordinates"]
+        polygons = coords if feature["geometry"]["type"] == "MultiPolygon" else [coords]
+        for polygon in polygons:
+            for ring in polygon:
+                all_points.extend(ring)
+    min_x = min(p[0] for p in all_points)
+    max_x = max(p[0] for p in all_points)
+    min_y = min(p[1] for p in all_points)
+    max_y = max(p[1] for p in all_points)
+    width, height, pad = 900.0, 520.0, 12.0
+    scale = min((width - 2 * pad) / (max_x - min_x), (height - 2 * pad) / (max_y - min_y))
+
+    paths = []
+    for feature in geo["features"]:
+        coords = feature["geometry"]["coordinates"]
+        polygons = coords if feature["geometry"]["type"] == "MultiPolygon" else [coords]
+        commands = []
+        for polygon in polygons:
+            for ring in polygon:
+                simplified = _rdp(ring, 0.018)
+                projected = [
+                    (pad + (x - min_x) * scale, pad + (max_y - y) * scale)
+                    for x, y in simplified
+                ]
+                if len(projected) < 3:
+                    continue
+                commands.append(
+                    "M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in projected) + "Z"
+                )
+        paths.append({
+            "cve": feature["properties"]["CVE_ENT"].zfill(2),
+            "d": "".join(commands),
+        })
+    return paths
+
+
 def chart_data() -> dict:
     outcomes = []
     with FLOW_YEAR.open(newline="", encoding="utf-8") as f:
@@ -80,6 +148,11 @@ def chart_data() -> dict:
                     "missing": _number(row.get("desap_y_nollocal"), integer=True),
                 })
 
+    state_codes = {}
+    with STATE_RATES.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            state_codes[(row.get("entidad") or "").strip().upper()] = row["cve_ent"].zfill(2)
+
     states = []
     with STATE_DATA.open(newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
@@ -87,9 +160,11 @@ def chart_data() -> dict:
             if not name:
                 continue
             states.append({
+                "cve": state_codes.get(name.upper(), ""),
                 "name": name,
                 "label": _state_label(name),
                 "count": _number(row.get("total_records"), integer=True),
+                "confidential_count": _number(row.get("confidential_records"), integer=True),
                 "rate": round(float(row.get("tasa_100k") or 0), 1),
                 "confidential_share": round(float(row.get("confidential_share") or 0), 6),
             })
@@ -103,7 +178,8 @@ def chart_data() -> dict:
                 "total": _number(row["total"], integer=True),
                 "conf": _number(row["conf"], integer=True),
             })
-    return {"outcomes": outcomes, "states": states, "snapshots": snapshots}
+    return {"outcomes": outcomes, "states": states, "snapshots": snapshots,
+            "map_paths": map_paths()}
 
 
 def flow_totals() -> dict[str, int]:
@@ -206,6 +282,7 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
   <h3 class="chart-heading">Recorded disappearances, by year and current outcome</h3>
   <p class="chart-subtitle">Year of disappearance, 2000–2025. Use “Still missing” for a zero-based comparison; hover or focus for exact values.</p>
   <div class="chart-controls" aria-label="Outcome chart display">
+    <span class="chart-control-label">View</span>
     <button type="button" data-mode="absolute" aria-pressed="true">All outcomes</button>
     <button type="button" data-mode="missing" aria-pressed="false">Still missing</button>
     <button type="button" data-mode="share" aria-pressed="false">Share of cohort</button>
@@ -217,8 +294,21 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
 <figcaption><span class="figlabel">Fig. A</span> {inline(caption)}</figcaption>
 </figure>"""
     if letter == "B":
-        return f"""<figure class="plate">
-<img src="{img_uri(image_name)}" alt="Map of unresolved records per 100,000 residents by state" loading="lazy">
+        return f"""<figure class="interactive-figure" data-chart="map">
+<div class="chart-shell">
+  <h3 class="chart-heading">Where unresolved cases are highest per resident</h3>
+  <p class="chart-subtitle">Point to, tap or focus a state for its count, population-adjusted rate and confidential share.</p>
+  <div class="chart-controls" aria-label="Map display">
+    <span class="chart-control-label">Colour by</span>
+    <button type="button" data-mode="rate" aria-pressed="true">Rate</button>
+    <button type="button" data-mode="count" aria-pressed="false">Count</button>
+    <button type="button" data-mode="confidential" aria-pressed="false">Confidential share</button>
+  </div>
+  <div class="map-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="map-legend" aria-hidden="true"></div>
+  <div class="map-detail" aria-live="polite"></div>
+</div>
+{fallback}
 <figcaption><span class="figlabel">Fig. B</span> {inline(caption)}</figcaption>
 </figure>
 <figure class="interactive-figure" data-chart="states">
