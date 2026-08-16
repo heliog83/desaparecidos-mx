@@ -47,7 +47,9 @@
       clear(canvas);
       const width = Math.max(300, canvas.clientWidth);
       const height = width < 520 ? 355 : 390;
-      const margin = { top: 28, right: 18, bottom: 45, left: width < 520 ? 50 : 66 };
+      // top leaves room for two stacked rows: the legend (y~5-14) and, below it, the
+      // presidential-term labels. At 28 they collided ("Lopez Obrador" over "Still missing").
+      const margin = { top: 48, right: 18, bottom: 45, left: width < 520 ? 50 : 66 };
       const innerW = width - margin.left - margin.right;
       const innerH = height - margin.top - margin.bottom;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
@@ -71,6 +73,33 @@
       }
       svg.append(svgNode("line", { x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + innerH, class: "chart-axis" }));
       svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right, y1: margin.top + innerH, y2: margin.top + innerH, class: "chart-axis" }));
+
+      // Presidential terms as neutral reference rules. Not colour-coded by party and
+      // never used to attribute counts: recorded volume is confounded by reporting and
+      // registry practice, which also changed across these boundaries. Labels are
+      // dropped on narrow viewports where they would collide.
+      // Accented names use \u escapes on purpose: build_page.py escapes the whole page
+      // to ASCII, and numeric entities do NOT decode inside a <script> block, so a
+      // literal accented character here renders as "Calder&#243;n" on the chart.
+      // build_page.py enforces this - keep this file ASCII-only.
+      const SEXENIOS = [
+        [2006, "Calder\u00F3n"], [2012, "Pe\u00F1a Nieto"],
+        [2018, "L\u00F3pez Obrador"], [2024, "Sheinbaum"],
+      ];
+      const firstYear = years[0].year;
+      SEXENIOS.forEach(([startYear, name]) => {
+        const idx = startYear - firstYear;
+        if (idx < 0 || idx >= years.length) return;
+        const gx = margin.left + idx * step;
+        svg.append(svgNode("line", {
+          x1: gx, x2: gx, y1: margin.top, y2: margin.top + innerH, class: "chart-sexenio",
+        }));
+        if (width >= 560) {
+          svg.append(svgNode("text", {
+            x: gx + 3, y: margin.top - 8, "text-anchor": "start", class: "chart-sexenio-label",
+          }, name));
+        }
+      });
 
       years.forEach((d, i) => {
         const total = totals[i];

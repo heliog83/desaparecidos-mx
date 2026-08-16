@@ -350,6 +350,27 @@ def hero_record() -> str:
     return "\n".join(rows)
 
 
+def _assert_ascii(path: Path) -> str:
+    """Refuse to inline a non-ASCII asset into the page.
+
+    ascii_safe() escapes the finished page to numeric entities so encoding cannot
+    break it. That is right for markup, but entities are NOT decoded inside <script>
+    or <style>: a literal accented character in the JS renders on the chart as
+    "Calder&#243;n". Assets must therefore be ASCII at source, using \\u escapes for
+    accented strings. This turns a silent rendering bug into a build failure.
+    """
+    text = path.read_text(encoding="utf-8")
+    bad = sorted({c for c in text if ord(c) > 127})
+    if bad:
+        lines = [f"{i}: {ln.strip()[:80]}" for i, ln in enumerate(text.splitlines(), 1)
+                 if any(ord(c) > 127 for c in ln)]
+        raise ValueError(
+            f"{path.name} contains non-ASCII {bad}; entities do not decode inside "
+            f"<script>/<style>. Use \\uXXXX escapes instead.\n  " + "\n  ".join(lines)
+        )
+    return text
+
+
 def ascii_safe(s: str) -> str:
     """Escape every non-ASCII char to a numeric entity.
 
@@ -376,9 +397,9 @@ def build() -> str:
         status=national_status(totals),
         body=parse_body(md),
         methods=parse_methods(md),
-        interactive_css=INTERACTIVE_CSS.read_text(encoding="utf-8"),
+        interactive_css=_assert_ascii(INTERACTIVE_CSS),
         chart_data=data_json,
-        interactive_js=INTERACTIVE_JS.read_text(encoding="utf-8"),
+        interactive_js=_assert_ascii(INTERACTIVE_JS),
     ))
 
 

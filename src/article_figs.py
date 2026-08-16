@@ -114,9 +114,22 @@ def fig_a():
     ax0.set_ylim(-0.38, 0.82)
     ax0.axis("off")
 
+    # Presidential terms, drawn as neutral reference rules ONLY.
+    # Deliberately not colour-coded by party and never used to attribute counts to an
+    # administration: recorded volume is confounded by reporting rates, prosecutorial
+    # practice and registry coverage, all of which changed across these boundaries.
+    # Readers reach for this reference anyway; withholding it is its own editorial act.
+    sexenios = [(2006, "Calderón"), (2012, "Peña Nieto"), (2018, "López Obrador"),
+                (2024, "Sheinbaum")]
+    ymax_bars = float((d.sum(axis=1)).max())
+    for start, name in sexenios:
+        ax1.axvline(start - 0.5, color=st.MUTED, lw=0.8, ls=":", alpha=0.75, zorder=0)
+        ax1.text(start - 0.35, ymax_bars * 1.045, name, fontsize=7.6, color=st.MUTED,
+                 ha="left", va="bottom", rotation=0)
+
     bottom = pd.Series(0.0, index=yrs)
     for c, col in zip(cols, colors):
-        ax1.bar(yrs, d[c], bottom=bottom, color=col, width=0.85)
+        ax1.bar(yrs, d[c], bottom=bottom, color=col, width=0.85, zorder=2)
         bottom += d[c]
     ax1.set_title("By year of disappearance, current outcome", loc="left", pad=10,
                   fontsize=11, weight="bold")
@@ -140,7 +153,9 @@ def fig_a():
     st.caption(
         fig,
         "Top includes all registry records. Annual bars include 352,294 records with a known disappearance year in 2000–25;\n"
-        "historical reporting is incomplete. Outcomes are current at August 15th 2026. Source: RNPDNO dashboard API.",
+        "historical reporting is incomplete. Dotted rules mark the start of each presidential term — context for reading the\n"
+        "series, not an attribution of counts to an administration, since reporting and registry practice also changed.\n"
+        "Outcomes are current at August 15th 2026. Source: RNPDNO dashboard API.",
         x=0.09,
     )
     st.save(fig, "A_outcomes_by_year.png")
