@@ -303,7 +303,8 @@ Data: this piece draws on **two vintages, and says so deliberately.** Aggregate
 outcome flows (fig A) come from the live RNPDNO dashboard API, consulted
 **2026-08-15**. Everything field-level — redaction shares, per-capita rates, the
 state rankings in figs B, C, D — comes from the registry's public *record-level*
-microdata via the [lapanquecita mirror] (133,566 records, snapshot **2025-12-02**,
+microdata via the [lapanquecita mirror](https://github.com/lapanquecita/personas-desaparecidas)
+(133,566 records, snapshot **2025-12-02**,
 upstream commit 666b3e7; max FECHA_REGISTRO 2025-12-01). The two cannot be
 aligned: the mirror stopped updating after 2025-12-02, having published monthly
 since April 2025, and no comparable record-level extract has been released since.
@@ -316,8 +317,9 @@ Cross-checks: category-sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA:
 national +6.1%, but Zacatecas +42%); Jalisco remains the volatile outlier across
 sources. Redaction-over-time: ten pinned monthly snapshots of the mirror
 (Apr–Dec 2025, upstream commit SHAs in `src/version_audit.py`). All figures
-reproducible from `src/` in [repo
-link]. Confidential records are counted as unresolved people but excluded from any
+reproducible from `src/` in the project repository
+(https://github.com/heliog83/desaparecidos-mx). Confidential records are counted as
+unresolved people but excluded from any
 field-level analysis. Full methodology: [link docs/methodology.md]; refresh audit
 and full number-by-number diff: [link docs/data-refresh-2026-08-15.md]. Key primary
 sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A dónde van los

@@ -46,6 +46,11 @@ def inline(t: str) -> str:
     """Escape, then re-apply the small markdown subset the draft actually uses."""
     t = html.escape(t)
     t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+    # [label](url) first, then any bare URL left over
+    t = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)",
+               r'<a href="\2" target="_blank" rel="noopener">\1</a>', t)
+    t = re.sub(r"(?<!\")(?<!>)\((https?://[^)\s]+)\)",
+               r'(<a href="\1" target="_blank" rel="noopener">\1</a>)', t)
     t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t, flags=re.S)
     t = re.sub(r"(?<!\*)\*([^*]+?)\*(?!\*)", r"<em>\1</em>", t, flags=re.S)
     return t
@@ -174,7 +179,10 @@ TEMPLATE = """<title>{title}</title>
     color:var(--muted); margin:0 0 22px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center;
   }}
   .chip {{ border:1px solid var(--rule); padding:3px 8px; }}
-  .chip.draft {{ color:var(--redact); border-color:var(--redact); }}
+  a {{ color:inherit; text-decoration:underline; text-underline-offset:2px;
+       text-decoration-color:var(--muted); }}
+  a:hover {{ text-decoration-color:var(--redact); }}
+  a:focus-visible {{ outline:2px solid var(--redact); outline-offset:2px; }}
   h1 {{
     font-size:clamp(2.4rem,6vw,4.1rem); line-height:1.03; margin:0 0 18px;
     font-weight:600; letter-spacing:-.015em; text-wrap:balance; max-width:15ch;
@@ -270,7 +278,6 @@ TEMPLATE = """<title>{title}</title>
       <span>Data investigation</span>
       <span class="chip">RNPDNO</span>
       <span class="chip">Mexico</span>
-      <span class="chip draft">Working draft</span>
     </p>
     <h1>{title}</h1>
     <p class="subtitle">{subtitle}</p>

@@ -37,7 +37,10 @@
     color:var(--muted); margin:0 0 22px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center;
   }
   .chip { border:1px solid var(--rule); padding:3px 8px; }
-  .chip.draft { color:var(--redact); border-color:var(--redact); }
+  a { color:inherit; text-decoration:underline; text-underline-offset:2px;
+       text-decoration-color:var(--muted); }
+  a:hover { text-decoration-color:var(--redact); }
+  a:focus-visible { outline:2px solid var(--redact); outline-offset:2px; }
   h1 {
     font-size:clamp(2.4rem,6vw,4.1rem); line-height:1.03; margin:0 0 18px;
     font-weight:600; letter-spacing:-.015em; text-wrap:balance; max-width:15ch;
@@ -133,7 +136,6 @@
       <span>Data investigation</span>
       <span class="chip">RNPDNO</span>
       <span class="chip">Mexico</span>
-      <span class="chip draft">Working draft</span>
     </p>
     <h1>The Redacted Crisis</h1>
     <p class="subtitle">What Mexico's registry of the disappeared won't let you see</p>
@@ -267,8 +269,8 @@
 
     <section class="methods">
       <h2>Methods and limits</h2>
-<p>Data: this piece draws on <strong>two vintages, and says so deliberately.</strong> Aggregate outcome flows (fig A) come from the live RNPDNO dashboard API, consulted <strong>2026-08-15</strong>. Everything field-level &#8212; redaction shares, per-capita rates, the state rankings in figs B, C, D &#8212; comes from the registry&#x27;s public <em>record-level</em> microdata via the [lapanquecita mirror] (133,566 records, snapshot <strong>2025-12-02</strong>, upstream commit 666b3e7; max FECHA_REGISTRO 2025-12-01). The two cannot be aligned: the mirror stopped updating after 2025-12-02, having published monthly since April 2025, and no comparable record-level extract has been released since. The gap is measurable and small &#8212; the mirror&#x27;s national total sits within 0.5% of the live registry (0.1% across state-attributable records) &#8212; but it is not uniform by state, and &#167;5b is in part about exactly that. Where a state&#x27;s live figure has since moved materially (Ciudad de M&#233;xico, Jalisco), we say so in the caption.</p>
-<p>Cross-checks: category-sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA: national +6.1%, but Zacatecas +42%); Jalisco remains the volatile outlier across sources. Redaction-over-time: ten pinned monthly snapshots of the mirror (Apr&#8211;Dec 2025, upstream commit SHAs in <code>src/version_audit.py</code>). All figures reproducible from <code>src/</code> in [repo link]. Confidential records are counted as unresolved people but excluded from any field-level analysis. Full methodology: [link docs/methodology.md]; refresh audit and full number-by-number diff: [link docs/data-refresh-2026-08-15.md]. Key primary sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A d&#243;nde van los desaparecidos (2021-04-08); Data C&#237;vica, Volver a desaparecer; Tlachinollan; HRW (2019-01-14). All web sources consulted 2026-07-06 unless noted.</p>
+<p>Data: this piece draws on <strong>two vintages, and says so deliberately.</strong> Aggregate outcome flows (fig A) come from the live RNPDNO dashboard API, consulted <strong>2026-08-15</strong>. Everything field-level &#8212; redaction shares, per-capita rates, the state rankings in figs B, C, D &#8212; comes from the registry&#x27;s public <em>record-level</em> microdata via the <a href="https://github.com/lapanquecita/personas-desaparecidas" target="_blank" rel="noopener">lapanquecita mirror</a> (133,566 records, snapshot <strong>2025-12-02</strong>, upstream commit 666b3e7; max FECHA_REGISTRO 2025-12-01). The two cannot be aligned: the mirror stopped updating after 2025-12-02, having published monthly since April 2025, and no comparable record-level extract has been released since. The gap is measurable and small &#8212; the mirror&#x27;s national total sits within 0.5% of the live registry (0.1% across state-attributable records) &#8212; but it is not uniform by state, and &#167;5b is in part about exactly that. Where a state&#x27;s live figure has since moved materially (Ciudad de M&#233;xico, Jalisco), we say so in the caption.</p>
+<p>Cross-checks: category-sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA: national +6.1%, but Zacatecas +42%); Jalisco remains the volatile outlier across sources. Redaction-over-time: ten pinned monthly snapshots of the mirror (Apr&#8211;Dec 2025, upstream commit SHAs in <code>src/version_audit.py</code>). All figures reproducible from <code>src/</code> in the project repository (<a href="https://github.com/heliog83/desaparecidos-mx" target="_blank" rel="noopener">https://github.com/heliog83/desaparecidos-mx</a>). Confidential records are counted as unresolved people but excluded from any field-level analysis. Full methodology: [link docs/methodology.md]; refresh audit and full number-by-number diff: [link docs/data-refresh-2026-08-15.md]. Key primary sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A d&#243;nde van los desaparecidos (2021-04-08); Data C&#237;vica, Volver a desaparecer; Tlachinollan; HRW (2019-01-14). All web sources consulted 2026-07-06 unless noted.</p>
 <p>Ethics line (keep): behind every record is a person and a searching family. This piece reports uncertainty as uncertainty and does not present proxies as counts.</p>
     </section>
   </main>
