@@ -7,26 +7,31 @@ home for this piece (and its sources) is Spanish-language.
 Every figure is reproducible from `src/`; every number carries a consultation date in
 `docs/`. Figure production notes at the end.
 
+Delivery note: this markdown is the narrative source and `reports/article.html` is its
+generated local output. Do not publish or update this article through Claude Artifacts.
+Build with `python src/build_page.py`, validate with `python src/check_article.py`, and
+preview at `http://127.0.0.1:8794/article.html` using the repository's local server.
+
 Working titles (pick one):
 1. *The Redacted Crisis: what Mexico's registry of the disappeared won't let you see*
 2. *134,000 people, one third behind a wall*
 3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
 
-Standfirst: *Mexico's official registry recorded 134,268 people as disappeared or not
-located on 15 August 2026. For one in three of them, the public record contains a
-single fact: the state where they vanished. This is the story of who decides that —
-and of the two very different ways a person can go missing from the data itself.*
+Standfirst: *On 15 August 2026 Mexico's official registry counted 134,268 people still
+missing. In the latest comparable record-level snapshot, dated 2 December 2025, 36.8%
+of unresolved records revealed only the state; every other public field was redacted.
+This is the story of how publication decisions shape what the public can see.*
 
 ---
 
 ## 1. The crisis is real, and it is growing
 
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
-*Caption: Top — the current recorded status of all 407,253 people in the registry:
-249,502 found alive, 23,483 found dead, 134,268 still missing. Bottom — the same
-records arranged by the year the person disappeared. Both panels show status as
-recorded on one day, 15 August 2026; neither shows when a case changed status.
-Aggregate figures: RNPDNO dashboard API, consulted 2026-08-15 [1].*
+*Caption: Recorded year-of-disappearance cohorts in Mexico, 2000–2025, decomposed by
+current registry outcome. Use the control to switch between counts and shares. These
+are current statuses, not dates on which anybody was found. Source: RNPDNO dashboard
+API, consulted 2026-08-15 [1]; 214,643 found alive, 20,551 found dead and 117,100 still
+missing across the period.*
 
 Start with the honest version of the number. On 15 August 2026 Mexico's National
 Registry of Disappeared and Missing Persons (RNPDNO) contained 407,253 records:

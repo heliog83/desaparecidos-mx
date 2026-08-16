@@ -1,5 +1,24 @@
 # CLAUDE.md — Project context for Desaparecidos MX
 
+## Current agent and delivery rules (supersedes older status notes below)
+
+- Read and follow [`AGENTS.md`](AGENTS.md). It applies equally to Claude Code, Codex
+  and other coding agents.
+- **Never publish this project through Claude Artifacts and never use an Artifact URL
+  as the canonical article.** Artifacts are agent-specific and previously allowed a
+  stale file from a different checkout to be published.
+- The canonical article is the repository-generated `reports/article.html`.
+- Before every handoff or publication, run `python src/build_page.py` followed by
+  `python src/check_article.py`. A failed check blocks delivery.
+- Preview locally at `http://127.0.0.1:8794/article.html` after running
+  `python -m http.server 8794 --directory reports`.
+- Current validated aggregate vintage: **2026-08-15 — 407,253 total records;
+  249,502 found alive; 23,483 found dead; 134,268 still missing.** Figure A contains
+  352,294 records assigned to 2000–2025. The 36.8% confidentiality figure belongs to
+  the separate **2025-12-02 record-level snapshot**.
+- Historical status entries below document how the project developed. Their older
+  headline numbers, figure layouts and framing are not reusable publication facts.
+
 ## What this is
 Data project to (1) **quantify** disappeared/missing persons in Mexico and (2) research the
 **impact of the madres buscadoras** (citizen search collectives). Two-stage scope: build the
@@ -24,8 +43,9 @@ deployment. A single signature chart could still be done in R later if wanted.
   ("A dónde van los desaparecidos" / Quinto Elemento) + structured news collection. Proxy, not census.
 - Full catalog: [docs/data-sources.md](docs/data-sources.md).
 
-## Snapshot figures (re-verify before citing)
-~132.5k disappeared/not-located, ~262k located (RNPDNO, March 2026). Numbers move between consults.
+## Snapshot figures
+Do not copy figures from this historical section. Use the validated current values in
+the rules above and recompute them from the processed CSVs before citing.
 
 ## Conventions
 - Data flow: `data/raw` → `data/interim` → `data/processed` (parquet). `data/external` = third-party.

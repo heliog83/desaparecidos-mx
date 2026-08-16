@@ -106,11 +106,48 @@ def chart_data() -> dict:
     return {"outcomes": outcomes, "states": states, "snapshots": snapshots}
 
 
-def national_status() -> str:
+def flow_totals() -> dict[str, int]:
     totals: dict[str, int] = {}
     with FLOW_TOTALS.open(newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             totals[row[""]] = _number(row["0"], integer=True)
+    return totals
+
+
+def validate_article_inputs(md: str, data: dict, totals: dict[str, int]) -> None:
+    """Fail the build when prose, headline totals and embedded data drift apart."""
+    alive = totals["TotalLocalizadosCV"]
+    dead = totals["TotalLocalizadosSV"]
+    missing = totals["TotalDesaparecidos"]
+    total = totals["TotalGlobal"]
+    if alive + dead + missing != total:
+        raise ValueError("flow_totales.csv categories do not sum to TotalGlobal")
+
+    years = [row["year"] for row in data["outcomes"]]
+    if years != list(range(2000, 2026)):
+        raise ValueError("Figure A must contain exactly one row for every year 2000–2025")
+
+    outcome_sums = {
+        key: sum(row[key] for row in data["outcomes"])
+        for key in ("alive", "dead", "missing")
+    }
+    required = [total, alive, dead, missing, *outcome_sums.values()]
+    absent = [f"{value:,}" for value in required if f"{value:,}" not in md]
+    if absent:
+        raise ValueError(f"article draft is stale; missing source-derived figures: {absent}")
+    if "Two panels:" in md:
+        raise ValueError("Figure A is now one interactive chart; remove the old two-panel caption")
+
+    latest = max(row["snapshot"] for row in data["snapshots"])
+    latest_rows = [row for row in data["snapshots"] if row["snapshot"] == latest]
+    latest_total = sum(row["total"] for row in latest_rows)
+    latest_conf = sum(row["conf"] for row in latest_rows)
+    latest_share = latest_conf / latest_total
+    if latest != "2025-12-02" or round(latest_share * 100, 1) != 36.8:
+        raise ValueError("the record-level confidentiality vintage or share changed; revise the standfirst")
+
+
+def national_status(totals: dict[str, int]) -> str:
     alive = totals["TotalLocalizadosCV"]
     dead = totals["TotalLocalizadosSV"]
     missing = totals["TotalDesaparecidos"]
@@ -132,6 +169,17 @@ def national_status() -> str:
       </div>
       <p class="status-note">These are people's current registry statuses. They do not show when somebody was located or why a record changed category.</p>
     </section>"""
+
+
+def standfirst(totals: dict[str, int]) -> str:
+    missing = totals["TotalDesaparecidos"]
+    return (
+        f"On 15 August 2026 Mexico's official registry counted <strong>{missing:,} people "
+        "still missing</strong>. In the latest comparable record-level snapshot, dated "
+        "2 December 2025, <strong>36.8% of unresolved records revealed only the state</strong>; "
+        "every other public field was redacted. This is the story of how publication "
+        "decisions shape what the public can see."
+    )
 
 
 def interactive_figure(letter: str, caption: str, image_name: str) -> str | None:
@@ -302,13 +350,17 @@ def ascii_safe(s: str) -> str:
 
 def build() -> str:
     md = DRAFT.read_text(encoding="utf-8")
-    data_json = json.dumps(chart_data(), ensure_ascii=True, separators=(",", ":"))
+    data = chart_data()
+    totals = flow_totals()
+    validate_article_inputs(md, data, totals)
+    data_json = json.dumps(data, ensure_ascii=True, separators=(",", ":"))
     data_json = data_json.replace("<", "\\u003c").replace("&", "\\u0026")
     return ascii_safe(TEMPLATE.format(
         title=TITLE,
         subtitle=SUBTITLE,
         hero=hero_record(),
-        status=national_status(),
+        standfirst=standfirst(totals),
+        status=national_status(totals),
         body=parse_body(md),
         methods=parse_methods(md),
         interactive_css=INTERACTIVE_CSS.read_text(encoding="utf-8"),
@@ -468,10 +520,7 @@ TEMPLATE = """<title>{title}</title>
     </p>
     <h1>{title}</h1>
     <p class="subtitle">{subtitle}</p>
-    <p class="standfirst">Mexico's official registry counts more than 134,000 disappeared
-      people. For one in three of them, the public record contains a single fact: the state
-      where they vanished. This is the story of how publication decisions shape what the
-      public can see — and of two ways a person can go missing from the data itself.</p>
+    <p class="standfirst">{standfirst}</p>
 
 {status}
 
@@ -482,8 +531,8 @@ TEMPLATE = """<title>{title}</title>
       </dl>
     </div>
     <p class="record-note">The field structure above is illustrative, not one person's
-      file — but it is everything the public registry returns for 36.8% of unresolved
-      cases. One field survives.</p>
+      file. It represents the 36.8% of unresolved records marked confidential in the
+      2 December 2025 record-level snapshot. One public field survives.</p>
   </header>
 
   <main>

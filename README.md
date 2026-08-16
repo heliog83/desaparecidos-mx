@@ -12,8 +12,8 @@ This project quantifies that redaction, tests several explanations for it and do
 how administrative decisions shape what the public can see. The available data do not
 identify a single cause for every confidential record.
 
-📄 **Read the article:** *The Redacted Crisis* — [published version](https://claude.ai/code/artifact/5f7022ae-4357-4fb8-a16e-a8e40ac988e7)
-· [markdown source](reports/article_draft.md)
+📄 **Read the article:** *The Redacted Crisis* — [generated local HTML](reports/article.html)
+· [markdown source](reports/article_draft.md) · [agent workflow](docs/working-with-agents.md)
 
 ---
 
@@ -79,6 +79,7 @@ MPLBACKEND=Agg python src/jalisco_divergence.py    # figure F
 MPLBACKEND=Agg python src/two_modes.py             # figure G
 MPLBACKEND=Agg python src/version_audit.py         # figure H
 python src/build_page.py                           # -> reports/article.html
+python src/check_article.py                        # required before publication
 ```
 
 `MPLBACKEND=Agg` matters: several scripts inherit `plt.show()` from the notebooks they
@@ -89,6 +90,23 @@ Interactive dashboard:
 ```bash
 streamlit run dashboard/app.py
 ```
+
+### Local-first delivery rule
+
+`reports/article.html` is generated output, not a second source document. Do not edit
+it independently. Make prose or data changes in the repository, run `build_page.py`,
+require `check_article.py` to pass, and commit the source and generated HTML together.
+
+**Claude Artifacts are not part of this project.** Agents must not invoke an Artifact
+tool or link to `claude.ai/code/artifact/...`. Preview locally with:
+
+```bash
+python -m http.server 8794 --directory reports
+```
+
+Then open `http://127.0.0.1:8794/article.html`. If public hosting is requested later,
+use an agent-neutral destination chosen explicitly by the user and deploy the exact
+validated HTML. See [docs/working-with-agents.md](docs/working-with-agents.md).
 
 ## Data sources, and one important caveat
 
