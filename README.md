@@ -79,6 +79,7 @@ MPLBACKEND=Agg python src/jalisco_divergence.py    # figure F
 MPLBACKEND=Agg python src/two_modes.py             # figure G
 MPLBACKEND=Agg python src/version_audit.py         # figure H
 python src/build_page.py                           # -> reports/article.html
+python src/check_article.py                        # required before publication
 ```
 
 `MPLBACKEND=Agg` matters: several scripts inherit `plt.show()` from the notebooks they
@@ -89,6 +90,14 @@ Interactive dashboard:
 ```bash
 streamlit run dashboard/app.py
 ```
+
+### Publishing rule
+
+`reports/article.html` is generated output, not a second source document. Do not edit
+the published artifact independently. Make prose or data changes in the repository,
+run `build_page.py`, require `check_article.py` to pass, commit the source and generated
+HTML together, and publish that exact HTML file. This prevents a hosted artifact from
+silently carrying an older data payload than its prose and methods note.
 
 ## Data sources, and one important caveat
 

@@ -12,20 +12,21 @@ Working titles (pick one):
 2. *134,000 people, one third behind a wall*
 3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
 
-Standfirst: *Mexico's official registry counts more than 134,000 disappeared people.
-For one in three of them, the public record contains a single fact: the state where
-they vanished. This is the story of who decides that — and of the two very different
-ways a person can go missing from the data itself.*
+Standfirst: *On 15 August 2026 Mexico's official registry counted 134,268 people still
+missing. In the latest comparable record-level snapshot, dated 2 December 2025, 36.8%
+of unresolved records revealed only the state; every other public field was redacted.
+This is the story of how publication decisions shape what the public can see.*
 
 ---
 
 ## 1. The crisis is real, and it is growing
 
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
-*Caption: Every year of reported disappearances in Mexico, 2000–2025, decomposed into
-people found alive, found dead, and still missing. Two panels: absolute counts and
-shares. Source: RNPDNO dashboard API, consulted 2026-08-15; ~214,600 found alive, ~20,600
-found dead, ~117,100 still missing across the period.*
+*Caption: Recorded year-of-disappearance cohorts in Mexico, 2000–2025, decomposed by
+current registry outcome. Use the control to switch between counts and shares. These
+are current statuses, not dates on which anybody was found. Source: RNPDNO dashboard
+API, consulted 2026-08-15; 214,643 found alive, 20,551 found dead and 117,100 still
+missing across the period.*
 
 Start with the honest version of the number. On August 15th 2026 Mexico's National
 Registry of Disappeared and Missing Persons (RNPDNO) contained 407,253 records:
