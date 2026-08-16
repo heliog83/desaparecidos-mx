@@ -416,37 +416,25 @@ piece reports uncertainty as uncertainty and does not present proxies as counts.
 
 ---
 
-## PROPOSAL — split §6 and §7 into a second article (NOT EXECUTED, needs sign-off)
+## DECISION — the article stays whole (settled 2026-08-16)
 
-Proposed, not done. Nothing below has been actioned; §6 and §7 remain in place.
+A split of §6 and §7 into a separate piece was proposed and **declined**. The article
+ships as one piece, §1 through §8. Recorded here so it is not reopened.
 
-**The case for splitting.** The piece currently does two jobs. §1–§5b build one
-argument from national data: the confidentiality flag is an administrative artifact,
-not a record of family choice. §6 and §7 then switch mode entirely — from registry
-forensics to reported case studies, carrying named people, a killing, an
-extermination site, and sources the national analysis never uses. They are the
-longest sections (300 and 400 words after the rewrite) and the least like the rest.
+The argument for splitting was that the piece does two jobs: §1–§5b are registry
+forensics built on national data, while §6 and §7 switch to reported case studies with
+named people and sources the quantitative sections never use. They are also the two
+longest sections.
 
-Splitting would give:
+The argument that won: §7 carries fig G and the two-modes idea, and §8 resolves on it.
+Splitting would leave the first article closing on a claim the reader had never been
+shown, and would strip out the most original framing in the piece to leave a more
+conventional data story behind. The case material is what makes the national analysis
+land as something other than an audit.
 
-- **Article 1 — "The Redacted Crisis."** §1–§5b plus §8, ~1,500 words, figs A–E and H.
-  A self-contained argument about how the registry is written and rewritten. Its
-  evidence is entirely quantitative and documentary, and every claim survives on
-  national data alone.
-- **Article 2 — "Two ways to disappear twice."** §6 and §7 expanded, figs F and G plus
-  the Iguala and Teuchitlán material. This is the natural bridge to Stage 2 and the
-  madres buscadoras, which is already the stated follow-up.
-
-**The case against.** §7 carries the thesis chart (fig G) and the "two modes" idea
-that §8 depends on; removing it would require §8 to be rewritten around a claim the
-reader has not yet seen demonstrated. The two-modes framing is arguably the most
-original thing in the whole piece, and article 1 without it is a more conventional
-data story.
-
-**If split, §8 must be rewritten**, and article 1 needs a new closing that lands on
-the administrative-artifact claim rather than on the two modes.
-
-Decision required before any restructuring.
+Consequence for the follow-up: the madres buscadoras piece (Stage 2) is a genuine
+sequel built on new data — find-events, collective attribution — not a spin-off of
+material removed from this one. §8's closing line already sets that up.
 
 ## FIGURE PRODUCTION NOTES (the data-viz workplan)
 
