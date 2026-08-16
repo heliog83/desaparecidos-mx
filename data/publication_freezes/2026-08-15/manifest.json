@@ -1,0 +1,173 @@
+{
+  "freeze_date": "2026-08-15",
+  "captured_at_utc": "2026-08-16T05:49:53+00:00",
+  "record_level_source": {
+    "snapshot_date": "2025-12-02",
+    "upstream_commit": "666b3e7605"
+  },
+  "aggregate_flow_source": {
+    "url": "https://versionpublicarnpdno.segob.gob.mx/",
+    "captured_at_utc": "2026-08-16T05:49:53+00:00"
+  },
+  "flow": {
+    "period": "2000-2025",
+    "found_alive": 214643,
+    "found_dead": 20551,
+    "still_missing": 117100,
+    "all_reported": 352294,
+    "year_2000_all_reported": 102,
+    "year_2007_all_reported": 3034,
+    "year_2025_all_reported": 37124
+  },
+  "version_audit": {
+    "first_snapshot": "2025-04-03",
+    "last_snapshot": "2025-12-02",
+    "confidential_first": 44035,
+    "confidential_last": 49136,
+    "confidential_change": 5101,
+    "total_change": 6624,
+    "share_first": 0.34689070599171273,
+    "share_last": 0.3678780527978677,
+    "confidential_share_of_net_growth": 0.7700785024154589
+  },
+  "consent_accounting": {
+    "total": 73388,
+    "no_information": 56803,
+    "with_information": 16585,
+    "family_refused_publication": 7478,
+    "family_agreed_to_publication": 6717
+  },
+  "automated_checks": [
+    {
+      "claim": "Mirror rows",
+      "actual": 133566,
+      "draft_expected": 133566,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Unique victim IDs",
+      "actual": 133566,
+      "draft_expected": 133566,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Confidential records",
+      "actual": 49136,
+      "draft_expected": 49136,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "National confidential share",
+      "actual": 0.3678780527978677,
+      "draft_expected": 0.368,
+      "tolerance": 0.0006,
+      "status": "PASS"
+    },
+    {
+      "claim": "Jalisco confidential share",
+      "actual": 0.6694755193956123,
+      "draft_expected": 0.67,
+      "tolerance": 0.006,
+      "status": "PASS"
+    },
+    {
+      "claim": "Nayarit confidential share",
+      "actual": 0.6618090452261306,
+      "draft_expected": 0.66,
+      "tolerance": 0.006,
+      "status": "PASS"
+    },
+    {
+      "claim": "Guerrero confidential share",
+      "actual": 0.09050078598697507,
+      "draft_expected": 0.09,
+      "tolerance": 0.006,
+      "status": "PASS"
+    },
+    {
+      "claim": "Colima confidential share",
+      "actual": 0.08958333333333333,
+      "draft_expected": 0.09,
+      "tolerance": 0.006,
+      "status": "PASS"
+    },
+    {
+      "claim": "Jalisco unresolved records",
+      "actual": 13766,
+      "draft_expected": 13766,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Jalisco confidential records",
+      "actual": 9216,
+      "draft_expected": 9216,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Guerrero unresolved records",
+      "actual": 4453,
+      "draft_expected": 4453,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Version audit starts at 44,035 confidential",
+      "actual": 44035,
+      "draft_expected": 44035,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Version audit ends at 49,136 confidential",
+      "actual": 49136,
+      "draft_expected": 49136,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Confidential records increased by 5,101",
+      "actual": 5101,
+      "draft_expected": 5101,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "claim": "Confidential made up about 77% of net growth",
+      "actual": 0.7700785024154589,
+      "draft_expected": 0.77,
+      "tolerance": 0.005,
+      "status": "PASS"
+    }
+  ],
+  "source_hashes_sha256": {
+    "derived/automated_claim_checks.csv": "a763b5bd19dea7488ae240243ec0a39628d4f8f27c9fcbf81bafb50e95bd3f4b",
+    "derived/confidencial_panel.csv": "fb343446e1d019a8d6b5a6af623722add770d908a9393778bc79f62a1dbf2f95",
+    "derived/flow_by_state.csv": "9b343e97c942fe47e8908f4ab562c1eebdca38e73a4ae91ae941ef02f4d13916",
+    "derived/flow_by_year.csv": "b3a9638fdea29f9dba0219811115971f7a9a1c663d481aadd5e6682fc2947551",
+    "derived/flow_totales.csv": "f20041d8514d00418237d5f35005ba235b4140f12630b7e1b1cd2c09f47fc757",
+    "derived/rnpdno_clean.parquet": "4f4c749ef45df189bab720e15df650598875ad2066946c0d636e4c343ff038bc",
+    "derived/state_redaction_summary.csv": "4ee8269778193edb6ad385d80bbb14495bcbf68418a14928f0d60067daf7f3e1",
+    "sources/Oficio_SEGOB_CNBP_1349_2020_consulta_INAI.pdf": "6447c3634075ab5117b29ab3dcf25aa96bee283238abd74af29bb0c16d2540ac",
+    "sources/rnpdno_api/by_state_desap_y_nollocal.json": "5565ff3287002c892168b660c8edb0d211e4cc86d686006beff40f7aebac126b",
+    "sources/rnpdno_api/by_state_desaparecidas.json": "73101be3545bcaffccbe7ea46cf7d3f58f8c8c2d52bace2636f3d3844bbe4c66",
+    "sources/rnpdno_api/by_state_loc_con_vida.json": "8acf10f151ed4c1c5df765bdb2ba8fd2daa61257180d8a92d8e27a2e7b1d6604",
+    "sources/rnpdno_api/by_state_loc_sin_vida.json": "4570000b8e62b630531aa84540d7031da78f81478d1e30d00019c3bcf455432d",
+    "sources/rnpdno_api/by_state_localizadas.json": "2b7ea3fd459f309669cc93b97ae727eac4240d60d76a16ca5111208eeb987124",
+    "sources/rnpdno_api/by_state_no_localizadas.json": "3eb33653565fb8e1397404ce4280e364ba3b4931e165997a3d00a7c978c7f4f8",
+    "sources/rnpdno_api/by_state_todos.json": "b26eb43fef7d2aa9e5d8c7d4d9dff0996ecafc9603d83ae2b8fcf01b27fe7ed7",
+    "sources/rnpdno_api/by_year_desap_y_nollocal.json": "5a78c81ed0b88668f0c30689a5f230969b8c47a1b10ee70f2b15bd0d8281d1c6",
+    "sources/rnpdno_api/by_year_desaparecidas.json": "e18cdaf11aeab8fd9711622293c385466cbed17fc8cd8930e90714bb3b1d324e",
+    "sources/rnpdno_api/by_year_loc_con_vida.json": "9325a3bd4547a541ff87c01ce305d1359c026df179c0a26f2d1650dc308b96a4",
+    "sources/rnpdno_api/by_year_loc_sin_vida.json": "bfe459b54a1af1ec124d9d391af7c3b77c8baed2311a2aae159684b3c91233ab",
+    "sources/rnpdno_api/by_year_localizadas.json": "e805cec209aff2b9843144c74e714cc4ee88fba40f18826e3deb050bd41994e1",
+    "sources/rnpdno_api/by_year_no_localizadas.json": "a36540ff3af7304f8a503e21fe0ad5cb261b05aa8286fb38e6363460bc50119f",
+    "sources/rnpdno_api/by_year_todos.json": "9b4113d16a27a0c404414066a04fba448b7e3a4f38abb83de6ac136ee1223cc6",
+    "sources/rnpdno_api/totales.json": "8562cb6c8770e4dcc596b2e47c549ea8e03a3a5ab95074631edb471e32e843cd",
+    "sources/rnpdno_mirror_2025-12-02.csv": "8da25ae67ea3d0a1dbdecfd781e7b9110fca87136856fc293ac73109f2988038"
+  }
+}

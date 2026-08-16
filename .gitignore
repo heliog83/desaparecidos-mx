@@ -2,6 +2,8 @@
 data/raw/
 data/interim/
 data/external/
+# Immutable publication freezes stay local; commit the small manifest/audit only.
+data/publication_freezes/*/sources/
 *.parquet
 *.csv
 !data/processed/.gitkeep

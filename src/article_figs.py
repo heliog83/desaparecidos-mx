@@ -3,7 +3,7 @@
 Rebuilds fig 19 / 06 / 09 / 10 in the shared article style (article_style.py)
 without touching the pipeline scripts or their numbered outputs.
 
-  A_outcomes_by_year.png       <- data/processed/flow_by_year.csv
+  A_outcomes_by_year.png       <- frozen RNPDNO totals + flow_by_year.csv
   B_rate_map.png               <- data/processed/state_rates.csv + mexico.json
   C_confidential_share.png     <- data/processed/rnpdno_clean.parquet
   D_redaction_vs_rate.png      <- parquet + state_rates.csv (join on cve_ent)
@@ -25,7 +25,9 @@ from matplotlib.patches import Patch, Polygon as MplPolygon
 import article_style as st
 
 ROOT = Path(__file__).resolve().parents[1]
-FLOW = ROOT / "data" / "processed" / "flow_by_year.csv"
+FREEZE = ROOT / "data" / "publication_freezes" / "2026-08-15"
+FLOW = FREEZE / "derived" / "flow_by_year.csv"
+TOTALS = FREEZE / "sources" / "rnpdno_api" / "totales.json"
 PARQUET = ROOT / "data" / "processed" / "rnpdno_clean.parquet"
 RATES = ROOT / "data" / "processed" / "state_rates.csv"
 GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
@@ -36,6 +38,22 @@ CASE_BLUE = {"12": "Guerrero", "06": "Colima"}     # omission-mode case states
 
 
 def fig_a():
+    totals = json.loads(TOTALS.read_text(encoding="utf-8"))
+
+    def as_int(key: str) -> int:
+        return int(totals[key].replace(",", ""))
+
+    all_status = pd.Series(
+        {
+            "Found alive": as_int("TotalLocalizadosCV"),
+            "Found dead": as_int("TotalLocalizadosSV"),
+            "Still missing": as_int("TotalDesaparecidos"),
+        }
+    )
+    all_records = as_int("TotalGlobal")
+    if int(all_status.sum()) != all_records:
+        raise ValueError("RNPDNO outcome totals do not reconcile to TotalGlobal")
+
     df = pd.read_csv(FLOW, index_col=0)
     df.index = pd.to_numeric(df.index, errors="coerce")
     df = df[df.index.notna()]
@@ -46,46 +64,84 @@ def fig_a():
     yrs, cols = d.index, ["Found alive", "Found dead", "Still missing"]
     colors = [ALIVE, st.INK, st.RED]
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8.6), sharex=True,
-                                   gridspec_kw={"height_ratios": [2.1, 1]})
-    fig.subplots_adjust(left=0.09, right=0.97, top=0.885, bottom=0.16, hspace=0.10)
-    st.title(fig, "Mexico's disappeared, by year and outcome",
-             f"Every reported disappearance since 2000 — {int(d['Still missing'].sum()):,} of these people are still missing",
+    fig, (ax0, ax1) = plt.subplots(
+        2,
+        1,
+        figsize=(10, 7.5),
+        gridspec_kw={"height_ratios": [0.9, 3.2]},
+    )
+    fig.subplots_adjust(left=0.09, right=0.97, top=0.87, bottom=0.16, hspace=0.44)
+    st.title(fig, "One in three remains missing",
+             f"Mexico, current outcome of all {all_records:,} people in the national disappearance registry, August 15th 2026",
              x=0.09)
+
+    # Complete all-period accounting: one compact bar that reconciles every
+    # registry record, including records without a usable disappearance year.
+    ax0.set_title("All records, current status", loc="left", pad=8, fontsize=11,
+                  weight="bold")
+    left = 0
+    for label, color in zip(cols, colors):
+        value = int(all_status[label])
+        ax0.barh(0, value, left=left, height=0.48, color=color)
+        centre = left + value / 2
+        pct = value / all_records
+        if label == "Found dead":
+            ax0.annotate(
+                f"FOUND DEAD  {value:,} · {pct:.0%}",
+                xy=(centre, 0.24),
+                xytext=(centre, 0.55),
+                ha="center",
+                va="bottom",
+                fontsize=8.5,
+                weight="bold",
+                color=st.INK,
+                arrowprops=dict(arrowstyle="-", color=st.MUTED, lw=0.8),
+            )
+        else:
+            ax0.text(
+                centre,
+                0,
+                f"{label.upper()}\n{value:,} · {pct:.0%}",
+                ha="center",
+                va="center",
+                fontsize=9,
+                weight="bold",
+                color="white",
+            )
+        left += value
+    ax0.set_xlim(0, all_records)
+    ax0.set_ylim(-0.38, 0.82)
+    ax0.axis("off")
 
     bottom = pd.Series(0.0, index=yrs)
     for c, col in zip(cols, colors):
         ax1.bar(yrs, d[c], bottom=bottom, color=col, width=0.85)
         bottom += d[c]
-    # direct band labels at the right edge instead of a legend
+    ax1.set_title("By year of disappearance, current outcome", loc="left", pad=10,
+                  fontsize=11, weight="bold")
+    # Direct band labels at the right edge instead of a legend.
     y_cum = d.loc[2025].cumsum()
     for c, col in zip(cols, [st.BLUE, st.INK, st.RED]):
         ymid = y_cum[c] - d.loc[2025, c] / 2
         ax1.annotate(c.upper(), xy=(2025.6, ymid), fontsize=9, weight="bold",
                      color=col, va="center", annotation_clip=False)
-    ax1.set_ylabel("People who disappeared")
+    ax1.set_ylabel("People recorded")
     ax1.yaxis.set_major_formatter(mticker.StrMethodFormatter("{x:,.0f}"))
     ax1.set_xlim(1999.2, 2028.6)
-    ax1.annotate("2006–07: militarized\n'war on drugs' begins",
-                 xy=(2007, d.loc[2007].sum()), xytext=(2001.5, 15000),
-                 fontsize=8.5, color=st.INK,
-                 arrowprops=dict(arrowstyle="->", color=st.MUTED, lw=1))
+    ax1.set_xlabel("Year of disappearance")
+    ax1.set_xticks([2000, 2005, 2010, 2015, 2020, 2025])
 
-    share = d.div(d.sum(axis=1), axis=0)
-    bottom = pd.Series(0.0, index=yrs)
-    for c, col in zip(cols, colors):
-        ax2.bar(yrs, share[c], bottom=bottom, color=col, width=0.85)
-        bottom += share[c]
-    ax2.set_ylim(0, 1)
-    ax2.set_ylabel("Share of outcomes")
-    ax2.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1))
-    ax2.set_xlabel("Year of disappearance")
-    ax2.annotate("older cohorts\nstay missing:\ntime does not\nfind people", xy=(2026.2, 0.93),
-                 va="top", fontsize=9, color=st.RED, weight="bold", annotation_clip=False)
+    for year in (2015, 2025):
+        total = int(d.loc[year].sum())
+        ax1.text(year, total + 650, f"{total:,}", ha="center", va="bottom",
+                 fontsize=8.5, weight="bold", color=st.INK)
 
-    st.caption(fig, "Top: absolute counts. Bottom: the same years as shares. The rise is real incidence, not accumulation;\n"
-                    "the still-missing share is LARGEST for pre-2007 cohorts. Source: RNPDNO dashboard API. 'Located' includes\n"
-                    "contested 2023 censo reclassifications (see methodology).", x=0.09)
+    st.caption(
+        fig,
+        "Top includes all registry records. Annual bars include 352,294 records with a known disappearance year in 2000–25;\n"
+        "historical reporting is incomplete. Outcomes are current at August 15th 2026. Source: RNPDNO dashboard API.",
+        x=0.09,
+    )
     st.save(fig, "A_outcomes_by_year.png")
 
 
