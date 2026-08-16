@@ -7,6 +7,11 @@ home for this piece (and its sources) is Spanish-language.
 Every figure is reproducible from `src/`; every number carries a consultation date in
 `docs/`. Figure production notes at the end.
 
+Delivery note: this markdown is the narrative source and `reports/article.html` is its
+generated local output. Do not publish or update this article through Claude Artifacts.
+Build with `python src/build_page.py`, validate with `python src/check_article.py`, and
+preview at `http://127.0.0.1:8794/article.html` using the repository's local server.
+
 Working titles (pick one):
 1. *The Redacted Crisis: what Mexico's registry of the disappeared won't let you see*
 2. *134,000 people, one third behind a wall*
