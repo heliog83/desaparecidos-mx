@@ -45,10 +45,10 @@ fig, ax = plt.subplots(figsize=(11, 5.5))
 for d, label in events:
     ax.axvline(d, color=C_EVENT, lw=0.8, ls=":", alpha=0.6, zorder=1)
 
-ax.plot(*zip(*fed), color=C_FED, marker="o", ms=7, lw=1.5, ls="--", zorder=3,
-        label="Federal registry (RNPDNO) — Jalisco unresolved")
-ax.plot(*zip(*sta), color=C_STATE, marker="s", ms=7, lw=1.5, ls="--", zorder=3,
-        label="Jalisco state registry (SISOVID/REPD)")
+ax.scatter(*zip(*fed), color=C_FED, marker="o", s=52, zorder=3,
+           label="Federal registry (RNPDNO) — documented snapshots")
+ax.scatter(*zip(*sta), color=C_STATE, marker="s", s=52, zorder=3,
+           label="Jalisco state registry — documented snapshots")
 
 # the last two federal pulls are only ~8 weeks apart: stagger so labels don't collide
 fed_offsets = [(0, -16)] * (len(fed) - 2) + [(-16, -18), (14, 6)]

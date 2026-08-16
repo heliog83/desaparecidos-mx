@@ -1,0 +1,91 @@
+/* Interactive figures are progressive enhancements: static PNG fallbacks remain
+   available in <details> and <noscript>. */
+.status-snapshot {
+  max-width:44em; margin:0 0 46px; font-family:var(--sans);
+}
+.status-snapshot h2 { max-width:none; margin:0 0 7px; font-size:1.55rem; }
+.status-snapshot .asof { color:var(--muted); font-size:13.5px; margin:0 0 13px; }
+.status-track { display:flex; width:100%; min-height:78px; background:var(--plate); }
+.status-segment {
+  display:flex; flex-direction:column; justify-content:center; padding:10px 12px;
+  min-width:0; color:#fff; line-height:1.16;
+}
+.status-segment strong { font-size:clamp(1rem,2vw,1.35rem); font-variant-numeric:tabular-nums; }
+.status-segment span { font-size:12px; }
+.status-alive { width:61.26%; background:#3c6e91; }
+.status-dead { width:5.77%; background:#2b2b2b; padding-inline:6px; }
+.status-dead span { position:absolute; left:-9999px; }
+.status-missing { width:32.97%; background:#7a1f1f; }
+.status-key {
+  display:flex; flex-wrap:wrap; gap:7px 18px; margin-top:10px; color:var(--muted);
+  font-size:13px; line-height:1.35;
+}
+.status-key b { color:var(--ink); font-variant-numeric:tabular-nums; }
+.status-note { max-width:44em; margin-top:10px; color:var(--muted); font-size:13.5px; line-height:1.45; }
+
+.interactive-figure {
+  margin:38px 0 40px; font-family:var(--sans); color:var(--ink);
+}
+.chart-shell {
+  background:var(--plate); border:1px solid var(--plate-edge); padding:18px 18px 14px;
+  color:#22201e;
+}
+.chart-heading { margin:0 0 3px; font-size:20px; line-height:1.25; font-weight:600; }
+.chart-subtitle { margin:0 0 14px; color:#666b67; font-size:13.5px; line-height:1.4; }
+.chart-controls { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px; align-items:center; }
+.chart-controls label { font-size:13px; color:#4f5450; }
+.chart-controls button, .chart-controls select {
+  border:1px solid #c8ccc7; background:#fff; color:#22201e; font:inherit;
+  font-size:13px; padding:6px 9px; border-radius:0;
+}
+.chart-controls button { cursor:pointer; }
+.chart-controls button[aria-pressed="true"] { background:#22201e; color:#fff; border-color:#22201e; }
+.chart-controls button:focus-visible, .chart-controls select:focus-visible {
+  outline:2px solid #7a1f1f; outline-offset:2px;
+}
+.chart-canvas { width:100%; min-height:360px; position:relative; }
+.chart-canvas svg { display:block; width:100%; overflow:visible; }
+.chart-axis { stroke:#8d918d; stroke-width:1; }
+.chart-grid { stroke:#e2e4e1; stroke-width:1; }
+.chart-label { fill:#343634; font:12px var(--sans); }
+.chart-muted { fill:#707570; font:11px var(--sans); }
+.chart-value { fill:#22201e; font:600 12px var(--sans); }
+.chart-hit { fill:transparent; cursor:pointer; }
+.chart-tooltip {
+  position:absolute; pointer-events:none; display:none; z-index:3; max-width:240px;
+  padding:8px 10px; background:#22201e; color:#fff; font-size:12px; line-height:1.4;
+}
+.chart-summary { margin-top:8px; color:#555a56; font-size:13px; min-height:1.4em; }
+.chart-summary strong { color:#22201e; }
+.static-fallback { margin-top:11px; font:13px var(--sans); color:var(--muted); }
+.static-fallback summary { cursor:pointer; }
+.static-fallback img { margin-top:10px; display:block; width:100%; height:auto; background:#fff; }
+
+.state-bars { display:flex; flex-direction:column; gap:7px; min-height:410px; }
+.state-row {
+  display:grid; grid-template-columns:minmax(105px,175px) 1fr 62px; align-items:center;
+  gap:9px; border:0; background:transparent; padding:2px 0; color:#22201e;
+  font:13px var(--sans); text-align:left; cursor:pointer;
+}
+.state-row:focus-visible { outline:2px solid #7a1f1f; outline-offset:2px; }
+.state-row[aria-current="true"] .state-name { color:#7a1f1f; font-weight:600; }
+.state-bar-track { height:15px; background:#eceeeb; }
+.state-bar { display:block; height:100%; background:#b9b4aa; min-width:2px; }
+.state-row[aria-current="true"] .state-bar { background:#7a1f1f; }
+.state-number { text-align:right; font-variant-numeric:tabular-nums; }
+.state-detail {
+  border-top:1px solid #d9dcd8; margin-top:12px; padding-top:10px; font-size:13px;
+  display:flex; flex-wrap:wrap; gap:7px 18px;
+}
+.state-detail b { font-variant-numeric:tabular-nums; }
+
+@media (max-width:640px) {
+  .status-track { min-height:66px; }
+  .status-segment { padding:8px; }
+  .status-segment strong { font-size:15px; }
+  .status-alive span, .status-missing span { font-size:11px; }
+  .chart-shell { padding:14px 10px 11px; margin-inline:-10px; }
+  .chart-canvas { min-height:330px; }
+  .state-row { grid-template-columns:105px 1fr 54px; gap:6px; font-size:12px; }
+  .state-bars { min-height:380px; }
+}

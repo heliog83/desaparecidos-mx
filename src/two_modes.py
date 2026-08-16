@@ -9,63 +9,71 @@ IMPORTANT: the two panels use different denominators and the Iguala figure is a
 documented example, NOT a comparable measurement or a census.
 """
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
+from matplotlib.patches import FancyBboxPatch
 
 import article_style as st
 
 st.apply()
 C_CONF, C_KNOWN, C_COLL, C_GREY = st.RED, st.SAND, st.BLUE, st.INK
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.8))
-fig.suptitle("Two ways to disappear from the data", fontsize=14, weight="bold",
-             x=0.02, ha="left")
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5.4))
+fig.suptitle("Two ways information can disappear from public view", fontsize=14,
+             weight="bold", x=0.02, ha="left")
 
-# ---- Left: Jalisco, redaction -------------------------------------------------
-jal_total, jal_conf = 13_766, 9_216
-ax1.add_patch(Rectangle((0, 0), 1, jal_conf, facecolor=C_CONF))
-ax1.add_patch(Rectangle((0, jal_conf), 1, jal_total - jal_conf, facecolor=C_KNOWN))
-ax1.set_xlim(-0.9, 2.2)
-ax1.set_ylim(0, 15_500)
-ax1.text(0.5, jal_conf / 2, "CONFIDENCIAL\n9,216 records\n67%", ha="center",
-         va="center", color="white", fontsize=11, weight="bold")
-ax1.text(0.5, jal_conf + (jal_total - jal_conf) / 2, "with public\ndetails\n33%",
-         ha="center", va="center", color="#555555", fontsize=9.5)
-ax1.annotate("1,026 of these have ACTIVE\npublic search notices\n(ZonaDocs, 2024)",
-             xy=(1.02, jal_conf * 0.75), xytext=(1.25, 10_800), fontsize=8.5,
-             color=C_CONF, arrowprops=dict(arrowstyle="-", color=C_CONF, lw=0.8))
-ax1.set_title("JALISCO — opacity by redaction\nrecorded, then hidden",
-              loc="left", fontsize=11, weight="bold", color=C_CONF)
-ax1.text(-0.85, 14_600, "13,766 unresolved records\n(public registry mirror)",
-         fontsize=8.5, color="#555555")
-ax1.axis("off")
 
-# ---- Right: Guerrero, omission ------------------------------------------------
-gro_total, gro_conf, iguala = 4_453, 403, 623
-ax2.add_patch(Rectangle((0, 0), 1, gro_conf, facecolor=C_CONF))
-ax2.add_patch(Rectangle((0, gro_conf), 1, gro_total - gro_conf, facecolor=C_KNOWN))
-ax2.add_patch(Rectangle((1.35, 0), 0.55, iguala, facecolor=C_COLL))
-ax2.set_xlim(-0.9, 3.4)
-ax2.set_ylim(0, 15_500)
-ax2.text(0.5, gro_total + 350, "4,453 registered\nstatewide — only\n9% confidential",
-         ha="center", fontsize=8.5, color="#555555")
-ax2.text(1.625, iguala + 350, "623 documented by\nthree collectives in\nIGUALA ALONE",
-         ha="center", fontsize=8.5, color=C_COLL, weight="bold")
-ax2.text(1.15, 6_500,
-         "the registry looks transparent —\nbut collectives keep finding people\n"
-         "who were never registered:\n260+ bodies located in Iguala,\n~70 in Acapulco, "
-         "by families,\nnot the state (Tlachinollan/HRW)",
-         fontsize=8.5, color=C_GREY)
-ax2.set_title("GUERRERO — opacity by omission\nnever recorded at all",
-              loc="left", fontsize=11, weight="bold", color=C_COLL)
-ax2.axis("off")
+def evidence_box(ax, x, y, w, h, text, face, text_color=st.INK):
+    patch = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.015,rounding_size=0.015",
+                           facecolor=face, edgecolor="none")
+    ax.add_patch(patch)
+    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center",
+            fontsize=9.5, color=text_color, weight="bold")
 
-fig.text(0.02, 0.015,
-         "Panels use different denominators; the Iguala count is a documented example of "
-         "under-registration, not a comparable measurement or a census. Sources: RNPDNO mirror "
-         "microdata; ZonaDocs (2024-11-21); Tlachinollan; HRW (2019). Consulted 2026-07-06.",
+
+for ax in (ax1, ax2):
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+# Jalisco: a measured path inside the registry.
+ax1.set_title("JALISCO — recorded, then redacted", loc="left", fontsize=11,
+              weight="bold", color=C_CONF, pad=12)
+evidence_box(ax1, 0.06, 0.67, 0.88, 0.16, "13,766 unresolved records\nin the Dec-2025 public mirror", C_KNOWN)
+ax1.annotate("", xy=(0.5, 0.62), xytext=(0.5, 0.67),
+             arrowprops=dict(arrowstyle="->", color=C_GREY, lw=1.2))
+evidence_box(ax1, 0.06, 0.42, 0.88, 0.16, "9,216 marked CONFIDENCIAL\n67% of Jalisco records", C_CONF, "white")
+ax1.annotate("", xy=(0.5, 0.37), xytext=(0.5, 0.42),
+             arrowprops=dict(arrowstyle="->", color=C_GREY, lw=1.2))
+evidence_box(ax1, 0.06, 0.17, 0.88, 0.16,
+             "1,026 also had active public search notices\nZonaDocs, 2024", "#ead8d1", C_CONF)
+ax1.text(0.06, 0.07, "Here the denominator and overlap are documented.",
+         fontsize=8.5, color=st.MUTED)
+
+# Guerrero: two evidence systems whose overlap is unknown.
+ax2.set_title("GUERRERO — official and family records", loc="left", fontsize=11,
+              weight="bold", color=C_COLL, pad=12)
+evidence_box(ax2, 0.04, 0.59, 0.42, 0.24,
+             "4,453 official\nunresolved records\nstatewide", C_KNOWN)
+evidence_box(ax2, 0.54, 0.59, 0.42, 0.24,
+             "623 cases documented\nby three collectives\nin Iguala", "#d7e3eb", C_COLL)
+ax2.text(0.50, 0.49, "OVERLAP UNKNOWN", ha="center", fontsize=9.5,
+         color=st.INK, weight="bold")
+ax2.plot([0.25, 0.75], [0.54, 0.54], color=st.MUTED, lw=1)
+ax2.text(0.50, 0.35,
+         "The two figures cannot be added or subtracted.\n"
+         "They show parallel systems of evidence, not a measured undercount.",
+         ha="center", va="center", fontsize=9, color=st.INK)
+ax2.text(0.50, 0.16,
+         "Collectives are credited with locating 260+ bodies in Iguala\n"
+         "and around 70 in Acapulco (Tlachinollan/HRW).",
+         ha="center", va="center", fontsize=8.5, color=C_COLL)
+
+fig.text(0.02, 0.02,
+         "The panels answer different questions. Jalisco measures redaction inside one registry; Guerrero shows official and "
+         "collective records whose person-level overlap has not been established. Sources: RNPDNO mirror microdata; ZonaDocs "
+         "(2024-11-21); Tlachinollan; HRW (2019). Consulted 2026-07-06.",
          fontsize=7.5, color="#666666")
 
-fig.tight_layout(rect=(0, 0.05, 1, 0.93))
+fig.tight_layout(rect=(0, 0.07, 1, 0.92))
 fig.savefig("reports/figures/22_two_modes_of_opacity.png", dpi=200, bbox_inches="tight")
 print("wrote reports/figures/22_two_modes_of_opacity.png")
 st.save(fig, "G_two_modes.png")
