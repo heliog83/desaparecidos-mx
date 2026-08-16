@@ -51,18 +51,20 @@ ax2.text(0.5, gro_total + 350, "4,453 registered\nstatewide — only\n9% confide
 ax2.text(1.625, iguala + 350, "623 documented by\nthree collectives in\nIGUALA ALONE",
          ha="center", fontsize=8.5, color=C_COLL, weight="bold")
 ax2.text(1.15, 6_500,
-         "the registry looks transparent —\nbut collectives keep finding people\n"
-         "who were never registered:\n260+ bodies located in Iguala,\n~70 in Acapulco, "
-         "by families,\nnot the state (Tlachinollan/HRW)",
+         "the registry looks transparent —\nbut collectives keep documenting\ncases the state did not:\n"
+         "260 bodies recovered in Iguala,\n69 identified and returned,\nby families, not the state\n"
+         "(Tlachinollan/HRW)",
          fontsize=8.5, color=C_GREY)
 ax2.set_title("GUERRERO — opacity by omission\nnever recorded at all",
               loc="left", fontsize=11, weight="bold", color=C_COLL)
 ax2.axis("off")
 
 fig.text(0.02, 0.015,
-         "Panels use different denominators; the Iguala count is a documented example of "
-         "under-registration, not a comparable measurement or a census. Sources: RNPDNO mirror "
-         "microdata; ZonaDocs (2024-11-21); Tlachinollan; HRW (2019). Consulted 2026-07-06.",
+         "Panels use different denominators and MAY OVERLAP: some of the 623 Iguala cases are also "
+         "in the state register, and the two cannot be netted against\neach other from public sources. "
+         "The Iguala count is a documented example of under-registration, not a comparable measurement "
+         "or a census. Sources: RNPDNO mirror\nmicrodata (2025-12-02); ZonaDocs (2024-11-21); "
+         "Tlachinollan; HRW (2019). Consulted 2026-07-06.",
          fontsize=7.5, color="#666666")
 
 fig.tight_layout(rect=(0, 0.05, 1, 0.93))

@@ -9,52 +9,67 @@ Every figure is reproducible from `src/`; every number carries a consultation da
 
 Working titles (pick one):
 1. *The Redacted Crisis: what Mexico's registry of the disappeared won't let you see*
-2. *132,000 people, one third behind a wall*
+2. *134,000 people, one third behind a wall*
 3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
 
-Standfirst: *Mexico's official registry counts more than 132,000 disappeared people.
-For one in three of them, the public record contains a single fact: the state where
-they vanished. This is the story of who decides that — and of the two very different
-ways a person can go missing from the data itself.*
+Standfirst: *Mexico's official registry recorded 134,268 people as disappeared or not
+located on 15 August 2026. For one in three of them, the public record contains a
+single fact: the state where they vanished. This is the story of who decides that —
+and of the two very different ways a person can go missing from the data itself.*
 
 ---
 
 ## 1. The crisis is real, and it is growing
 
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
-*Caption: Every year of reported disappearances in Mexico, 2000–2025, decomposed into
-people found alive, found dead, and still missing. Two panels: absolute counts and
-shares. Source: RNPDNO dashboard API, consulted 2026-08-15; ~214,600 found alive, ~20,600
-found dead, ~117,100 still missing across the period.*
+*Caption: Top — the current recorded status of all 407,253 people in the registry:
+249,502 found alive, 23,483 found dead, 134,268 still missing. Bottom — the same
+records arranged by the year the person disappeared. Both panels show status as
+recorded on one day, 15 August 2026; neither shows when a case changed status.
+Aggregate figures: RNPDNO dashboard API, consulted 2026-08-15 [1].*
 
 Start with the honest version of the number, because almost nobody publishes it.
 Mexico's National Registry of Disappeared and Missing Persons (RNPDNO) is usually
-quoted as a single figure — 132,000+ disappeared. But the registry is a *stock*, not a
-history: it counts people missing *right now*. The fuller accounting, pulled from the
-registry's own API, is that since 2000 roughly 350,000 disappearances have been
-reported; most people were found alive, about 20,600 were found dead, and roughly
-117,000 have never been found.
+quoted as a single figure — more than 134,000 disappeared. That figure is real: on
+15 August 2026 the registry recorded **134,268** people as disappeared or not located.
+But it is a *stock*, not a history. It counts people recorded as missing at that
+moment, out of **407,253** records in total: 249,502 of them recorded as found alive,
+23,483 as found dead.
 
-Three things in this chart survive every methodological caveat we could throw at them
-(and we threw several — see methods note):
+Read the chart as a photograph, not a film. Every number in it is a status **as
+recorded on 15 August 2026**. The registry publishes what a case looks like now; it
+does not publish when a case changed, or who changed it. So the top panel is a census
+of the present, and the bottom panel sorts that same census by the year each person
+went missing.
 
-- **The growth is real incidence, not an artifact of accumulation.** Reported
-  disappearances rose from ~100/year in 2000 to ~3,000 at the drug-war onset in
-  2007 to ~37,000 in 2025.
-- **The share who are found has barely moved in eighteen years.** From 2008 onward,
-  close to two-thirds of each year's reported disappearances end with the person
-  located — 65% of the 2008 cohort, 75% of 2014, 68% of 2025. The rate holds steady
-  while the annual volume more than triples. So the number of people left missing
-  grows with the size of the caseload, not because finding them got harder.
-- **But once a case is about a year old, it very rarely resolves.** Of everyone who
-  disappeared before 2016 and is still missing — 32,102 people — just 123 were
-  located in the eight weeks between our two consultations of the registry. That is
-  roughly 2.5% a year. At that rate it would take some three decades to account for
-  half of them. Searching finds people quickly or it does not find them.
+Three things in this chart hold up, stated as narrowly as the data allows:
 
-(The bars for 2000–2005 look dramatic in the lower panel — almost entirely
-unresolved — but each covers only a few hundred people, so we do not lean on them.
-The eighteen-year plateau rests on cohorts of tens of thousands.)
+- **Recorded disappearances per year rose steeply.** The registry holds ~100 records
+  for 2000, ~3,000 for 2007 as the militarised drug war began, and ~37,000 for 2025.
+  This is the count of *records the state holds*, not a measurement of how many
+  disappearances occurred. Reporting rates, prosecutorial practice and registry
+  coverage all changed enormously over the same 25 years, and cases can still be
+  registered years late — three new 2014 records appeared in an eight-week window in
+  2026. Treat the shape as a floor under a growing crisis, not a census of it.
+- **About two-thirds of post-2008 cohorts are currently recorded as located.** 65% of
+  the 2008 cohort, 75% of 2014, 68% of 2025 [1]. But these cohorts have had wildly
+  unequal time to reach that state — the 2008 group has been observed for eighteen
+  years, the 2025 group for months — so this is not a like-for-like comparison, and
+  it is not evidence that outcomes have held steady. It is a description of where the
+  register happens to stand today.
+- **Older records move very little between snapshots.** Comparing our two
+  consultations, eight weeks apart, 123 records from pre-2016 cohorts moved into a
+  located category, against 32,102 still recorded as missing. Annualising a single
+  eight-week window gives roughly 2.5% a year — a rough snapshot estimate, not a
+  measured rate, and one short window can be unrepresentative. What it does suggest
+  is that the register's older strata are close to static.
+
+Two cautions carry through the whole piece. "Located" is a **registry category, not a
+verified outcome**: it includes people found alive, people found dead, and records
+reclassified in administrative batches — including the contested 2023 *censo*. It is
+not a measure of successful searching, and nothing here should be read as crediting
+any institution with finding people. And the bars for 2000–2005 look dramatic in the
+lower panel but cover only a few hundred records each, so we do not lean on them.
 
 ## 2. Where people disappear — once you divide by population
 
@@ -64,7 +79,7 @@ record-level registry snapshot of 2025-12-02. Tamaulipas (359), Zacatecas (226)
 and Sinaloa (211) lead by rate; Estado de México (82) and CDMX (79), the leaders
 in absolute counts, fall to around 80. Note: on the live registry consulted
 2026-08-15, CDMX's unresolved count has since fallen by ~1,300 (a rate of ~64) —
-see §5b.*
+see §5b. Microdata vintage 2025-12-02 [3]; live comparison [1].*
 
 Mexico's disappeared are not distributed the way Mexicans are. Estado de México and
 Mexico City register the most cases in absolute terms, which is unsurprising: they
@@ -84,8 +99,8 @@ Hold onto it. The next chart takes it apart.
 
 **[FIG C — `figures/article/C_confidential_share.png`]**
 *Caption: Share of each state's unresolved records marked CONFIDENCIAL in the public
-registry. National: 36.8%. Jalisco: 67%. Nayarit: 66%. Guerrero and Colima: 9%. A
-confidential record retains exactly one public fact — the state.*
+registry. National: 36.8%. Jalisco: 66.9%. Nayarit: 66.2%. Guerrero 9.1%, Colima 9.0%.
+A confidential record retains exactly one public fact — the state. Vintage 2025-12-02 [3].*
 
 Here is what "consulting the public registry" actually gets you: for 36.8% of
 unresolved records, every field is redacted — no date, no age, no sex, no
@@ -102,7 +117,8 @@ Guerrero, one of the most violent states in the country, redacts one in eleven.
 *Caption: Confidential share vs disappearance rate, by state. If redaction were a
 by-product of crisis intensity, states would line up. They don't — the relationship
 with violence is actually negative (r = −0.42 against homicide rate, 28 states).
-Guerrero has ~2.4× Jalisco's homicide rate and one-seventh of its redaction share.*
+Guerrero has ~2.4× Jalisco's homicide rate and one-seventh of its redaction share.
+Redaction 2025-12-02 [3]; homicide rates 2015–2025 cumulative [2].*
 
 There is an innocent explanation for all this redaction, and it deserves a fair test.
 
@@ -111,22 +127,27 @@ families are in the most danger. A mother in a state where the cartels read the
 newspapers has an obvious reason to keep her son's name out of a public database. On
 that theory, redaction should rise with violence.
 
-It does the opposite. Across the 28 states where both measures can be matched, the
-correlation between how much a state redacts and how violent it is comes out
-*negative* — −0.42. The most violent states in Mexico are among its most transparent.
-Colima has recorded roughly 950 homicides per 100,000 residents since 2015, the worst
-rate in the country; it redacts 9% of its disappearance records. Guerrero, at 550,
-redacts 9%. Chihuahua, at 548, redacts 9%.
+The data does not support it. Across the 28 states where both measures can be
+matched, redaction and homicide rate are *negatively* correlated — Pearson r = −0.42
+[2]. The states carrying the heaviest violence are among the least redacted. Colima
+has recorded roughly 950 homicides per 100,000 residents since 2015, the highest rate
+in the country; it redacts 9% of its disappearance records. Guerrero, at 550, redacts
+9%. Chihuahua, at 548, redacts 9%.
 
-Now look at the other end of the scale. Jalisco's homicide rate is less than half
-Guerrero's, and it redacts 67%. And then there is Yucatán, which is the cleanest test
-the data offers: it has the lowest homicide rate in Mexico *and* the lowest
-disappearance rate in Mexico — 18 and 12.5 per 100,000 respectively — and it redacts
-62% of its records. Whatever Yucatán is protecting those families from, it is not
-the danger they are in.
+At the other end of the scale, Jalisco's homicide rate is less than half Guerrero's
+and it redacts 67%. Yucatán has both the lowest homicide rate and the lowest
+disappearance rate in the country — 18 and 12.5 per 100,000 — and redacts 62% of its
+records.
 
-Whatever the confidentiality flag is tracking, it is not risk to families. So what
-is it?
+The narrow conclusion, and the only one this supports: **state-level homicide rates
+do not explain state-level differences in confidentiality.** A state's violence tells
+you almost nothing about how much of its registry is readable. That does not
+establish what redaction *is* tracking, and it cannot rule out risk assessments made
+case by case, which no public field records. It does rule out the simplest version of
+the official rationale — that redaction maps onto danger — as an explanation for why
+Jalisco is at 67% and Guerrero at 9%.
+
+So what does account for the difference?
 
 ## 5. Who decides a record goes dark
 
@@ -134,7 +155,7 @@ is it?
 *Caption: The CNB's own accounting of publication consent, Aug 2020 (73,388
 records): for 77.4%, no consent information exists at all. Among the minority of
 family reporters actually asked, 52% declined publication, 47% agreed. Source:
-Oficio SEGOB/CNBP/1349/2020, pp. 5, 11.*
+Oficio SEGOB/CNBP/1349/2020, pp. 5, 11 [4]; universe dated 2020-08-07.*
 
 On paper, the rule is humane and simple. Article 108 of the General Law on
 Disappearances gives families the right to keep their loved one's information out
@@ -172,7 +193,7 @@ policy — and no public field distinguishes them.**
 *Caption: CONFIDENCIAL records per state across ten monthly snapshots of the public
 registry, April–December 2025, recovered from the mirror's version history.
 Nationally, confidential records grew 44,035 → 49,136 (+5,101) — 77% of the
-registry's entire net growth in those eight months.*
+registry's entire net growth in those eight months. Ten pinned mirror snapshots [5].*
 
 If confidentiality reflected family choices, it would drift — a few records at a
 time, in every state. Instead it jumps. Tamaulipas reclassified ~2,500 existing
@@ -191,12 +212,21 @@ them in eight months, roughly one in five. We can see the direction and the size
 that reversal but not its mechanism: the registry does not say whether those
 records were deleted, reclassified, resolved, or moved.
 
-Step changes, flat totals during reclassifications, batch deletions: these are the
-signatures of administrative operations, not of thousands of families changing
-their minds in the same week. This is the version-history evidence for the claim in
-section 5 — and it means the registry's most basic public property, *how much of it
-you can see*, is being rewritten in bulk, state by state, with no public log of who
-decided or why.
+Step changes, flat totals during reclassification, batch deletions: these patterns are
+**consistent with administrative processing** — records handled in bulk, by an office,
+on an office's schedule. They are not proof that the underlying consent decisions are
+fabricated. Families do decide, and some of those decisions are surely real; a backlog
+of genuine consent forms entered in one batch would look much like this from the
+outside. What the shape of the data does show is that the *timing* of publication is
+governed by administrative operations rather than by when families decide, and that
+the two cannot be separated from the public record.
+
+That is the version-history counterpart to section 5. Together they support a claim
+that is narrower than "the state is hiding people" and harder to dismiss: the
+registry's most basic public property — *how much of it you can read* — is rewritten
+in bulk, state by state, with no published log of who authorised a change or why, and
+no field that distinguishes a redaction a family asked for from one that a missing form
+produced.
 
 ## 6. Jalisco: opacity by redaction
 
@@ -204,7 +234,7 @@ decided or why.
 *Caption: Jalisco's registry conflict, 2020–2026: blanket confidentiality declared
 (2020), the state stops feeding the national registry in favour of its own (2022),
 "erased" names controversy (2023), official denial (2024), Teuchitlán (2025), new
-federal recount (2026). The two registries move independently and now differ by
+federal recount (2026) [4]. The two registries move independently and now differ by
 roughly 3,000 people — the federal count fell to 12,776 by June 2026 and has since
 edged back to 12,964, while the state's stands near 16,000. Markers are documented
 snapshots, not a continuous series, and the two registries define their counts
@@ -245,10 +275,12 @@ Jalisco. They are one fact, seen from two sides.
 ## 7. Guerrero: opacity by omission
 
 **[FIG G — `figures/article/G_two_modes.png`]**
-*Caption: Guerrero registers ~3,800–4,500 disappeared. In Iguala alone, three
-family collectives jointly document 623 cases. Collectives — not the state — have
-located 260+ bodies in Iguala and ~70 in Acapulco. Sources: Tlachinollan, HRW,
-consulted 2026-07-06.*
+*Caption: Guerrero's registry holds ~3,800–4,500 records. In Iguala alone, three
+family collectives jointly document 623 cases. The two bars count different things
+and may overlap: some of the 623 are certainly also in the state's register, and we
+cannot say how many. Tlachinollan credits collective searches with 260 bodies
+recovered in Iguala, of which 69 were identified and returned to families. Sources:
+Tlachinollan, HRW [4]; registry figures 2025-12-02 microdata [3].*
 
 On the redaction chart, Guerrero is one of the clean ones: 9% confidential, against
 Jalisco's 67%. The same federal consent rules apply there; its search commission's
@@ -257,20 +289,33 @@ redacting less because it has better privacy law. It is redacting less because o
 happens *before* a record can be redacted. In Guerrero, cases often never enter the
 registry at all.
 
-The state registers roughly 3,800 disappeared people. In Iguala alone — one city —
-three family collectives jointly document 623 cases. The human-rights centre
-Tlachinollan, which has tracked the state for decades, describes prosecutors who stall
-investigations unless families force them open, and a forensic service that has
-effectively collapsed. Nationally, between 2% and 6% of disappearance cases are ever
-prosecuted; there have been 36 sentences in the entire country.
+The state's registry holds roughly 3,800 records. In Iguala alone — one city — three
+family collectives jointly document 623 cases.
+
+Those two numbers are not a subtraction, and it matters that we say so. **They may
+overlap, and we cannot measure by how much.** Some of the 623 Iguala cases are
+certainly also registered with the state; others, by the collectives' account, are
+not. Without case-level identifiers on both sides — which no public source provides —
+there is no way to net one against the other. The comparison is worth making because
+of the ratio it implies: three collectives in one city hold a caseload equal to a
+sixth of the entire state register. It is not worth making as an estimate of how many
+people are missing from that register.
+
+The human-rights centre Tlachinollan, which has tracked the state for decades,
+describes prosecutors who stall investigations unless families force them open, and a
+forensic service that has effectively collapsed. Nationally, between 2% and 6% of
+disappearance cases are ever prosecuted; there have been 36 sentences in the entire
+country [4].
 
 The modern searching-mothers movement was, in an important sense, born here. When the
 43 students from Ayotzinapa disappeared in September 2014, families searching the hills
 around Iguala for them began instead to find other people: graves of the dead nobody
 was officially looking for. The collective that formed out of that search, Los Otros
 Desaparecidos de Iguala, has since exhumed more than 160 bodies. Tlachinollan credits
-women-led collectives — not state institutions — with locating over 260 bodies in
-Iguala and around 70 in Acapulco.
+women-led collectives — not state institutions — with the recovery of 260 bodies in
+Iguala, of which 69 were identified and returned to their families. In Acapulco it
+records a different outcome: 70 people found alive, and 55 identified bodies returned
+[4].
 
 The under-registration is not history. During Holy Week searches in 2026, in Iguala and
 Buenavista de Cuéllar, three families approached the searching mothers to report
@@ -310,37 +355,98 @@ That is the subject of the next piece.
 
 ## Methods note (publish as expandable box or footer)
 
-Data: this piece draws on **two vintages, and says so deliberately.** Aggregate
-outcome flows (fig A) come from the live RNPDNO dashboard API, consulted
-**2026-08-15**. Everything field-level — redaction shares, per-capita rates, the
-state rankings in figs B, C, D — comes from the registry's public *record-level*
-microdata via the [lapanquecita mirror](https://github.com/lapanquecita/personas-desaparecidas)
-(133,566 records, snapshot **2025-12-02**,
-upstream commit 666b3e7; max FECHA_REGISTRO 2025-12-01). The two cannot be
-aligned: the mirror stopped updating after 2025-12-02, having published monthly
-since April 2025, and no comparable record-level extract has been released since.
-The gap is measurable and small — the mirror's national total sits within 0.5% of
-the live registry (0.1% across state-attributable records) — but it is not uniform
-by state, and §5b is in part about exactly that. Where a state's live figure has
-since moved materially (Ciudad de México, Jalisco), we say so in the caption.
+**This piece draws on two data vintages that cannot be merged, and every figure is
+labelled with the one it uses.** They answer different questions and carry different
+cutoff dates. Reading a number from one against a number from the other will give a
+wrong answer.
 
-Cross-checks: category-sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA:
-national +6.1%, but Zacatecas +42%); Jalisco remains the volatile outlier across
-sources. Redaction-over-time: ten pinned monthly snapshots of the mirror
-(Apr–Dec 2025, upstream commit SHAs in `src/version_audit.py`). All figures
-reproducible from `src/` in the project repository
-(https://github.com/heliog83/desaparecidos-mx). Confidential records are counted as
-unresolved people but excluded from any
-field-level analysis. Full methodology: [link docs/methodology.md]; refresh audit
-and full number-by-number diff: [link docs/data-refresh-2026-08-15.md]. Key primary
-sources: Oficio SEGOB/CNBP/1349/2020; ZonaDocs (2024-11-21); A dónde van los
-desaparecidos (2021-04-08); Data Cívica, Volver a desaparecer; Tlachinollan; HRW
-(2019-01-14). All web sources consulted 2026-07-06 unless noted.
+**[1] Aggregate outcomes — vintage 2026-08-15 (live).** All-record totals and the
+by-year outcome breakdown in fig A. Source: RNPDNO public dashboard API, captured
+2026-08-15 23:49 America/Mexico_City. Covers every record including confidential ones,
+because the dashboard counts records it will not display. Totals: 407,253 records —
+249,502 recorded found alive, 23,483 found dead, 134,268 disappeared or not located.
+Frozen with source hashes at `data/publication_freezes/2026-08-15/`.
+
+**[2] Homicide and state-capacity variables — vintage 2015–2025 cumulative.**
+SESNSP homicide victims aggregated 2015–2025 per 100,000; INEGI ENCIG 2025
+(corruption prevalence) and PIBE 2024 (GDP per capita). Matched to 28 of 32 states.
+Used only for the correlations in §4 and the negative controls in
+`docs/methodology.md` §7.
+
+**[3] Record-level microdata — vintage 2025-12-02 (frozen).** Every field-level figure:
+redaction shares, per-capita rates, and the state rankings in figs B, C and D. Source:
+the public RNPDNO record-level extract via the
+[lapanquecita mirror](https://github.com/lapanquecita/personas-desaparecidas) —
+133,566 records, upstream commit 666b3e7605, max FECHA_REGISTRO 2025-12-01. **This
+mirror stopped publishing after 2025-12-02**, having released monthly since April 2025,
+and no comparable record-level extract has appeared since. Our copy is byte-identical
+to the last upstream commit.
+
+Drift between [1] and [3] is small nationally — the mirror sits within 0.5% of the live
+registry, 0.1% across state-attributable records — but **it is not uniform by state**.
+Ciudad de México has since fallen 18% and Jalisco 6% against the frozen microdata;
+both carry their live figures in the caption. `src/crosscheck.py` reports the full
+per-state drift table.
+
+**[4] Documentary and journalistic sources**, each with its own date: Oficio
+SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07); ZonaDocs,
+"El engaño estadístico", 2024-11-21 (active notices marked confidential; Jalisco
+under-registration); El Informador, 2023-05-09 (Jalisco federal/state divergence);
+Animal Político (the 2022 reporting gap); Tlachinollan, "Guerrero: territorio de
+personas desaparecidas" (Iguala and Acapulco recoveries, prosecution rates); Human
+Rights Watch, 2019-01-14 (Los Otros Desaparecidos de Iguala); Proceso, 2026-04-03
+(Holy Week searches). Web sources consulted 2026-07-06 unless stated.
+
+**[5] Redaction over time — vintage Apr–Dec 2025.** Ten pinned monthly snapshots of
+the mirror, upstream commit SHAs in `src/version_audit.py`.
+
+Cross-checks: category sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA moves the
+national count +6.1%, but Zacatecas +42%); confidential records are counted as people
+but excluded from every field-level analysis; 15 headline numbers are recomputed
+automatically against the freeze on each build
+(`data/publication_freezes/2026-08-15/derived/automated_claim_checks.csv`). All figures
+reproduce from `src/` in the project repository
+(https://github.com/heliog83/desaparecidos-mx). Full methodology:
+[docs/methodology.md](docs/methodology.md); refresh audit and number-by-number diff:
+[docs/data-refresh-2026-08-15.md](docs/data-refresh-2026-08-15.md); source audit:
+[reports/publication_data_audit_2026-08-15.md](reports/publication_data_audit_2026-08-15.md).
 
 Ethics line (keep): behind every record is a person and a searching family. This
 piece reports uncertainty as uncertainty and does not present proxies as counts.
 
 ---
+
+## PROPOSAL — split §6 and §7 into a second article (NOT EXECUTED, needs sign-off)
+
+Proposed, not done. Nothing below has been actioned; §6 and §7 remain in place.
+
+**The case for splitting.** The piece currently does two jobs. §1–§5b build one
+argument from national data: the confidentiality flag is an administrative artifact,
+not a record of family choice. §6 and §7 then switch mode entirely — from registry
+forensics to reported case studies, carrying named people, a killing, an
+extermination site, and sources the national analysis never uses. They are the
+longest sections (300 and 400 words after the rewrite) and the least like the rest.
+
+Splitting would give:
+
+- **Article 1 — "The Redacted Crisis."** §1–§5b plus §8, ~1,500 words, figs A–E and H.
+  A self-contained argument about how the registry is written and rewritten. Its
+  evidence is entirely quantitative and documentary, and every claim survives on
+  national data alone.
+- **Article 2 — "Two ways to disappear twice."** §6 and §7 expanded, figs F and G plus
+  the Iguala and Teuchitlán material. This is the natural bridge to Stage 2 and the
+  madres buscadoras, which is already the stated follow-up.
+
+**The case against.** §7 carries the thesis chart (fig G) and the "two modes" idea
+that §8 depends on; removing it would require §8 to be rewritten around a claim the
+reader has not yet seen demonstrated. The two-modes framing is arguably the most
+original thing in the whole piece, and article 1 without it is a more conventional
+data story.
+
+**If split, §8 must be rewritten**, and article 1 needs a new closing that lands on
+the administrative-artifact claim rather than on the two modes.
+
+Decision required before any restructuring.
 
 ## FIGURE PRODUCTION NOTES (the data-viz workplan)
 

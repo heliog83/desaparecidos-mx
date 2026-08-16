@@ -306,10 +306,10 @@ TEMPLATE = """<title>{title}</title>
     </p>
     <h1>{title}</h1>
     <p class="subtitle">{subtitle}</p>
-    <p class="standfirst">Mexico's official registry counts more than 132,000 disappeared
-      people. For one in three of them, the public record contains a single fact: the state
-      where they vanished. This is the story of who decides that — and of the two very
-      different ways a person can go missing from the data itself.</p>
+    <p class="standfirst">Mexico's official registry recorded 134,268 people as disappeared
+      or not located on 15 August 2026. For one in three of them, the public record contains
+      a single fact: the state where they vanished. This is the story of who decides that —
+      and of the two very different ways a person can go missing from the data itself.</p>
 
     <div class="record">
       <p class="rlabel">What a confidential record contains</p>
