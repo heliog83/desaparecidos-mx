@@ -204,9 +204,10 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
         return f"""<figure class="interactive-figure" data-chart="outcomes">
 <div class="chart-shell">
   <h3 class="chart-heading">Recorded disappearances, by year and current outcome</h3>
-  <p class="chart-subtitle">Year of disappearance, 2000–2025. Hover or focus a bar for exact values.</p>
+  <p class="chart-subtitle">Year of disappearance, 2000–2025. Use “Still missing” for a zero-based comparison; hover or focus for exact values.</p>
   <div class="chart-controls" aria-label="Outcome chart display">
-    <button type="button" data-mode="absolute" aria-pressed="true">People</button>
+    <button type="button" data-mode="absolute" aria-pressed="true">All outcomes</button>
+    <button type="button" data-mode="missing" aria-pressed="false">Still missing</button>
     <button type="button" data-mode="share" aria-pressed="false">Share of cohort</button>
   </div>
   <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
@@ -403,7 +404,12 @@ def build() -> str:
     ))
 
 
-TEMPLATE = """<title>{title}</title>
+TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title}</title>
 <style>
   /* ---- tokens: light is the base, dark redefines tokens only ---- */
   :root {{
@@ -460,7 +466,7 @@ TEMPLATE = """<title>{title}</title>
   /* ---- hero: one registry record as the public sees it ---- */
   .record {{
     background:var(--plate); border:1px solid var(--plate-edge);
-    padding:26px 28px 24px; max-width:36em; margin:0 0 14px; color:#22201E;
+    padding:26px 28px 24px; max-width:36em; margin:0 0 14px; color:var(--ink);
   }}
   .record .rlabel {{
     font-family:var(--mono); font-size:10.5px; letter-spacing:.15em; text-transform:uppercase;
@@ -472,7 +478,7 @@ TEMPLATE = """<title>{title}</title>
     font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:#6B706C;
     text-transform:uppercase; overflow-wrap:anywhere;
   }}
-  dl.fields dd {{ margin:0; font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:#22201E; }}
+  dl.fields dd {{ margin:0; font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:var(--ink); }}
   dl.fields dd.redacted {{ color:#7A1F1F; }}
   .record-note {{
     font-family:var(--sans); font-size:13.5px; color:var(--muted); max-width:36em;
@@ -544,6 +550,8 @@ TEMPLATE = """<title>{title}</title>
   @media (prefers-reduced-motion:reduce) {{ * {{ animation:none !important; transition:none !important; }} }}
 {interactive_css}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="mast">
@@ -586,6 +594,8 @@ TEMPLATE = """<title>{title}</title>
 </div>
 <script type="application/json" id="article-chart-data">{chart_data}</script>
 <script>{interactive_js}</script>
+</body>
+</html>
 """
 
 

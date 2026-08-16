@@ -28,8 +28,9 @@ This is the story of how publication decisions shape what the public can see.*
 
 **[FIG A — `figures/article/A_outcomes_by_year.png`]**
 *Caption: Recorded year-of-disappearance cohorts in Mexico, 2000–2025, decomposed by
-current registry outcome. Use the control to switch between counts and shares. These
-are current statuses, not dates on which anybody was found. Source: RNPDNO dashboard
+current registry outcome. Use the controls to compare all outcomes, view still-missing
+counts from a zero baseline, or compare cohort shares. These are current statuses, not
+dates on which anybody was found. Source: RNPDNO dashboard
 API, consulted 2026-08-15 [1]; 214,643 found alive, 20,551 found dead and 117,100 still
 missing across the period.*
 

@@ -44,7 +44,10 @@
     let mode = "absolute";
 
     function draw() {
-      clear(canvas);
+      // Preserve the tooltip node. Clearing the whole canvas detached it from the
+      // DOM, so pointer events updated an invisible orphan instead of the page.
+      canvas.querySelectorAll("svg").forEach((n) => n.remove());
+      hideTip(tip);
       const width = Math.max(300, canvas.clientWidth);
       const height = width < 520 ? 355 : 390;
       // top leaves room for two stacked rows: the legend (y~5-14) and, below it, the
@@ -54,10 +57,14 @@
       const innerH = height - margin.top - margin.bottom;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
       svg.append(svgNode("title", {}, "Recorded disappearances by year and current registry outcome"));
-      svg.append(svgNode("desc", {}, "Stacked bars for found alive, found dead and still missing. Controls switch between counts and shares."));
+      svg.append(svgNode("desc", {}, "Bars for found alive, found dead and still missing. Controls show stacked counts, still-missing counts from zero, or cohort shares."));
       const years = DATA.outcomes;
       const totals = years.map((d) => d.alive + d.dead + d.missing);
-      const ymax = mode === "share" ? 1 : niceMax(Math.max(...totals));
+      const ymax = mode === "share"
+        ? 1
+        : mode === "missing"
+          ? niceMax(Math.max(...years.map((d) => d.missing)))
+          : niceMax(Math.max(...totals));
       const y = (v) => margin.top + innerH - (v / ymax) * innerH;
       const step = innerW / years.length;
       const bw = Math.max(4, step * 0.78);
@@ -103,8 +110,8 @@
 
       years.forEach((d, i) => {
         const total = totals[i];
-        const vals = [d.alive, d.dead, d.missing];
-        const keys = ["alive", "dead", "missing"];
+        const vals = mode === "missing" ? [d.missing] : [d.alive, d.dead, d.missing];
+        const keys = mode === "missing" ? ["missing"] : ["alive", "dead", "missing"];
         let cumulative = 0;
         vals.forEach((raw, j) => {
           const val = mode === "share" ? raw / total : raw;
@@ -113,18 +120,17 @@
           const bottom = y(cumulative);
           const rect = svgNode("rect", { x, y: top, width: bw, height: Math.max(0, bottom - top), fill: COLORS[keys[j]], tabindex: 0 });
           rect.setAttribute("aria-label", `${d.year}: ${keys[j]}, ${fmt.format(raw)} people`);
+          const tooltipHtml = `<strong>${d.year}</strong><br>Still missing <strong>${fmt.format(d.missing)}</strong> (${pct.format(d.missing / total)})<br>Found alive ${fmt.format(d.alive)}<br>Found dead ${fmt.format(d.dead)}<br>Total reported ${fmt.format(total)}`;
           rect.addEventListener("mouseenter", (e) => {
             const [px, py] = pointerIn(e, canvas);
-            showTip(tip, `<strong>${d.year}</strong><br>Found alive ${fmt.format(d.alive)}<br>Found dead ${fmt.format(d.dead)}<br>Still missing ${fmt.format(d.missing)}<br>Total ${fmt.format(total)}`, px, py);
+            showTip(tip, tooltipHtml, px, py);
           });
           rect.addEventListener("mousemove", (e) => {
             const [px, py] = pointerIn(e, canvas);
             showTip(tip, tip.innerHTML, px, py);
           });
           rect.addEventListener("mouseleave", () => hideTip(tip));
-          rect.addEventListener("focus", () => showTip(tip,
-            `<strong>${d.year}</strong><br>Found alive ${fmt.format(d.alive)}<br>Found dead ${fmt.format(d.dead)}<br>Still missing ${fmt.format(d.missing)}<br>Total ${fmt.format(total)}`,
-            x, top));
+          rect.addEventListener("focus", () => showTip(tip, tooltipHtml, x, top));
           rect.addEventListener("blur", () => hideTip(tip));
           svg.append(rect);
           cumulative += val;
@@ -133,7 +139,9 @@
           svg.append(svgNode("text", { x: margin.left + (i + 0.5) * step, y: height - 18, "text-anchor": "middle", class: "chart-label" }, String(d.year)));
         }
       });
-      const legend = [["Found alive", COLORS.alive], ["Found dead", COLORS.dead], ["Still missing", COLORS.missing]];
+      const legend = mode === "missing"
+        ? [["Still missing - each bar starts at zero", COLORS.missing]]
+        : [["Found alive", COLORS.alive], ["Found dead", COLORS.dead], ["Still missing", COLORS.missing]];
       const legendStep = innerW / legend.length;
       legend.forEach(([label, color], index) => {
         const lx = margin.left + index * legendStep;
@@ -143,7 +151,9 @@
       canvas.append(svg);
       summary.innerHTML = mode === "share"
         ? "Shares describe each cohort's <strong>current registry status</strong>; they do not show when a person was located."
-        : "Each bar is a recorded year-of-disappearance cohort, not a cumulative total.";
+        : mode === "missing"
+          ? "Every red bar starts at <strong>zero</strong>, so annual still-missing counts can be compared directly. These are current outcomes, not the number newly missing that year."
+          : "Each stacked bar is a recorded year-of-disappearance cohort, not a cumulative total.";
     }
     root.querySelectorAll("button[data-mode]").forEach((b) => b.addEventListener("click", () => {
       mode = b.dataset.mode;
@@ -220,7 +230,9 @@
       return [...byDate.values()].sort((a, b) => a.snapshot.localeCompare(b.snapshot));
     }
     function draw() {
-      clear(canvas);
+      // Keep the tooltip attached while replacing only the rendered chart.
+      canvas.querySelectorAll("svg").forEach((n) => n.remove());
+      hideTip(tip);
       const values = series().map((d) => ({ ...d, share: d.conf / d.total }));
       const width = Math.max(300, canvas.clientWidth), height = width < 520 ? 330 : 360;
       const margin = { top: 20, right: 22, bottom: 48, left: width < 520 ? 54 : 72 };

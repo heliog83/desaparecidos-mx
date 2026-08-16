@@ -47,18 +47,25 @@
 }
 .chart-shell {
   background:var(--plate); border:1px solid var(--plate-edge); padding:18px 18px 14px;
-  color:#22201e;
+  color:var(--ink);
+}
+/* Article dark mode keeps analytical plates white. Give those plates their own
+   light colour tokens so headings, controls and SVG labels never inherit the
+   page's pale dark-mode ink. The record card uses the same white-paper rule. */
+.chart-shell, .record {
+  --ground:#fff; --plate:#fff; --ink:#22201e; --muted:#585d59; --rule:#cbcfc9;
+  --plate-edge:#d5d8d2; color-scheme:light;
 }
 .chart-heading { margin:0 0 3px; font-size:20px; line-height:1.25; font-weight:600; }
 .chart-subtitle { margin:0 0 14px; color:#666b67; font-size:13.5px; line-height:1.4; }
 .chart-controls { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px; align-items:center; }
 .chart-controls label { font-size:13px; color:#4f5450; }
 .chart-controls button, .chart-controls select {
-  border:1px solid #c8ccc7; background:#fff; color:#22201e; font:inherit;
+  border:1px solid var(--rule); background:var(--plate); color:var(--ink); font:inherit;
   font-size:13px; padding:6px 9px; border-radius:0;
 }
 .chart-controls button { cursor:pointer; }
-.chart-controls button[aria-pressed="true"] { background:#22201e; color:#fff; border-color:#22201e; }
+.chart-controls button[aria-pressed="true"] { background:var(--ink); color:var(--ground); border-color:var(--ink); }
 .chart-controls button:focus-visible, .chart-controls select:focus-visible {
   outline:2px solid #7a1f1f; outline-offset:2px;
 }
@@ -71,14 +78,15 @@
 .chart-sexenio-label { font-size:9.5px; fill:#6f746f; letter-spacing:.02em; }
 .chart-label { fill:#343634; font:12px var(--sans); }
 .chart-muted { fill:#707570; font:11px var(--sans); }
-.chart-value { fill:#22201e; font:600 12px var(--sans); }
+.chart-value { fill:var(--ink); font:600 12px var(--sans); }
 .chart-hit { fill:transparent; cursor:pointer; }
 .chart-tooltip {
-  position:absolute; pointer-events:none; display:none; z-index:3; max-width:240px;
-  padding:8px 10px; background:#22201e; color:#fff; font-size:12px; line-height:1.4;
+  position:absolute; pointer-events:none; display:none; z-index:10; width:max-content;
+  max-width:min(240px,calc(100% - 12px)); padding:8px 10px; background:#22201e;
+  color:#fff; font-size:12px; line-height:1.4; box-shadow:0 2px 8px rgb(0 0 0 / .28);
 }
 .chart-summary { margin-top:8px; color:#555a56; font-size:13px; min-height:1.4em; }
-.chart-summary strong { color:#22201e; }
+.chart-summary strong { color:var(--ink); }
 .static-fallback { margin-top:11px; font:13px var(--sans); color:var(--muted); }
 .static-fallback summary { cursor:pointer; }
 .static-fallback img { margin-top:10px; display:block; width:100%; height:auto; background:#fff; }
@@ -86,7 +94,7 @@
 .state-bars { display:flex; flex-direction:column; gap:7px; min-height:410px; }
 .state-row {
   display:grid; grid-template-columns:minmax(105px,175px) 1fr 62px; align-items:center;
-  gap:9px; border:0; background:transparent; padding:2px 0; color:#22201e;
+  gap:9px; border:0; background:transparent; padding:2px 0; color:var(--ink);
   font:13px var(--sans); text-align:left; cursor:pointer;
 }
 .state-row:focus-visible { outline:2px solid #7a1f1f; outline-offset:2px; }
