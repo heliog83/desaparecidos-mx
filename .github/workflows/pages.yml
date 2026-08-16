@@ -1,0 +1,60 @@
+# Publish the validated article to GitHub Pages.
+#
+# INERT BY DEFAULT: this runs only when triggered by hand (Actions tab ->
+# "Publish article to Pages" -> "Run workflow"), and only once Pages is enabled
+# for the repository with "Source: GitHub Actions". It will not fire on push.
+# To publish on every push to main, uncomment the `push:` trigger below.
+#
+# It deploys reports/article.html EXACTLY as committed. It does not rebuild and
+# does not recompute anything: the data the page is built from is gitignored, so
+# a rebuild here would be impossible and a partial rebuild would be worse than
+# none. Validation stays where docs/working-with-agents.md puts it — locally,
+# via `python src/build_page.py && python src/check_article.py`, before commit.
+# The committed HTML is therefore the audit trail.
+
+name: Publish article to Pages
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  #   paths: ["reports/article.html"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at once; let a newer one supersede a queued older one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble the site
+        run: |
+          set -euo pipefail
+          test -f reports/article.html || { echo "::error::reports/article.html is missing"; exit 1; }
+          mkdir -p _site
+          cp reports/article.html _site/index.html
+          # Fail loudly if the committed page lost its data payload, so a broken
+          # build cannot be published even though we are not rebuilding here.
+          for token in "407,253" "134,268" "36.8%"; do
+            grep -qF "$token" _site/index.html || { echo "::error::published HTML is missing $token — rebuild and revalidate locally"; exit 1; }
+          done
+          echo "Deploying $(wc -c < _site/index.html) bytes"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
