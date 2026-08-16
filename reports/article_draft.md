@@ -28,50 +28,40 @@ records arranged by the year the person disappeared. Both panels show status as
 recorded on one day, 15 August 2026; neither shows when a case changed status.
 Aggregate figures: RNPDNO dashboard API, consulted 2026-08-15 [1].*
 
-Start with the honest version of the number, because almost nobody publishes it.
-Mexico's National Registry of Disappeared and Missing Persons (RNPDNO) is usually
-quoted as a single figure — more than 134,000 disappeared. That figure is real: on
-15 August 2026 the registry recorded **134,268** people as disappeared or not located.
-But it is a *stock*, not a history. It counts people recorded as missing at that
-moment, out of **407,253** records in total: 249,502 of them recorded as found alive,
-23,483 as found dead.
+Start with the honest version of the number. On 15 August 2026 Mexico's National
+Registry of Disappeared and Missing Persons (RNPDNO) contained 407,253 records:
+249,502 people recorded as found alive, 23,483 found dead and 134,268 still missing
+[1]. Those are current registry statuses, not dates on which anybody was found.
 
-Read the chart as a photograph, not a film. Every number in it is a status **as
-recorded on 15 August 2026**. The registry publishes what a case looks like now; it
-does not publish when a case changed, or who changed it. So the top panel is a census
-of the present, and the bottom panel sorts that same census by the year each person
-went missing.
+Figure A looks at the subset assigned a year of disappearance between 2000 and 2025.
+Across those cohorts the registry currently records roughly 214,600 found alive,
+20,600 found dead and 117,100 still missing. The gap between those figures and the
+headline totals consists mainly of records without a usable year and records outside
+the chart's period.
 
-Three things in this chart hold up, stated as narrowly as the data allows:
+Three things can be read from the chart, provided its limits stay visible:
 
-- **Recorded disappearances per year rose steeply.** The registry holds ~100 records
-  for 2000, ~3,000 for 2007 as the militarised drug war began, and ~37,000 for 2025.
-  This is the count of *records the state holds*, not a measurement of how many
-  disappearances occurred. Reporting rates, prosecutorial practice and registry
-  coverage all changed enormously over the same 25 years, and cases can still be
-  registered years late — three new 2014 records appeared in an eight-week window in
-  2026. Treat the shape as a floor under a growing crisis, not a census of it.
-- **About two-thirds of post-2008 cohorts are currently recorded as located.** 65% of
-  the 2008 cohort, 75% of 2014, 68% of 2025 [1]. But these cohorts have had wildly
-  unequal time to reach that state — the 2008 group has been observed for eighteen
-  years, the 2025 group for months — so this is not a like-for-like comparison, and
-  it is not evidence that outcomes have held steady. It is a description of where the
-  register happens to stand today.
-- **Older records move very little between snapshots.** Comparing our two
-  consultations, eight weeks apart, 123 records from pre-2016 cohorts moved into a
-  located category, against 32,102 still recorded as missing. Annualising a single
-  eight-week window gives roughly 2.5% a year — a rough snapshot estimate, not a
-  measured rate, and one short window can be unrepresentative. What it does suggest
-  is that the register's older strata are close to static.
+- **Recent recorded cohorts are much larger.** The registry assigns roughly 3,000
+  reports to 2007 and 37,124 to 2025 [1]. Unlike a cumulative line, each bar
+  represents one recorded year-of-disappearance cohort. Delayed reporting and later
+  registry revisions still mean the bars are not a perfect measure of annual
+  incidence — three new 2014 records appeared inside a single eight-week window in
+  2026.
+- **Most post-2008 cohorts are currently recorded as roughly two-thirds located.**
+  The shares include 65% of the 2008 cohort, 75% of 2014 and 68% of 2025. Because
+  those cohorts have had radically different follow-up periods, this is a descriptive
+  registry pattern — not a measure of search effectiveness.
+- **The chart cannot show when a status changed.** A person assigned to the 2014
+  cohort may have been located in 2014 or years later. Nor can the public aggregate
+  data distinguish a confirmed recovery from an administrative correction or
+  reclassification: "located" is a registry category, not a verified outcome, and it
+  includes the contested 2023 *censo*. Nothing here credits any institution with
+  finding people.
 
-Two cautions carry through the whole piece. "Located" is a **registry category, not a
-verified outcome**: it includes people found alive, people found dead, and records
-reclassified in administrative batches — including the contested 2023 *censo*. It is
-not a measure of successful searching, and nothing here should be read as crediting
-any institution with finding people. And the bars for 2000–2005 look dramatic in the
-lower panel but cover only a few hundred records each, so we do not lean on them.
+(The bars for 2000–2005 look dramatic in percentage form, but each covers only a few
+hundred people. The article does not use those small cohorts to infer a trend.)
 
-## 2. Where people disappear — once you divide by population
+## 2. Where unresolved stock is greatest per resident
 
 **[FIG B — `figures/article/B_rate_map.png`]**
 *Caption: Unresolved disappearances per 100,000 residents by state, from the
@@ -85,12 +75,11 @@ Mexico's disappeared are not distributed the way Mexicans are. Estado de México
 Mexico City register the most cases in absolute terms, which is unsurprising: they
 are where the most people live. Divide by population and the map rearranges itself.
 
-The national rate is 98 unresolved disappearances per 100,000 residents. Tamaulipas,
-on the northeastern border, runs at 359 — more than four times Estado de México's 82.
-Behind it come Zacatecas (226) and Sinaloa (211): one state straddling the highway
-corridors that run north toward the border, the other the home of the country's
-oldest trafficking organisation. The states that lead by rate are the states the drug
-economy moves through.
+The national rate is 98 unresolved records per 100,000 residents. Tamaulipas, on the
+northeastern border, runs at 359 — more than four times Estado de México's 82. Behind
+it come Zacatecas (226) and Sinaloa (211). This is a map of the unresolved registry
+stock, not of underlying risk: differences in reporting, resolution and publication
+practice all affect where a state appears.
 
 This is the ordinary way to read registry data, and for one paragraph it works.
 Hold onto it. The next chart takes it apart.
@@ -111,41 +100,39 @@ every chart in this piece says so.
 The redaction is not evenly spread. Jalisco redacts two of every three records.
 Guerrero, one of the most violent states in the country, redacts one in eleven.
 
-## 4. The most violent states redact the least
+## 4. State violence does not explain confidentiality
 
 **[FIG D — `figures/article/D_redaction_vs_rate.png`]**
-*Caption: Confidential share vs disappearance rate, by state. If redaction were a
-by-product of crisis intensity, states would line up. They don't — the relationship
-with violence is actually negative (r = −0.42 against homicide rate, 28 states).
-Guerrero has ~2.4× Jalisco's homicide rate and one-seventh of its redaction share.
-Redaction 2025-12-02 [3]; homicide rates 2015–2025 cumulative [2].*
+*Caption: Confidential share vs cumulative homicide-victim rate, 2015–2025, by
+state. Higher state-level violence is not associated with more confidentiality; the
+relationship is moderately negative (Pearson r = −0.38, all 32 states). This
+ecological comparison is descriptive, not a test of risk in individual cases.
+Redaction 2025-12-02 [3]; homicide victims 2015–2025 cumulative [2].*
 
 There is an innocent explanation for all this redaction, and it deserves a fair test.
 
-If confidentiality exists to protect families, it should be most common where
-families are in the most danger. A mother in a state where the cartels read the
-newspapers has an obvious reason to keep her son's name out of a public database. On
-that theory, redaction should rise with violence.
+If statewide danger were the principal explanation for interstate variation in
+confidentiality, states with higher homicide rates should generally redact more.
 
-The data does not support it. Across the 28 states where both measures can be
-matched, redaction and homicide rate are *negatively* correlated — Pearson r = −0.42
-[2]. The states carrying the heaviest violence are among the least redacted. Colima
-has recorded roughly 950 homicides per 100,000 residents since 2015, the highest rate
-in the country; it redacts 9% of its disappearance records. Guerrero, at 550, redacts
-9%. Chihuahua, at 548, redacts 9%.
+The data do not show that pattern. Across all 32 states, the correlation between the
+confidential share and the cumulative homicide-victim rate for 2015–2025 is
+*negative* — Pearson r = −0.38 [2]. Several of the most violent states are among
+those publishing the largest share of registry detail. Colima has recorded roughly
+950 homicides per 100,000 residents since 2015, the highest rate in the country; it
+redacts 9% of its disappearance records. Guerrero, at 550, redacts 9%. Chihuahua, at
+548, redacts 9%.
 
 At the other end of the scale, Jalisco's homicide rate is less than half Guerrero's
 and it redacts 67%. Yucatán has both the lowest homicide rate and the lowest
-disappearance rate in the country — 18 and 12.5 per 100,000 — and redacts 62% of its
-records.
+unresolved-record rate in Mexico — 18 and 12.5 per 100,000 respectively — yet redacts
+62% of its records.
 
 The narrow conclusion, and the only one this supports: **state-level homicide rates
-do not explain state-level differences in confidentiality.** A state's violence tells
-you almost nothing about how much of its registry is readable. That does not
-establish what redaction *is* tracking, and it cannot rule out risk assessments made
-case by case, which no public field records. It does rule out the simplest version of
-the official rationale — that redaction maps onto danger — as an explanation for why
-Jalisco is at 67% and Guerrero at 9%.
+do not explain state-level differences in confidentiality.** This is an ecological
+comparison between states; it does not measure risk in any individual case, and it
+cannot rule out case-by-case risk assessments, which no public field records. What it
+does rule out is the simplest version of the official rationale — that redaction
+tracks danger — as the explanation for why Jalisco sits at 67% and Guerrero at 9%.
 
 So what does account for the difference?
 
@@ -182,12 +169,11 @@ authorities. Officials admitted no risk assessment underlies the classification.
 María de Jesús Solís, whose son disappeared in Zapopan in 2020, said she never
 signed anything and wants maximum visibility. Her son's record is confidential.
 
-**The redaction flag is an administrative artifact — a mixture of genuine family
-requests, missing paperwork defaulting to silence, and at least one blanket state
-policy — and no public field distinguishes them.**
+**The redaction flag mixes genuine family requests, missing consent paperwork and at
+least one blanket state policy — and no public field distinguishes them.**
 
 
-### 5b. And the flag moves in batches
+### 5b. The public totals sometimes move in batches
 
 **[FIG H — `figures/article/H_confidencial_batches.png`]**
 *Caption: CONFIDENCIAL records per state across ten monthly snapshots of the public
@@ -195,14 +181,14 @@ registry, April–December 2025, recovered from the mirror's version history.
 Nationally, confidential records grew 44,035 → 49,136 (+5,101) — 77% of the
 registry's entire net growth in those eight months. Ten pinned mirror snapshots [5].*
 
-If confidentiality reflected family choices, it would drift — a few records at a
-time, in every state. Instead it jumps. Tamaulipas reclassified ~2,500 existing
-records to confidential in two months (May–July 2025) while its total barely moved;
+If confidentiality were updated one family decision at a time, we might expect it to
+move gradually. Instead the published count sometimes jumps. Tamaulipas added ~2,500
+confidential records in two months (May–July 2025) while its total barely moved;
 its redaction share went from 20% to 39%, and every chart in this piece would have
 looked different had we pulled the data in April. Jalisco's confidential count was
-flat all year, then fell by ~1,400 in the last quarter as records left the federal
-registry entirely — months before the new recount was announced. Tabasco deleted a
-third of its records in a single month.
+flat all year, then fell by ~1,400 in the last quarter as the state's overall federal
+count also fell — months before the new recount was announced. Tabasco's published
+total fell by a third in a single month.
 
 The reversals do not stop at the edge of the panel. Mexico City's unresolved count
 climbed steadily all through 2025, from 6,025 in April to 7,242 in December — and
@@ -272,7 +258,7 @@ The state with the most redacted registry in Mexico is also the state where civi
 society keeps producing the evidence its registry lacks. Those are not two facts about
 Jalisco. They are one fact, seen from two sides.
 
-## 7. Guerrero: opacity by omission
+## 7. Guerrero: the limits of official counts
 
 **[FIG G — `figures/article/G_two_modes.png`]**
 *Caption: Guerrero's registry holds ~3,800–4,500 records. In Iguala alone, three
@@ -282,12 +268,10 @@ cannot say how many. Tlachinollan credits collective searches with 260 bodies
 recovered in Iguala, of which 69 were identified and returned to families. Sources:
 Tlachinollan, HRW [4]; registry figures 2025-12-02 microdata [3].*
 
-On the redaction chart, Guerrero is one of the clean ones: 9% confidential, against
-Jalisco's 67%. The same federal consent rules apply there; its search commission's
-privacy notice mirrors the national architecture almost word for word. Guerrero is not
-redacting less because it has better privacy law. It is redacting less because of what
-happens *before* a record can be redacted. In Guerrero, cases often never enter the
-registry at all.
+On the redaction chart, Guerrero appears unusually open: 9% confidential, against
+Jalisco's 67%. But a low confidential share describes only records that have entered
+the federal stock. It cannot tell us how completely the registry covers disappearances
+known to families and collectives.
 
 The state's registry holds roughly 3,800 records. In Iguala alone — one city — three
 family collectives jointly document 623 cases.
@@ -322,16 +306,11 @@ Buenavista de Cuéllar, three families approached the searching mothers to repor
 disappearances they had never reported to any authority. That is the gap happening in
 real time: people becoming known to a collective before they are known to the state.
 
-A low confidential share, then, is not a clean bill of health. Jalisco's registry hides
-what it holds; Guerrero's is missing what it never took in. A state can look
-transparent on the redaction chart precisely because it failed at the earlier step.
-
-The two modes are not opposites, and no state is purely one or the other — Jalisco's
-2,137 unregistered cases are omission, sitting alongside its redaction. They are two
-different points at which a person can vanish from the public record: before the state
-writes anything down, and after. Guerrero shows you the first clearly. Jalisco shows
-you the second. Most states are doing some of both, and the registry gives you no way
-to tell how much.
+A low confidential share, then, is not a clean bill of health. Jalisco documents how
+fields can disappear after a record enters the registry. Guerrero's family records
+show why coverage before that point must be investigated separately. The project
+cannot measure Guerrero's under-registration from these sources because the official
+and collective lists have not been linked person by person.
 
 ## 8. What this means — and what we cannot claim
 
@@ -344,10 +323,11 @@ important:
   notices**.
 - Cross-state comparisons of registry data measure *institutional publication
   practice* as much as they measure disappearance.
-- Opacity has two modes — **redacting what is recorded, and never recording** — and
-  a state can look clean on one axis while failing badly on the other.
-- In both modes, the gap is being filled by the same people: the families and
-  collectives searching, counting, and digging where the record ends.
+- There are two distinct visibility problems: **fields redacted inside the registry,
+  and disappearances documented by families outside it**. Their overlap must be
+  measured before the second can be called an undercount.
+- Families and collectives provide an essential parallel record, but the registry does
+  not provide the identifiers needed to reconcile the two systems publicly.
 
 That is the subject of the next piece.
 
@@ -369,7 +349,7 @@ Frozen with source hashes at `data/publication_freezes/2026-08-15/`.
 
 **[2] Homicide and state-capacity variables — vintage 2015–2025 cumulative.**
 SESNSP homicide victims aggregated 2015–2025 per 100,000; INEGI ENCIG 2025
-(corruption prevalence) and PIBE 2024 (GDP per capita). Matched to 28 of 32 states.
+(corruption prevalence) and PIBE 2024 (GDP per capita). Matched to all 32 states.
 Used only for the correlations in §4 and the negative controls in
 `docs/methodology.md` §7.
 
@@ -407,9 +387,9 @@ automatically against the freeze on each build
 (`data/publication_freezes/2026-08-15/derived/automated_claim_checks.csv`). All figures
 reproduce from `src/` in the project repository
 (https://github.com/heliog83/desaparecidos-mx). Full methodology:
-[docs/methodology.md](docs/methodology.md); refresh audit and number-by-number diff:
-[docs/data-refresh-2026-08-15.md](docs/data-refresh-2026-08-15.md); source audit:
-[reports/publication_data_audit_2026-08-15.md](reports/publication_data_audit_2026-08-15.md).
+[methodology](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/methodology.md); refresh audit and number-by-number diff:
+[data refresh audit](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/data-refresh-2026-08-15.md); source audit:
+[source audit](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/publication_data_audit_2026-08-15.md).
 
 Ethics line (keep): behind every record is a person and a searching family. This
 piece reports uncertainty as uncertainty and does not present proxies as counts.
@@ -438,23 +418,23 @@ material removed from this one. §8's closing line already sets that up.
 
 ## FIGURE PRODUCTION NOTES (the data-viz workplan)
 
-STYLE PASS DONE (2026-07-06): all 7 publication figures live in
-`reports/figures/article/` (A–G), built by `src/article_figs.py` (A–D) and
+STYLE PASS DONE (updated 2026-08-16): all 8 publication figures live in
+`reports/figures/article/` (A–H), built by `src/article_figs.py` (A–D) and
 `src/consent_accounting.py` / `src/jalisco_divergence.py` / `src/two_modes.py`
-(E–G; these also still emit the numbered pipeline versions). Shared palette,
+(E–G; these also still emit the numbered pipeline versions), plus
+`src/version_audit.py` (H). Shared palette,
 typography and caption format in `src/article_style.py` — edit there to restyle
-the whole set. Remaining viz decisions, if any, are ES caption pairs and any
-personal design touches. Original per-figure notes kept below for reference:
+the whole set.
 
-- **FIG A = fig 19** (signature). Already the strongest asset. Add direct labels on
-  the three bands; consider annotating 2007 (drug-war onset) and the resolution
-  gradient.
+- **FIG A.** One-panel stacked cohorts with direct outcome labels and a careful
+  current-status caveat. The page adds a counts/share toggle and exact tooltips.
 - **FIG B = fig 06 + 05.** Choropleth needs a discrete legend (rates bin better
   than continuous), and top-3 state labels on the map itself.
 - **FIG C = fig 09 or 04.** Horizontal ranking, national reference line at 36.8%,
   Jalisco/Nayarit/Guerrero/Colima emphasized.
-- **FIG D = fig 10 or 14.** Grey all states except the four case states; annotate
-  the two axes in plain language ("more redacted →", "more disappearances →").
+- **FIG D.** Confidential share against the cumulative homicide-victim rate,
+  2015–2025; all 32 states, highlighted outliers, Pearson r = −0.38. This is an
+  ecological description, not a causal or individual-risk model.
 
 New figures — ALL BUILT (baseline styling; restyle pass pending):
 
@@ -474,14 +454,13 @@ New figures — ALL BUILT (baseline styling; restyle pass pending):
   Six event markers 2020–2026. CAVEAT kept in footer: registry definitions differ;
   the 2026 federal drop coincides with the announced recount (A dónde van los
   desaparecidos, 2026-01-08) — say "coincides", do not assert cause.
-- **fig 22 — the two modes (for §7, the thesis chart).** BUILT (safer option 2):
-  `src/two_modes.py` → `figures/22_two_modes_of_opacity.png`. Left: Jalisco 13,766
-  split 67% CONFIDENCIAL / 33% public, annotated with the 1,026
-  active-notice-yet-confidential cases. Right: Guerrero 4,453 statewide (9%
-  confidential) beside the 623 Iguala collective-documented bar, shared y-scale,
-  footer states explicitly that denominators differ and the Iguala figure is a
-  documented example, not a comparable measurement.
+- **fig 22 — parallel evidence systems (for §7).** BUILT:
+  `src/two_modes.py` → `figures/22_two_modes_of_opacity.png`. Left: Jalisco's
+  documented denominator and redaction path. Right: Guerrero's official statewide
+  stock and the Iguala collective record shown as separate evidence boxes, with
+  overlap explicitly unknown. They are not placed on a shared quantitative scale.
 
-Interactive (optional, dashboard cross-link): fig 16's interactive typology is the
-natural embed; update its language per the memo ("administrative redaction
-artifact", omission caveat) before linking.
+The standalone article now embeds three dependency-free responsive interactives:
+Figure A switches counts/shares; Figure B ranks and inspects every state by rate,
+count or confidential share; Figure H explores every stored national or state
+snapshot. Static figures remain in `<noscript>` fallbacks.

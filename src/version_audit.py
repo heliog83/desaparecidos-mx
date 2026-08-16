@@ -85,7 +85,7 @@ def fig_batches(panel: pd.DataFrame) -> None:
 
     fig, axes = plt.subplots(2, 3, figsize=(11.5, 6.6), sharex=True)
     fig.subplots_adjust(top=0.82, bottom=0.15, hspace=0.45, wspace=0.3)
-    st.title(fig, "The redaction flag moves in batches",
+    st.title(fig, "The public totals sometimes move in batches",
              "CONFIDENCIAL records per state, ten monthly snapshots of the public registry, Apr–Dec 2025")
 
     notes = {
@@ -115,7 +115,8 @@ def fig_batches(panel: pd.DataFrame) -> None:
                f"National: confidential records grew {int(nat.conf.iloc[0]):,} to {int(nat.conf.iloc[-1]):,} "
                f"(+{int(nat.conf.iloc[-1] - nat.conf.iloc[0]):,}) Apr–Dec 2025 — 77% of the registry's net growth — "
                f"share {nat.share.iloc[0]:.1%} to {nat.share.iloc[-1]:.1%}. Step changes, flat totals during "
-               "reclassifications, and batch deletions are administrative signatures, not family decisions.\n"
+               "reclassifications, and batch deletions are consistent with bulk administrative processing. The snapshots "
+               "do not reveal whether the underlying cause was consent, correction, resolution, deletion or another operation.\n"
                "Source: ten pinned snapshots of the lapanquecita RNPDNO mirror (same scrape method throughout), "
                "Apr 2025–Dec 2025. Consulted 2026-07-11.")
     fig.savefig(FIGDIR / "23_confidencial_batches.png", dpi=200, bbox_inches="tight")

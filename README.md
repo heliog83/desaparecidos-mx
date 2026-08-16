@@ -3,13 +3,14 @@
 **What Mexico's public registry of disappeared people does not let you see — and what
 can still be measured through it.**
 
-More than 133,000 people are registered as disappeared or not-located in Mexico. For
-**36.8% of them the public record contains a single fact: the state where they
-vanished.** Every other field — date, age, sex, municipality, case status — is replaced
-by the word `CONFIDENCIAL`.
+More than 134,000 people are currently registered as disappeared or not-located in
+Mexico. In the frozen record-level mirror dated 2 December 2025, **36.8% of unresolved
+records contained a single public fact: the state.** Every other field — date, age,
+sex, municipality and case status — was replaced by the word `CONFIDENCIAL`.
 
-This project quantifies that redaction, establishes what causes it, and shows that it is
-an administrative artifact rather than a record of families choosing privacy.
+This project quantifies that redaction, tests several explanations for it and documents
+how administrative decisions shape what the public can see. The available data do not
+identify a single cause for every confidential record.
 
 📄 **Read the article:** *The Redacted Crisis* — [published version](https://claude.ai/code/artifact/5f7022ae-4357-4fb8-a16e-a8e40ac988e7)
 · [markdown source](reports/article_draft.md)
@@ -18,34 +19,38 @@ an administrative artifact rather than a record of families choosing privacy.
 
 ## Findings
 
-**1. The redaction flag is not about protecting people at risk.**
-Redaction correlates *negatively* with violence (r = −0.42 against homicide rate, 28
-states). The three most violent states — Colima, Guerrero, Chihuahua — each redact 9%.
-Yucatán, which has both the lowest homicide rate and the lowest disappearance rate in
-the country, redacts 62%.
+**1. State violence does not explain interstate differences in confidentiality.**
+Across all 32 states, confidential share correlates *negatively* with the cumulative
+homicide-victim rate for 2015–2025 (Pearson r = −0.38). That state-level association is
+descriptive: it neither measures danger in individual cases nor establishes why a
+particular record was marked confidential.
 
-**2. It is an administrative artifact, and the government's own paperwork says so.**
+**2. The government's own paperwork reveals an administrative and consent-accounting gap.**
 In 2020 the National Search Commission told the transparency institute that for **77.4%
 of records no consent information existed at all** (Oficio SEGOB/CNBP/1349/2020). The
 Fiscalía of Jalisco declared its *entire* federal submission non-publishable. Journalists
 later found 4,765 cases marked confidential while the same authorities circulated public
 search posters for them.
 
-**3. The flag moves in batches, not in individual decisions.**
+**3. The public totals sometimes move in batches.**
 Rebuilding ten monthly snapshots from a mirror's git history: confidential records grew
 44,035 → 49,136 in eight months — **77% of the registry's entire net growth**. Tamaulipas
 reclassified ~2,500 existing records in two months while its total barely moved (share
-20% → 39%). Mexico City added 1,217 records through 2025, then shed 1,327 by August 2026.
+20% → 39%). These changes are consistent with bulk administrative processing, but the
+snapshots do not reveal whether the cause was consent, correction, resolution, deletion
+or another operation.
 
-**4. Opacity has two modes, and a state can look clean on the wrong axis.**
-Jalisco redacts 67% of its registry. Guerrero redacts 9% — but registers ~3,800 people
-while three collectives document 623 cases in the city of Iguala alone. One registry
-hides what it holds; the other is missing what it never took in.
+**4. Official and family records provide different views.**
+Jalisco redacts 67% of its registry. Guerrero redacts 9%, while three collectives
+document 623 cases in the city of Iguala. The person-level overlap is unknown, so these
+figures cannot be added or subtracted; they establish parallel systems of evidence, not
+a measured undercount.
 
-**5. Resolution has been flat for eighteen years.**
-Since 2008, close to two-thirds of each year's reported disappearances end with the
-person located, while annual volume more than tripled. But of those who disappeared
-before 2016 and are still missing, only ~2.5% are found per year.
+**5. Recent recorded cohorts are much larger.**
+For most cohorts since 2008, roughly two-thirds are currently classified as located,
+even as annual recorded volume more than tripled. Because the aggregate data contain a
+year of disappearance but no date of location, this pattern cannot measure search speed
+or show how many people were found in any particular year.
 
 Full reasoning and caveats: [docs/methodology.md](docs/methodology.md) ·
 [docs/opacity-mechanism.md](docs/opacity-mechanism.md)

@@ -13,7 +13,9 @@ Run:    python src/build_page.py
 from __future__ import annotations
 
 import base64
+import csv
 import html
+import json
 import re
 from pathlib import Path
 
@@ -21,9 +23,15 @@ ROOT = Path(__file__).resolve().parents[1]
 DRAFT = ROOT / "reports" / "article_draft.md"
 FIGDIR = ROOT / "reports" / "figures" / "article"
 OUT = ROOT / "reports" / "article.html"
+INTERACTIVE_CSS = ROOT / "src" / "article_interactive.css"
+INTERACTIVE_JS = ROOT / "src" / "article_interactive.js"
+FLOW_YEAR = ROOT / "data" / "processed" / "flow_by_year.csv"
+FLOW_TOTALS = ROOT / "data" / "processed" / "flow_totales.csv"
+STATE_DATA = ROOT / "data" / "processed" / "state_opacity_enriched.csv"
+SNAPSHOT_DATA = ROOT / "data" / "processed" / "confidencial_panel.csv"
 
 TITLE = "The Redacted Crisis"
-SUBTITLE = "What Mexico's registry of the disappeared won't let you see"
+SUBTITLE = "What Mexico's public registry leaves unseen"
 
 # Field readout for the hero: exactly what the public registry returns for a
 # confidential record. Structure only — no person, no invented identifiers.
@@ -40,6 +48,149 @@ HERO_FIELDS = [
 def img_uri(name: str) -> str:
     data = base64.b64encode((FIGDIR / name).read_bytes()).decode()
     return f"data:image/png;base64,{data}"
+
+
+def _number(value: str | None, *, integer: bool = False) -> float | int:
+    if value is None or value == "":
+        return 0 if integer else 0.0
+    parsed = float(str(value).replace(",", "").replace("%", "").strip())
+    return int(round(parsed)) if integer else parsed
+
+
+def _state_label(name: str) -> str:
+    label = name.strip().title()
+    for token in (" De ", " Del ", " La ", " Las ", " Los "):
+        label = label.replace(token, token.lower())
+    return label
+
+
+def chart_data() -> dict:
+    outcomes = []
+    with FLOW_YEAR.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            try:
+                year = int(row.get("") or "")
+            except ValueError:
+                continue
+            if 2000 <= year <= 2025:
+                outcomes.append({
+                    "year": year,
+                    "alive": _number(row.get("loc_con_vida"), integer=True),
+                    "dead": _number(row.get("loc_sin_vida"), integer=True),
+                    "missing": _number(row.get("desap_y_nollocal"), integer=True),
+                })
+
+    states = []
+    with STATE_DATA.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            name = (row.get("entidad") or row.get("state_key") or "").strip()
+            if not name:
+                continue
+            states.append({
+                "name": name,
+                "label": _state_label(name),
+                "count": _number(row.get("total_records"), integer=True),
+                "rate": round(float(row.get("tasa_100k") or 0), 1),
+                "confidential_share": round(float(row.get("confidential_share") or 0), 6),
+            })
+
+    snapshots = []
+    with SNAPSHOT_DATA.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            snapshots.append({
+                "snapshot": row["snapshot"],
+                "name": _state_label(row["ENTIDAD"]),
+                "total": _number(row["total"], integer=True),
+                "conf": _number(row["conf"], integer=True),
+            })
+    return {"outcomes": outcomes, "states": states, "snapshots": snapshots}
+
+
+def national_status() -> str:
+    totals: dict[str, int] = {}
+    with FLOW_TOTALS.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            totals[row[""]] = _number(row["0"], integer=True)
+    alive = totals["TotalLocalizadosCV"]
+    dead = totals["TotalLocalizadosSV"]
+    missing = totals["TotalDesaparecidos"]
+    total = totals["TotalGlobal"]
+    return f"""
+    <section class="status-snapshot" aria-labelledby="status-title">
+      <h2 id="status-title">One in three remains missing</h2>
+      <p class="asof">Current RNPDNO registry status, 15 August 2026</p>
+      <div class="status-track" role="img" aria-label="Of {total:,} registry records, {alive:,} are found alive, {dead:,} found dead and {missing:,} still missing">
+        <div class="status-segment status-alive"><strong>61%</strong><span>found alive</span></div>
+        <div class="status-segment status-dead"><strong>6%</strong><span>found dead</span></div>
+        <div class="status-segment status-missing"><strong>33%</strong><span>still missing</span></div>
+      </div>
+      <div class="status-key">
+        <span><b>{alive:,}</b> found alive</span>
+        <span><b>{dead:,}</b> found dead</span>
+        <span><b>{missing:,}</b> still missing</span>
+        <span><b>{total:,}</b> total records</span>
+      </div>
+      <p class="status-note">These are people's current registry statuses. They do not show when somebody was located or why a record changed category.</p>
+    </section>"""
+
+
+def interactive_figure(letter: str, caption: str, image_name: str) -> str | None:
+    fallback = (
+        f'<details class="static-fallback"><summary>Show static version</summary>'
+        f'<img src="{img_uri(image_name)}" alt="Static Figure {letter}" loading="lazy"></details>'
+    )
+    if letter == "A":
+        return f"""<figure class="interactive-figure" data-chart="outcomes">
+<div class="chart-shell">
+  <h3 class="chart-heading">Recorded disappearances, by year and current outcome</h3>
+  <p class="chart-subtitle">Year of disappearance, 2000–2025. Hover or focus a bar for exact values.</p>
+  <div class="chart-controls" aria-label="Outcome chart display">
+    <button type="button" data-mode="absolute" aria-pressed="true">People</button>
+    <button type="button" data-mode="share" aria-pressed="false">Share of cohort</button>
+  </div>
+  <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="chart-summary" aria-live="polite"></div>
+</div>
+{fallback}
+<figcaption><span class="figlabel">Fig. A</span> {inline(caption)}</figcaption>
+</figure>"""
+    if letter == "B":
+        return f"""<figure class="plate">
+<img src="{img_uri(image_name)}" alt="Map of unresolved records per 100,000 residents by state" loading="lazy">
+<figcaption><span class="figlabel">Fig. B</span> {inline(caption)}</figcaption>
+</figure>
+<figure class="interactive-figure" data-chart="states">
+<div class="chart-shell">
+  <h3 class="chart-heading">Explore the states</h3>
+  <p class="chart-subtitle">The ranked view uses the December 2025 record-level snapshot throughout.</p>
+  <div class="chart-controls">
+    <label for="state-select">Highlight state</label><select id="state-select"></select>
+    <button type="button" data-mode="rate" aria-pressed="true">Rate</button>
+    <button type="button" data-mode="count" aria-pressed="false">Count</button>
+    <button type="button" data-mode="confidential" aria-pressed="false">Confidential share</button>
+  </div>
+  <div class="state-bars" aria-live="polite"></div>
+  <div class="state-detail" aria-live="polite"></div>
+</div>
+</figure>"""
+    if letter == "H":
+        return f"""<figure class="interactive-figure" data-chart="snapshots">
+<div class="chart-shell">
+  <h3 class="chart-heading">How the public registry changes between snapshots</h3>
+  <p class="chart-subtitle">Ten comparable snapshots, April–December 2025. A change is a registry movement, not a known real-world event.</p>
+  <div class="chart-controls">
+    <label for="snapshot-state">State</label><select id="snapshot-state"></select>
+    <button type="button" data-mode="share" aria-pressed="true">Confidential share</button>
+    <button type="button" data-mode="conf" aria-pressed="false">Confidential count</button>
+    <button type="button" data-mode="total" aria-pressed="false">Total unresolved</button>
+  </div>
+  <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="chart-summary" aria-live="polite"></div>
+</div>
+{fallback}
+<figcaption><span class="figlabel">Fig. H</span> {inline(caption)}</figcaption>
+</figure>"""
+    return None
 
 
 def inline(t: str) -> str:
@@ -85,12 +236,16 @@ def parse_body(md: str) -> str:
             cap = ""
             if rest.startswith("*Caption:"):
                 cap = " ".join(rest.strip().strip("*").replace("Caption:", "", 1).split())
-            out.append(
-                f'<figure class="plate">\n'
-                f'<img src="{img_uri(Path(path).name)}" alt="Figure {letter}" loading="lazy">\n'
-                f'<figcaption><span class="figlabel">Fig. {letter}</span> '
-                f"{inline(cap)}</figcaption>\n</figure>"
-            )
+            enhanced = interactive_figure(letter, cap, Path(path).name)
+            if enhanced:
+                out.append(enhanced)
+            else:
+                out.append(
+                    f'<figure class="plate">\n'
+                    f'<img src="{img_uri(Path(path).name)}" alt="Figure {letter}" loading="lazy">\n'
+                    f'<figcaption><span class="figlabel">Fig. {letter}</span> '
+                    f"{inline(cap)}</figcaption>\n</figure>"
+                )
             continue
 
         # bullet list: items start with "- " and may wrap over several lines
@@ -147,12 +302,18 @@ def ascii_safe(s: str) -> str:
 
 def build() -> str:
     md = DRAFT.read_text(encoding="utf-8")
+    data_json = json.dumps(chart_data(), ensure_ascii=True, separators=(",", ":"))
+    data_json = data_json.replace("<", "\\u003c").replace("&", "\\u0026")
     return ascii_safe(TEMPLATE.format(
         title=TITLE,
         subtitle=SUBTITLE,
         hero=hero_record(),
+        status=national_status(),
         body=parse_body(md),
         methods=parse_methods(md),
+        interactive_css=INTERACTIVE_CSS.read_text(encoding="utf-8"),
+        chart_data=data_json,
+        interactive_js=INTERACTIVE_JS.read_text(encoding="utf-8"),
     ))
 
 
@@ -295,6 +456,7 @@ TEMPLATE = """<title>{title}</title>
     figure.plate img {{ padding:9px; }}
   }}
   @media (prefers-reduced-motion:reduce) {{ * {{ animation:none !important; transition:none !important; }} }}
+{interactive_css}
 </style>
 
 <div class="wrap">
@@ -306,10 +468,12 @@ TEMPLATE = """<title>{title}</title>
     </p>
     <h1>{title}</h1>
     <p class="subtitle">{subtitle}</p>
-    <p class="standfirst">Mexico's official registry recorded 134,268 people as disappeared
-      or not located on 15 August 2026. For one in three of them, the public record contains
-      a single fact: the state where they vanished. This is the story of who decides that —
-      and of the two very different ways a person can go missing from the data itself.</p>
+    <p class="standfirst">Mexico's official registry counts more than 134,000 disappeared
+      people. For one in three of them, the public record contains a single fact: the state
+      where they vanished. This is the story of how publication decisions shape what the
+      public can see — and of two ways a person can go missing from the data itself.</p>
+
+{status}
 
     <div class="record">
       <p class="rlabel">What a confidential record contains</p>
@@ -337,6 +501,8 @@ TEMPLATE = """<title>{title}</title>
     <span>Data consulted 2026-08-15</span>
   </footer>
 </div>
+<script type="application/json" id="article-chart-data">{chart_data}</script>
+<script>{interactive_js}</script>
 """
 
 

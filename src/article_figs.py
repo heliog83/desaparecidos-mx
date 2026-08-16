@@ -31,6 +31,7 @@ TOTALS = FREEZE / "sources" / "rnpdno_api" / "totales.json"
 PARQUET = ROOT / "data" / "processed" / "rnpdno_clean.parquet"
 RATES = ROOT / "data" / "processed" / "state_rates.csv"
 GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
+ENRICHED = ROOT / "data" / "processed" / "state_opacity_enriched.csv"
 
 ALIVE = "#8fadc4"  # light tint of article blue for the large found-alive band
 CASE_RED = {"14": "Jalisco", "18": "Nayarit"}      # redaction-mode case states
@@ -174,8 +175,8 @@ def fig_b():
 
     fig, ax = plt.subplots(figsize=(10, 6.4))
     fig.subplots_adjust(top=0.86)
-    st.title(fig, "Where the crisis is most intense, per person",
-             "Registered disappeared per 100,000 residents (cumulative stock ÷ 2025 population)", x=0.06)
+    st.title(fig, "Where unresolved stock is highest per resident",
+             "Unresolved registry records per 100,000 residents (current stock ÷ 2025 population)", x=0.06)
     pc = PatchCollection(patches, facecolor=colors, edgecolor="white", linewidths=0.5)
     ax.add_collection(pc)
     ax.autoscale_view()
@@ -247,35 +248,42 @@ def fig_c():
 
 
 def fig_d():
-    g, _ = load_opacity()
+    g = pd.read_csv(ENRICHED)
+    g = g.dropna(subset=["confidential_share", "homicide_victims_2015_2025_per100k"])
+    xcol = "homicide_victims_2015_2025_per100k"
+    r = g["confidential_share"].corr(g[xcol])
 
     fig, ax = plt.subplots(figsize=(9, 6.4))
     fig.subplots_adjust(top=0.87, bottom=0.18)
-    st.title(fig, "Redaction does not follow the crisis",
-             "If confidentiality tracked danger, states would line up. They don't.", x=0.06)
-    others = g[~g.index.isin(list(CASE_RED) + list(CASE_BLUE))]
-    ax.scatter(others["tasa_100k"], others["share"], s=48, color=st.SAND,
+    st.title(fig, "State violence does not explain confidentiality",
+             f"Confidential share vs cumulative homicide-victim rate, 2015–2025 (Pearson r={r:.2f}; 32 states)", x=0.06)
+    highlighted = {"JALISCO", "NAYARIT", "GUERRERO", "COLIMA", "CHIHUAHUA", "YUCATÁN"}
+    others = g[~g["entidad"].isin(highlighted)]
+    ax.scatter(others[xcol], others["confidential_share"], s=48, color=st.SAND,
                edgecolor="white", linewidth=0.6, zorder=2)
-    offsets = {"Jalisco": (10, 4, "left"), "Nayarit": (-10, -4, "right"),
-               "Guerrero": (10, 4, "left"), "Colima": (10, 4, "left")}
-    for cve, name in {**CASE_RED, **CASE_BLUE}.items():
-        row = g.loc[cve]
-        color = st.RED if cve in CASE_RED else st.BLUE
+    offsets = {"JALISCO": (10, 5, "left"), "NAYARIT": (-10, -5, "right"),
+               "GUERRERO": (10, 4, "left"), "COLIMA": (-10, 4, "right"),
+               "CHIHUAHUA": (10, -11, "left"), "YUCATÁN": (10, 4, "left")}
+    for name in highlighted:
+        row = g[g["entidad"] == name].iloc[0]
+        color = st.RED if name in {"JALISCO", "NAYARIT", "YUCATÁN"} else st.BLUE
         dx, dy, ha = offsets[name]
-        ax.scatter(row["tasa_100k"], row["share"], s=110, color=color, zorder=3)
-        ax.annotate(name, (row["tasa_100k"], row["share"]),
+        ax.scatter(row[xcol], row["confidential_share"], s=100, color=color, zorder=3)
+        ax.annotate(name.title(), (row[xcol], row["confidential_share"]),
                     xytext=(dx, dy), textcoords="offset points", ha=ha,
                     fontsize=10, weight="bold", color=color)
-    tam = g.loc["28"]
-    ax.annotate("Tamaulipas", (tam["tasa_100k"], tam["share"]), xytext=(-8, 8),
-                textcoords="offset points", ha="right", fontsize=8.5, color=st.MUTED)
 
-    ax.set_xlabel("Unresolved disappearances per 100,000 residents   (right = more disappearances)")
-    ax.set_ylabel("Share of records redacted   (up = more hidden)")
+    slope, intercept = np.polyfit(g[xcol], g["confidential_share"], 1)
+    xs = np.linspace(g[xcol].min(), g[xcol].max(), 100)
+    ax.plot(xs, intercept + slope * xs, color=st.MUTED, lw=1.2, ls="--", zorder=1)
+
+    ax.set_xlabel("Homicide victims per 100,000 residents, cumulative 2015–2025")
+    ax.set_ylabel("Share of unresolved records marked CONFIDENCIAL")
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1))
     ax.set_ylim(0, 0.75)
-    st.caption(fig, "Each dot is a state. Guerrero has roughly 2.4× Jalisco's homicide rate and one-seventh of its\n"
-                    "redaction share. Source: RNPDNO mirror microdata + CONAPO population.")
+    st.caption(fig, "Each dot is a state. The negative association is descriptive and does not measure risk in individual cases or\n"
+                    "establish why a record was marked confidential. Sources: RNPDNO mirror microdata; SESNSP victims, 2015–2025;\n"
+                    "CONAPO population. Data vintage: 2025-12-02.")
     st.save(fig, "D_redaction_vs_rate.png")
 
 
