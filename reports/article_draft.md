@@ -55,10 +55,19 @@ in absolute counts, fall to around 80. Note: on the live registry consulted
 2026-08-15, CDMX's unresolved count has since fallen by ~1,300 (a rate of ~64) —
 see §5b.*
 
-One paragraph of geography, because it sets up the puzzle: the map of disappearance
-is not the map of population. Per-capita, the northeastern corridor and the
-Pacific trafficking routes dominate. Keep this section short — its job is to
-establish that we *can* compare states… which is exactly what the next chart breaks.
+Mexico's disappeared are not distributed the way Mexicans are. Estado de México and
+Mexico City register the most cases in absolute terms, which is unsurprising: they
+are where the most people live. Divide by population and the map rearranges itself.
+
+The national rate is 98 unresolved disappearances per 100,000 residents. Tamaulipas,
+on the northeastern border, runs at 359 — more than four times Estado de México's 82.
+Behind it come Zacatecas (226) and Sinaloa (211): one state straddling the highway
+corridors that run north toward the border, the other the home of the country's
+oldest trafficking organisation. The states that lead by rate are the states the drug
+economy moves through.
+
+This is the ordinary way to read registry data, and for one paragraph it works.
+Hold onto it. The next chart takes it apart.
 
 ## 3. The wall: one in three records is blank
 
@@ -76,16 +85,37 @@ every chart in this piece says so.
 The redaction is not evenly spread. Jalisco redacts two of every three records.
 Guerrero, one of the most violent states in the country, redacts one in eleven.
 
-## 4. Redaction does not follow violence
+## 4. The most violent states redact the least
 
 **[FIG D — `figures/article/D_redaction_vs_rate.png`]**
 *Caption: Confidential share vs disappearance rate, by state. If redaction were a
-by-product of crisis intensity, states would line up. They don't: Guerrero has ~2.4×
-Jalisco's homicide rate and one-seventh of its redaction share.*
+by-product of crisis intensity, states would line up. They don't — the relationship
+with violence is actually negative (r = −0.42 against homicide rate, 28 states).
+Guerrero has ~2.4× Jalisco's homicide rate and one-seventh of its redaction share.*
 
-If confidentiality were protecting families in the most dangerous places, the most
-violent states would redact the most. The scatter says otherwise. Whatever drives
-redaction, it is not violence. So what is it?
+There is an innocent explanation for all this redaction, and it deserves a fair test.
+
+If confidentiality exists to protect families, it should be most common where
+families are in the most danger. A mother in a state where the cartels read the
+newspapers has an obvious reason to keep her son's name out of a public database. On
+that theory, redaction should rise with violence.
+
+It does the opposite. Across the 28 states where both measures can be matched, the
+correlation between how much a state redacts and how violent it is comes out
+*negative* — −0.42. The most violent states in Mexico are among its most transparent.
+Colima has recorded roughly 950 homicides per 100,000 residents since 2015, the worst
+rate in the country; it redacts 9% of its disappearance records. Guerrero, at 550,
+redacts 9%. Chihuahua, at 548, redacts 9%.
+
+Now look at the other end of the scale. Jalisco's homicide rate is less than half
+Guerrero's, and it redacts 67%. And then there is Yucatán, which is the cleanest test
+the data offers: it has the lowest homicide rate in Mexico *and* the lowest
+disappearance rate in Mexico — 18 and 12.5 per 100,000 respectively — and it redacts
+62% of its records. Whatever Yucatán is protecting those families from, it is not
+the danger they are in.
+
+Whatever the confidentiality flag is tracking, it is not risk to families. So what
+is it?
 
 ## 5. Who decides a record goes dark
 
@@ -160,25 +190,46 @@ decided or why.
 ## 6. Jalisco: opacity by redaction
 
 **[FIG F — `figures/article/F_jalisco_divergence.png`]**
-*Caption: Jalisco's registry conflict, 2020–2025: blanket confidentiality declared
-(2020), the state stops feeding the national registry in favor of its own (2022),
-"erased" names controversy (2023), official denial (2024), Teuchitlán (2025).
-Federal vs state registry totals diverge by hundreds of cases.*
+*Caption: Jalisco's registry conflict, 2020–2026: blanket confidentiality declared
+(2020), the state stops feeding the national registry in favour of its own (2022),
+"erased" names controversy (2023), official denial (2024), Teuchitlán (2025), new
+federal recount (2026). The two registries move independently and now differ by
+roughly 3,000 people — the federal count fell to 12,776 by June 2026 and has since
+edged back to 12,964, while the state's stands near 16,000. Markers are documented
+snapshots, not a continuous series, and the two registries define their counts
+differently.*
 
-Jalisco has the largest number of unresolved cases among large states and redacts
-67% of them. It also, since 2022, effectively seceded from the national registry:
-disappearances were logged in the state's own registry (REPD) and stopped flowing
-to the RNPDNO — a gap critics put at up to ~3,000 people, and which the state
-government answered with a communiqué titled "Jalisco does not manipulate its
-registry, nor erase figures." Today the federal and state registries disagree with
-each other by hundreds of cases at any given cut-off date.
+Jalisco redacts more of its registry than any other state in Mexico: 9,216 of its
+13,766 unresolved records, two out of every three. It is also the state that stopped
+fully participating in the national count.
 
-What the registry would not document, families did. In March 2025 the collective
-Guerreros Buscadores de Jalisco entered Rancho Izaguirre in Teuchitlán and found a
-cartel recruitment-and-extermination site: clothing, shoes, backpacks, notebooks
-with names, bone fragments. That year two searchers from Jalisco collectives were
-killed. The state with the most redacted registry in Mexico is also the state
-where civil society keeps producing the evidence the registry lacks.
+From 2022, under then-governor Enrique Alfaro, Jalisco largely stopped reporting
+disappearances to the RNPDNO and logged them in its own state registry instead. The
+country now has two official counts of Jalisco's disappeared, kept by two governments,
+and they do not agree with each other. Animal Político put the resulting gap at up to
+2,986 people. The state government's answer, in January 2024, was a communiqué titled
+"Jalisco does not manipulate its registry, nor erase figures."
+
+Jalisco is also where the contradiction from section 5 concentrates. Of the 4,765
+confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
+more than any other state. The same investigation found a further 2,137 disappearances
+between 2019 and mid-2024 that were never registered anywhere at all: not redacted,
+simply absent.
+
+What the registry would not record, families recorded themselves. On 5 March 2025 the
+collective Guerreros Buscadores de Jalisco entered Rancho Izaguirre, a property outside
+Teuchitlán, and found a cartel recruitment and extermination site: clothing, shoes,
+backpacks, notebooks, bone fragments. It became a national scandal — not only for what
+was on the ranch, but because a group of searching families, rather than the state, was
+what finally established it.
+
+Searching in Jalisco is lethal work. In 2025 Teresa González Murillo was attacked and
+died. María del Carmen Morales, of Guerreros Buscadores, was murdered alongside one son
+while searching for another.
+
+The state with the most redacted registry in Mexico is also the state where civil
+society keeps producing the evidence its registry lacks. Those are not two facts about
+Jalisco. They are one fact, seen from two sides.
 
 ## 7. Guerrero: opacity by omission
 
@@ -188,21 +239,43 @@ family collectives jointly document 623 cases. Collectives — not the state —
 located 260+ bodies in Iguala and ~70 in Acapulco. Sources: Tlachinollan, HRW,
 consulted 2026-07-06.*
 
-Guerrero looks, on the redaction chart, like the transparent one: 9% confidential.
-The same federal consent rules apply there — its search commission's privacy notice
-mirrors the national architecture almost word for word. The difference is what
-happens *before* a record can be redacted: in Guerrero, cases often never enter the
+On the redaction chart, Guerrero is one of the clean ones: 9% confidential, against
+Jalisco's 67%. The same federal consent rules apply there; its search commission's
+privacy notice mirrors the national architecture almost word for word. Guerrero is not
+redacting less because it has better privacy law. It is redacting less because of what
+happens *before* a record can be redacted. In Guerrero, cases often never enter the
 registry at all.
 
-Human-rights monitors and the collectives born after Ayotzinapa — Los Otros
-Desaparecidos de Iguala, who have exhumed more than 160 bodies from the hills
-around the city — document systematically more disappeared than the state
-registers. Prosecutors stall or discourage reports. During Holy Week searches in
-2026, three families approached the searching mothers to report disappearances
-they had never reported to any authority.
+The state registers roughly 3,800 disappeared people. In Iguala alone — one city —
+three family collectives jointly document 623 cases. The human-rights centre
+Tlachinollan, which has tracked the state for decades, describes prosecutors who stall
+investigations unless families force them open, and a forensic service that has
+effectively collapsed. Nationally, between 2% and 6% of disappearance cases are ever
+prosecuted; there have been 36 sentences in the entire country.
 
-A low confidential share is not good news. It can mean the missing were never
-counted.
+The modern searching-mothers movement was, in an important sense, born here. When the
+43 students from Ayotzinapa disappeared in September 2014, families searching the hills
+around Iguala for them began instead to find other people: graves of the dead nobody
+was officially looking for. The collective that formed out of that search, Los Otros
+Desaparecidos de Iguala, has since exhumed more than 160 bodies. Tlachinollan credits
+women-led collectives — not state institutions — with locating over 260 bodies in
+Iguala and around 70 in Acapulco.
+
+The under-registration is not history. During Holy Week searches in 2026, in Iguala and
+Buenavista de Cuéllar, three families approached the searching mothers to report
+disappearances they had never reported to any authority. That is the gap happening in
+real time: people becoming known to a collective before they are known to the state.
+
+A low confidential share, then, is not a clean bill of health. Jalisco's registry hides
+what it holds; Guerrero's is missing what it never took in. A state can look
+transparent on the redaction chart precisely because it failed at the earlier step.
+
+The two modes are not opposites, and no state is purely one or the other — Jalisco's
+2,137 unregistered cases are omission, sitting alongside its redaction. They are two
+different points at which a person can vanish from the public record: before the state
+writes anything down, and after. Guerrero shows you the first clearly. Jalisco shows
+you the second. Most states are doing some of both, and the registry gives you no way
+to tell how much.
 
 ## 8. What this means — and what we cannot claim
 
