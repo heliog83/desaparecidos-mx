@@ -7,6 +7,13 @@ depends on nothing external (required — the Artifact CSP blocks all remote hos
 The draft's internal scaffolding (working titles, figure production notes) is
 dropped; the standfirst and methods note are lifted into their own treatments.
 
+Data comes from one immutable, dated publication freeze (PUBLICATION_FREEZE below),
+never from the mutable data/processed/ working directory. That matters: re-running
+src/fetch_flow.py refreshes data/processed/ with live figures, which would silently
+change what the article is validated against. The freeze is the pin; refreshing the
+article's numbers means cutting a new freeze with src/publication_freeze.py and
+bumping PUBLICATION_FREEZE deliberately.
+
 Output: reports/article.html  (~2 MB, mostly embedded PNGs)
 Run:    python src/build_page.py
 """
@@ -25,11 +32,22 @@ FIGDIR = ROOT / "reports" / "figures" / "article"
 OUT = ROOT / "reports" / "article.html"
 INTERACTIVE_CSS = ROOT / "src" / "article_interactive.css"
 INTERACTIVE_JS = ROOT / "src" / "article_interactive.js"
-FLOW_YEAR = ROOT / "data" / "processed" / "flow_by_year.csv"
-FLOW_TOTALS = ROOT / "data" / "processed" / "flow_totales.csv"
-STATE_DATA = ROOT / "data" / "processed" / "state_opacity_enriched.csv"
-STATE_RATES = ROOT / "data" / "processed" / "state_rates.csv"
-SNAPSHOT_DATA = ROOT / "data" / "processed" / "confidencial_panel.csv"
+# The pinned publication vintage. Every number in the article resolves through it.
+PUBLICATION_FREEZE = "2026-08-15"
+FREEZE = ROOT / "data" / "publication_freezes" / PUBLICATION_FREEZE
+FREEZE_DERIVED = FREEZE / "derived"
+FREEZE_MANIFEST = FREEZE / "manifest.json"
+
+FLOW_YEAR = FREEZE_DERIVED / "flow_by_year.csv"
+FLOW_TOTALS = FREEZE_DERIVED / "flow_totales.csv"
+STATE_DATA = FREEZE_DERIVED / "state_opacity_enriched.csv"
+STATE_RATES = FREEZE_DERIVED / "state_rates.csv"
+SNAPSHOT_DATA = FREEZE_DERIVED / "confidencial_panel.csv"
+
+# Cached SVG state outlines. The 4.8 MB source GeoJSON is gitignored, so the build
+# reads this 64 KB derived cache and a clean checkout needs no external assets.
+# Delete it (with mexico.json present) to regenerate from source.
+MAP_PATHS_CACHE = FREEZE_DERIVED / "map_paths.json"
 MEXICO_GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
 
 TITLE = "The Redacted Crisis"
@@ -92,7 +110,14 @@ def _rdp(points: list[list[float]], epsilon: float) -> list[list[float]]:
 
 
 def map_paths() -> list[dict[str, str]]:
-    """Convert the large GeoJSON into compact, dependency-free SVG state paths."""
+    """Compact, dependency-free SVG state paths, from cache or from the GeoJSON."""
+    if MAP_PATHS_CACHE.exists():
+        return json.loads(MAP_PATHS_CACHE.read_text(encoding="utf-8"))
+    if not MEXICO_GEO.exists():
+        raise SystemExit(
+            f"FAIL: neither {MAP_PATHS_CACHE.relative_to(ROOT)} nor "
+            f"{MEXICO_GEO.relative_to(ROOT)} is present — cannot draw the map"
+        )
     geo = json.loads(MEXICO_GEO.read_text(encoding="utf-8"))
     all_points: list[list[float]] = []
     for feature in geo["features"]:
@@ -129,6 +154,11 @@ def map_paths() -> list[dict[str, str]]:
             "cve": feature["properties"]["CVE_ENT"].zfill(2),
             "d": "".join(commands),
         })
+    # Persist so the next build — and every clean checkout — needs no GeoJSON.
+    MAP_PATHS_CACHE.write_text(
+        json.dumps(paths, ensure_ascii=False, indent=0, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     return paths
 
 

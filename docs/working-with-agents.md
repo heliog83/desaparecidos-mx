@@ -9,7 +9,7 @@ No proprietary artifact surface is part of the workflow.
 The article has one directed build path:
 
 ```text
-processed CSVs + article_draft.md + figure scripts
+pinned publication freeze + article_draft.md + figure scripts
                          ↓
                 src/build_page.py
                          ↓
@@ -19,7 +19,10 @@ processed CSVs + article_draft.md + figure scripts
 ```
 
 - Narrative source: `reports/article_draft.md`
-- Data sources: `data/processed/`
+- Data sources: `data/publication_freezes/<PUBLICATION_FREEZE>/derived/`, pinned by
+  the `PUBLICATION_FREEZE` constant at the top of `src/build_page.py`. The build
+  never reads `data/processed/`, which is a mutable scratch directory that
+  `src/fetch_flow.py` overwrites with live figures.
 - Static figures: `reports/figures/article/`
 - Interactive code: `src/article_interactive.css` and
   `src/article_interactive.js`
@@ -43,8 +46,16 @@ Open:
 http://127.0.0.1:8794/article.html
 ```
 
-The checker compares the embedded chart data and headline values against the processed
-CSVs. If it fails, fix the source prose or data; do not patch the generated HTML.
+The checker runs two gates. First it hash-verifies the freeze against its
+`manifest.json` and refuses to proceed if any build input is missing from that
+manifest — an input nobody hashed is an unaudited number. Then it compares the
+embedded chart data and headline values against that freeze. If it fails, fix the
+source prose or data; do not patch the generated HTML.
+
+Both commands run on a clean checkout with no external data: the derived tables and
+the cached map geometry are committed. Changing the article's *numbers* is therefore
+a deliberate act — cut a new freeze with `src/publication_freeze.py` and bump
+`PUBLICATION_FREEZE` — not something a stray `fetch_flow.py` run can do silently.
 
 ## Worktrees
 

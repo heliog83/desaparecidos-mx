@@ -150,7 +150,10 @@
     "derived/flow_by_state.csv": "9b343e97c942fe47e8908f4ab562c1eebdca38e73a4ae91ae941ef02f4d13916",
     "derived/flow_by_year.csv": "b3a9638fdea29f9dba0219811115971f7a9a1c663d481aadd5e6682fc2947551",
     "derived/flow_totales.csv": "f20041d8514d00418237d5f35005ba235b4140f12630b7e1b1cd2c09f47fc757",
+    "derived/map_paths.json": "9c307676dac07dae64e35d81f4b0de583cfab72858b4e632a4ec6c8f9e3f170b",
     "derived/rnpdno_clean.parquet": "4f4c749ef45df189bab720e15df650598875ad2066946c0d636e4c343ff038bc",
+    "derived/state_opacity_enriched.csv": "508638c107f5f15561a3e0ae92b62dbdba53d21dd1aae9dbaedccba46bcfac76",
+    "derived/state_rates.csv": "36bc102f7b2bb781dde571fb99760a6fd8857b9e5b9f34e6c553da247254f7d3",
     "derived/state_redaction_summary.csv": "4ee8269778193edb6ad385d80bbb14495bcbf68418a14928f0d60067daf7f3e1",
     "sources/Oficio_SEGOB_CNBP_1349_2020_consulta_INAI.pdf": "6447c3634075ab5117b29ab3dcf25aa96bee283238abd74af29bb0c16d2540ac",
     "sources/rnpdno_api/by_state_desap_y_nollocal.json": "5565ff3287002c892168b660c8edb0d211e4cc86d686006beff40f7aebac126b",
@@ -169,5 +172,17 @@
     "sources/rnpdno_api/by_year_todos.json": "9b4113d16a27a0c404414066a04fba448b7e3a4f38abb83de6ac136ee1223cc6",
     "sources/rnpdno_api/totales.json": "8562cb6c8770e4dcc596b2e47c549ea8e03a3a5ab95074631edb471e32e843cd",
     "sources/rnpdno_mirror_2025-12-02.csv": "8da25ae67ea3d0a1dbdecfd781e7b9110fca87136856fc293ac73109f2988038"
-  }
+  },
+  "amendments": [
+    {
+      "date": "2026-08-29",
+      "reason": "The original freeze hashed the flow tables but not the two state-level tables src/build_page.py reads, nor the cached map geometry. Without them the article could not be rebuilt or revalidated from the repository. Added here unchanged; no existing hash was altered.",
+      "added": [
+        "derived/map_paths.json",
+        "derived/state_opacity_enriched.csv",
+        "derived/state_rates.csv"
+      ],
+      "note": "state_rates.csv and state_opacity_enriched.csv were derived from the same 2025-12-02 record-level snapshot as the rest of the freeze, but were generated earlier (2026-06-19) by src/rates.py and the opacity scripts. map_paths.json is derived from data/external/assets/mexico.json (sha256 5d16971d31e1442af97e089f718d93c494c8b0f94f2e80bd86f9290e0c39c70d), which stays gitignored at 4.8 MB."
+    }
+  ]
 }

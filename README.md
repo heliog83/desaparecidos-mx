@@ -64,7 +64,24 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then, in order. Every figure in the article is produced by one of these:
+**Building and validating the article needs none of this** — not even the venv.
+`build_page.py` and `check_article.py` are standard-library only, and the publication
+data is committed under `data/publication_freezes/2026-08-15/`, so a clean checkout
+can run:
+
+```bash
+python src/build_page.py     # -> reports/article.html
+python src/check_article.py  # hash-verifies the freeze, then the HTML against it
+```
+
+That reproduces the committed `reports/article.html` byte for byte.
+
+The scripts below regenerate the *underlying* data and figures. They need the
+gitignored raw sources, and `fetch_flow.py` pulls **live** numbers that will differ
+from the pinned freeze — it writes to the mutable `data/processed/`, which the article
+build deliberately does not read. To move the article to fresher data, cut a new
+freeze with `src/publication_freeze.py --date YYYY-MM-DD` and bump the
+`PUBLICATION_FREEZE` constant in `src/build_page.py`.
 
 ```bash
 MPLBACKEND=Agg python src/fetch_flow.py        # live RNPDNO dashboard API -> flow_*.csv
@@ -78,8 +95,6 @@ MPLBACKEND=Agg python src/consent_accounting.py    # figure E
 MPLBACKEND=Agg python src/jalisco_divergence.py    # figure F
 MPLBACKEND=Agg python src/two_modes.py             # figure G
 MPLBACKEND=Agg python src/version_audit.py         # figure H
-python src/build_page.py                           # -> reports/article.html
-python src/check_article.py                        # required before publication
 ```
 
 `MPLBACKEND=Agg` matters: several scripts inherit `plt.show()` from the notebooks they

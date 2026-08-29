@@ -18,7 +18,12 @@ the current delivery contract.
    python src/check_article.py
    ```
 
-   Publication or handoff is blocked unless both commands succeed.
+   Publication or handoff is blocked unless both commands succeed. Both are
+   standard-library only and work on a clean checkout: the publication data is
+   committed under `data/publication_freezes/`, and the checker hash-verifies it
+   before comparing the HTML against it. Do not repoint the build at
+   `data/processed/` — that directory is mutable and `src/fetch_flow.py` overwrites
+   it with live figures that do not match the pinned article.
 4. **Preview the generated file locally:**
 
    ```bash

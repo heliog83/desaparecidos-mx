@@ -5,12 +5,16 @@
 # for the repository with "Source: GitHub Actions". It will not fire on push.
 # To publish on every push to main, uncomment the `push:` trigger below.
 #
-# It deploys reports/article.html EXACTLY as committed. It does not rebuild and
-# does not recompute anything: the data the page is built from is gitignored, so
-# a rebuild here would be impossible and a partial rebuild would be worse than
-# none. Validation stays where docs/working-with-agents.md puts it — locally,
-# via `python src/build_page.py && python src/check_article.py`, before commit.
-# The committed HTML is therefore the audit trail.
+# It deploys reports/article.html EXACTLY as committed. It does not rebuild.
+#
+# A rebuild here would now be possible — the publication freeze is committed and
+# the build is standard-library only — but deploying a freshly built page would
+# make the deployed bytes something no human reviewed. Deploying the reviewed,
+# committed HTML keeps the Git commit as the audit trail. Validation stays where
+# docs/working-with-agents.md puts it: locally, before commit, via
+# `python src/build_page.py && python src/check_article.py`.
+#
+# The token grep below is the backstop against a broken or stale committed page.
 
 name: Publish article to Pages
 

@@ -2,7 +2,9 @@
 data/raw/
 data/interim/
 data/external/
-# Immutable publication freezes stay local; commit the small manifest/audit only.
+# Immutable publication freezes: the large raw sources stay local, but the small
+# derived tables the article is built and validated from ARE committed — without
+# them src/build_page.py and src/check_article.py cannot run on a clean checkout.
 data/publication_freezes/*/sources/
 *.parquet
 *.csv
@@ -11,6 +13,8 @@ data/publication_freezes/*/sources/
 !data/stage2/*.csv
 # tiny committed audit artifact — upstream git history could vanish
 !data/processed/confidencial_panel.csv
+# publication inputs — the article's build and validation gate depend on these
+!data/publication_freezes/*/derived/*.csv
 
 # Python
 .venv/
