@@ -135,3 +135,46 @@
   .state-row { grid-template-columns:105px 1fr 54px; gap:6px; font-size:12px; }
   .state-bars { min-height:380px; }
 }
+
+/* Median tick inside bar track */
+.state-bar-track { position:relative; }
+.state-median-tick {
+  position:absolute; top:0; bottom:0; width:1.5px;
+  background:var(--muted); pointer-events:none;
+  opacity:0.8;
+}
+.state-median-caption {
+  font-family:var(--sans); font-size:12px; color:var(--muted);
+  margin:4px 0 0; padding-left:0;
+}
+
+/* Tooltip vintage note */
+.tooltip-vintage {
+  display:block; margin-top:4px; font-size:10.5px; opacity:.75;
+}
+
+/* Theme toggle in kicker */
+.theme-toggle {
+  margin-left:auto; display:inline-flex; gap:2px; border:1px solid var(--rule);
+  padding:2px; background:var(--plate);
+}
+.theme-toggle button {
+  border:0; background:transparent; color:var(--muted); font-family:var(--mono);
+  font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:2px 7px;
+  cursor:pointer;
+}
+.theme-toggle button[aria-pressed="true"] {
+  background:var(--ink); color:var(--ground); font-weight:600;
+}
+.theme-toggle button:focus-visible {
+  outline:2px solid var(--redact); outline-offset:1px;
+}
+
+/* Scatter plot dot hover */
+.chart-canvas circle {
+  transition:r .12s ease, opacity .12s ease;
+}
+.chart-canvas circle:hover, .chart-canvas circle:focus {
+  stroke:#22201e; stroke-width:2px; opacity:1 !important; outline:none;
+}
+

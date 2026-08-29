@@ -167,6 +167,16 @@ def chart_data() -> dict:
                 "confidential_count": _number(row.get("confidential_records"), integer=True),
                 "rate": round(float(row.get("tasa_100k") or 0), 1),
                 "confidential_share": round(float(row.get("confidential_share") or 0), 6),
+                # alive / dead / resolution for the new outcome views
+                "alive": _number(row.get("loc_con_vida"), integer=True),
+                "dead": _number(row.get("loc_sin_vida"), integer=True),
+                "resolution_share": round(float(row.get("resolution_share") or 0), 6),
+                # correlation variables for Fig D
+                "homicide_rate": round(float(row.get("homicide_victims_2015_2025_per100k") or 0), 2),
+                "pibe_per_capita": round(float(row.get("pibe_per_capita_2024_2018_mxn") or 0), 0),
+                "corruption_per100k": round(float(row.get("corruption_prevalence_2025_per100k") or 0), 0),
+                "kidnapping_per100k": round(float(row.get("kidnapping_victims_2015_2025_per100k") or 0), 4),
+                "femicide_per100k": round(float(row.get("femicide_victims_2015_2025_per100k") or 0), 4),
             })
 
     snapshots = []
@@ -285,6 +295,8 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
     <span class="chart-control-label">View</span>
     <button type="button" data-mode="absolute" aria-pressed="true">All outcomes</button>
     <button type="button" data-mode="missing" aria-pressed="false">Still missing</button>
+    <button type="button" data-mode="alive" aria-pressed="false">Found alive</button>
+    <button type="button" data-mode="dead" aria-pressed="false">Found dead</button>
     <button type="button" data-mode="share" aria-pressed="false">Share of cohort</button>
   </div>
   <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
@@ -324,6 +336,43 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
   <div class="state-bars" aria-live="polite"></div>
   <div class="state-detail" aria-live="polite"></div>
 </div>
+</figure>"""
+    if letter == "C":
+        return f"""<figure class="interactive-figure" data-chart="confidential">
+<div class="chart-shell">
+  <h3 class="chart-heading">Confidential share by state — violence does not explain it</h3>
+  <p class="chart-subtitle">Share of each state&#8217;s unresolved records marked CONFIDENCIAL. National median shown as dashed line. Hover or focus for detail.</p>
+  <div class="chart-controls" aria-label="Sort order">
+    <button type="button" data-mode="confidential_share" aria-pressed="true">By redaction share</button>
+    <button type="button" data-mode="rate" aria-pressed="false">By missing-persons rate</button>
+  </div>
+  <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="chart-summary" aria-live="polite"></div>
+</div>
+{fallback}
+<figcaption><span class="figlabel">Fig. C</span> {inline(caption)}</figcaption>
+</figure>"""
+    if letter == "D":
+        return f"""<figure class="interactive-figure" data-chart="scatter">
+<div class="chart-shell">
+  <h3 class="chart-heading">State violence does not explain confidentiality</h3>
+  <p class="chart-subtitle">Confidential share vs selected state variable. Hover or focus a dot for detail. Pearson <em>r</em> is recomputed for the active variable.</p>
+  <div class="chart-controls" aria-label="X-axis variable">
+    <label for="scatter-var">Compare against</label>
+    <select id="scatter-var">
+      <option value="homicide_rate" selected>Homicide rate per 100k (2015&#8211;2025)</option>
+      <option value="pibe_per_capita">GDP per capita (PIBE 2024, MXN 2018)</option>
+      <option value="corruption_per100k">Corruption prevalence per 100k (ENCIG 2025)</option>
+      <option value="kidnapping_per100k">Kidnapping rate per 100k (2015&#8211;2025)</option>
+      <option value="femicide_per100k">Femicide rate per 100k (2015&#8211;2025)</option>
+      <option value="resolution_share">Resolution share (% of records located)</option>
+    </select>
+  </div>
+  <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="chart-summary" aria-live="polite"></div>
+</div>
+{fallback}
+<figcaption><span class="figlabel">Fig. D</span> {inline(caption)}</figcaption>
 </figure>"""
     if letter == "H":
         return f"""<figure class="interactive-figure" data-chart="snapshots">
@@ -649,6 +698,11 @@ TEMPLATE = """<!DOCTYPE html>
       <span>Data investigation</span>
       <span class="chip">RNPDNO</span>
       <span class="chip">Mexico</span>
+      <span class="theme-toggle" aria-label="Theme selection">
+        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+        <button type="button" data-theme-set="auto" aria-pressed="true">Auto</button>
+      </span>
     </p>
     <h1>{title}</h1>
     <p class="subtitle">{subtitle}</p>

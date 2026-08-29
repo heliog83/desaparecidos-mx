@@ -20,7 +20,11 @@ __pycache__/
 .ipynb_checkpoints/
 .python-version
 
-# OS / editor
+# OS / editor / sync conflicts
 .DS_Store
 .vscode/
 .idea/
+* (1).*
+*(1)*
+*conflicted copy*
+*.tmp

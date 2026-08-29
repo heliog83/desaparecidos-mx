@@ -1,9 +1,12 @@
 import pandas as pd
 from datetime import datetime
 from pathlib import Path
-import unidecode
+import unicodedata
 import urllib.request
 import json
+
+def strip_accents(s: str) -> str:
+    return unicodedata.normalize('NFKD', s).encode('ASCII', 'ignore').decode('utf-8')
 
 def normalize_state(state: str) -> str:
     """Normalize state name to RNPDNO format."""
@@ -17,7 +20,7 @@ def normalize_state(state: str) -> str:
         "VERACRUZ": "VERACRUZ DE IGNACIO DE LA LLAVE",
         "COAHUILA": "COAHUILA DE ZARAGOZA",
     }
-    state_no_accents = unidecode.unidecode(state)
+    state_no_accents = strip_accents(state)
     return mapping.get(state, mapping.get(state_no_accents, state_no_accents))
 
 def fetch_municipality_coords():
@@ -25,7 +28,7 @@ def fetch_municipality_coords():
     url = "https://raw.githubusercontent.com/eduardoarandah/coordenadas-estados-municipios-localidades-de-mexico-json/master/data.csv"
     coords = {}
     try:
-        df_geo = pd.read_csv(url, dtype={'CVE_ENT': str, 'CVE_MUN': str, 'CVE_LOC': str})
+        df_geo = pd.read_csv(url, dtype={'CVE_ENT': str, 'CVE_MUN': str, 'CVE_LOC': str}, low_memory=False)
         # Use only cabeceras municipales (usually CVE_LOC == '0001')
         df_geo = df_geo[df_geo['CVE_LOC'] == '0001']
         for _, row in df_geo.iterrows():
@@ -86,7 +89,7 @@ def map_cnb_fosas_dataset(input_path: str, output_path: str):
     
     # Source metadata
     mapped['source_outlet'] = 'CNB/Quinto Elemento Lab'
-    mapped['source_url'] = ''
+    mapped['source_url'] = 'https://quintoelab.org/project/fosas-clandestinas-nuevo-mapa-mexico'
     mapped['consulted'] = '2023-10-06'
     mapped['confidence'] = 'high'
     mapped['notes'] = 'Registro Fosas CNB Quinto Elemento'
