@@ -153,6 +153,7 @@
     "derived/map_paths.json": "9c307676dac07dae64e35d81f4b0de583cfab72858b4e632a4ec6c8f9e3f170b",
     "derived/rnpdno_clean.parquet": "4f4c749ef45df189bab720e15df650598875ad2066946c0d636e4c343ff038bc",
     "derived/state_opacity_enriched.csv": "508638c107f5f15561a3e0ae92b62dbdba53d21dd1aae9dbaedccba46bcfac76",
+    "derived/state_opacity_typology.csv": "5803241541aa24b1b2111890127c444e1b1f00ee60908f41082659cbb731463c",
     "derived/state_rates.csv": "36bc102f7b2bb781dde571fb99760a6fd8857b9e5b9f34e6c553da247254f7d3",
     "derived/state_redaction_summary.csv": "4ee8269778193edb6ad385d80bbb14495bcbf68418a14928f0d60067daf7f3e1",
     "sources/Oficio_SEGOB_CNBP_1349_2020_consulta_INAI.pdf": "6447c3634075ab5117b29ab3dcf25aa96bee283238abd74af29bb0c16d2540ac",
@@ -183,6 +184,14 @@
         "derived/state_rates.csv"
       ],
       "note": "state_rates.csv and state_opacity_enriched.csv were derived from the same 2025-12-02 record-level snapshot as the rest of the freeze, but were generated earlier (2026-06-19) by src/rates.py and the opacity scripts. map_paths.json is derived from data/external/assets/mexico.json (sha256 5d16971d31e1442af97e089f718d93c494c8b0f94f2e80bd86f9290e0c39c70d), which stays gitignored at 4.8 MB."
+    },
+    {
+      "date": "2026-08-29",
+      "reason": "dashboard/app.py read the mutable data/processed/ at module scope, so the whole app crashed on a clean checkout before any tab rendered. Pointed it at this freeze and added the one input it needed that was not already here.",
+      "added": [
+        "derived/state_opacity_typology.csv"
+      ],
+      "note": "Generated 2026-06-22 by the opacity typology scripts from the same 2025-12-02 record-level snapshot as the rest of the freeze."
     }
   ]
 }

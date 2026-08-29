@@ -17,7 +17,12 @@ import pandas as pd
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
-PROC = ROOT / "data" / "processed"
+# Read the pinned publication freeze, not the mutable data/processed/ scratch
+# directory that src/fetch_flow.py overwrites with live figures. Same pin as
+# src/build_page.py, so the dashboard and the article never disagree.
+PUBLICATION_FREEZE = "2026-08-15"
+PROC = ROOT / "data" / "publication_freezes" / PUBLICATION_FREEZE / "derived"
+STAGE2 = ROOT / "data" / "stage2"
 FIG = ROOT / "reports" / "figures"
 
 ALIVE, DEAD, MISSING, INK = "#7d9bb5", "#2b2b2b", "#7a1f1f", "#2b2b2b"
@@ -70,7 +75,7 @@ with st.sidebar.expander("⚠️ Read before interpreting", expanded=False):
 yr_range = st.sidebar.slider("Year of disappearance", 1990, 2025, (2000, 2025))
 
 # --------------------------------------------------------------------------- header
-tab1, tab2 = st.tabs(["Stage 1: Official Data", "Stage 2: Madres Buscadoras"])
+tab1, tab2 = st.tabs(["Stage 1: Official Data", "Stage 2: Clandestine Graves"])
 
 with tab1:
     st.title("Mexico's disappeared — by the numbers")
@@ -179,97 +184,187 @@ with tab1:
                "Stage 2 (madres buscadoras) in progress.")
 
 with tab2:
-    st.title("Madres Buscadoras: Clandestine Recoveries")
-    try:
-        fosas = pd.read_csv(ROOT / "data" / "stage2" / "clandestine_finds_imported.csv")
-        
-        # Metrics
-        tot_graves = int(fosas["graves_found"].sum())
-        tot_bodies = int(fosas["bodies_found"].sum()) if pd.notna(fosas["bodies_found"].sum()) else 0
-        tot_remains = int(fosas["remains_bags"].sum()) if pd.notna(fosas["remains_bags"].sum()) else 0
-        
-        m1, m2, m3 = st.columns(3)
-        if tot_bodies == 0 and tot_remains == 0:
-            m1.metric("Total Graves", f"{tot_graves:,}")
-            m2.metric("Municipalities Affected", int(fosas["municipality"].nunique()))
-            
-            top_state = fosas.groupby("state")["graves_found"].sum().idxmax()
-            top_state_count = int(fosas.groupby("state")["graves_found"].sum().max())
-            m3.metric("Top Hotspot State", f"{top_state} ({top_state_count:,})")
-            
-            st.caption("*Note: Figures reflect official CNB / Quinto Elemento Lab clandestine grave registries. Individual body and remains counts are unrecorded in official state entries.*")
-        else:
-            m1.metric("Total Graves", f"{tot_graves:,}")
-            m2.metric("Total Bodies", f"{tot_bodies:,}")
-            m3.metric("Total Remains Bags", f"{tot_remains:,}")
-            
-        st.divider()
-        
-        # Stacked bar chart
-        st.subheader("Recoveries by Attribution")
-        metric_choice = st.radio("Metric to plot", ["Total Graves", "Bodies / Remains"], horizontal=True, label_visibility="collapsed")
-        
-        if metric_choice == "Total Graves":
-            fosas["chart_metric"] = fosas["graves_found"].fillna(0)
-            y_title = "Total Graves"
-        else:
-            fosas["chart_metric"] = fosas["bodies_found"].fillna(0) + fosas["remains_bags"].fillna(0)
-            y_title = "Total Recoveries (Bodies + Remains)"
+    st.title("Clandestine Graves: What the Records Show")
 
-        fosas["source_dataset"] = fosas["source_outlet"].fillna("Unknown Source")
-        bar = alt.Chart(fosas).mark_bar().encode(
-            x=alt.X("state:N", title="State", sort="-y", axis=alt.Axis(labelAngle=-45, labelLimit=500)),
-            y=alt.Y("chart_metric:Q", title=y_title),
-            color=alt.Color("led_by:N", title="Led By", scale=alt.Scale(domain=["collective", "state", "unknown"], range=["#7a1f1f", "#7d9bb5", "#cccccc"])),
-            tooltip=["state", "municipality", "collective", "led_by", alt.Tooltip("chart_metric:Q", title=y_title), alt.Tooltip("source_dataset:N", title="Source")]
-        ).properties(height=400)
-        st.altair_chart(bar, use_container_width=True)
-        st.divider()
-        
-        # Map
-        st.subheader("Grave Locations")
-        map_layer = st.radio("Map Style", ["Scatter Pins", "Density Heatmap"], horizontal=True, label_visibility="collapsed")
-        map_data = fosas.dropna(subset=["lat", "lon"])
-        if not map_data.empty:
-            import pydeck as pdk
-            
-            if map_layer == "Density Heatmap":
-                layer = pdk.Layer(
-                    "HeatmapLayer",
-                    data=map_data,
-                    opacity=0.9,
-                    get_position=["lon", "lat"],
-                    get_weight="graves_found",
-                    radiusPixels=30,
-                    colorRange=[
-                        [122, 31, 31],     # Dark red
-                        [217, 72, 1],      # Orange
-                        [241, 105, 19],
-                        [253, 141, 60],
-                        [253, 174, 107],
-                        [255, 255, 255],   # White (peak hotspots)
-                    ]
-                )
+    @st.cache_data
+    def load_stage2():
+        """Both Stage-2 files, tagged by provenance. Either may be absent."""
+        frames, missing = [], []
+        for name in ("clandestine_finds.csv", "clandestine_finds_imported.csv"):
+            path = STAGE2 / name
+            if path.exists():
+                frames.append(pd.read_csv(path))
             else:
-                layer = pdk.Layer(
-                    'ScatterplotLayer',
-                    data=map_data,
-                    get_position='[lon, lat]',
-                    get_color='[122, 31, 31, 200]',
-                    get_radius=20000,
-                )
+                missing.append(name)
+        if not frames:
+            return None, missing
+        combined = pd.concat(frames, ignore_index=True, sort=False)
+        if "source_type" not in combined.columns:
+            combined["source_type"] = "journalism"
+        combined["source_type"] = combined["source_type"].fillna("journalism")
+        return combined, missing
 
-            st.pydeck_chart(pdk.Deck(
-                map_style=None,
-                initial_view_state=pdk.ViewState(
-                    latitude=23.6,
-                    longitude=-102.5,
-                    zoom=4.5,
-                    pitch=0,
-                ),
-                layers=[layer],
-            ))
+    fosas, missing = load_stage2()
+
+    if fosas is None:
+        st.error(
+            "No Stage-2 data found. Expected `data/stage2/clandestine_finds.csv` "
+            "and/or `data/stage2/clandestine_finds_imported.csv`. Rebuild the "
+            "import with `python src/stage2_import.py`."
+        )
+        st.stop()
+    if missing:
+        st.warning(f"Stage-2 file(s) not found, showing what is present: {missing}")
+
+    registry = fosas[fosas["source_type"] == "registry"]
+    coded = fosas[fosas["source_type"] == "journalism"]
+
+    # The single most important caveat on this tab. Stated before any number.
+    st.warning(
+        "**This tab cannot tell you what the madres buscadoras found.** "
+        f"{len(registry):,} of these {len(fosas):,} rows come from the CNB / Quinto "
+        "Elemento Lab grave registry, which records *that* a grave exists but not "
+        "*who located it* — it has no attribution field at all. Their "
+        "`led_by = state` is a missing column, not a finding. Only the "
+        f"{len(coded)} hand-coded journalism rows carry real attribution, and they "
+        "are illustrative seeds, not a sample anyone should generalise from."
+    )
+
+    st.subheader("Registry baseline")
+    st.caption(
+        "CNB / Quinto Elemento Lab clandestine-grave registry, consulted "
+        "2023-10-06. One row is one registry grave record — not one search event, "
+        "and not one person. Bodies and remains are not recorded in this source, "
+        "so no body count can be derived from it."
+    )
+
+    graves = pd.to_numeric(registry["graves_found"], errors="coerce")
+    m1, m2, m3 = st.columns(3)
+    m1.metric("Graves recorded", f"{int(graves.sum()):,}")
+    # Count (state, municipality) pairs: municipality names repeat across states
+    # (Abasolo exists in both Nuevo León and Tamaulipas), so a name-only nunique
+    # undercounts.
+    n_muni = registry[["state", "municipality"]].drop_duplicates().shape[0]
+    m2.metric("Municipalities", f"{n_muni:,}")
+    m3.metric("States", f"{registry['state'].nunique():,}")
+
+    st.divider()
+
+    # ---------------------------------------------------------------- by state
+    st.subheader("Recorded graves by state")
+    by_state = (
+        registry.assign(graves=graves)
+        .groupby("state", as_index=False)["graves"]
+        .sum()
+        .sort_values("graves", ascending=False)
+    )
+    bar = (
+        alt.Chart(by_state)
+        .mark_bar(color=MISSING)
+        .encode(
+            x=alt.X("state:N", title="State", sort="-y",
+                    axis=alt.Axis(labelAngle=-45, labelLimit=500)),
+            y=alt.Y("graves:Q", title="Graves recorded"),
+            tooltip=["state", alt.Tooltip("graves:Q", title="Graves recorded")],
+        )
+        .properties(height=400)
+    )
+    st.altair_chart(bar, use_container_width=True)
+    st.caption(
+        "Counts are of *recorded* graves. A state can rank low because little was "
+        "found or because little was registered; this chart cannot separate the two."
+    )
+
+    st.divider()
+
+    # ------------------------------------------------------------------- map
+    st.subheader("Where records concentrate, by municipality")
+    st.caption(
+        "⚠️ Points are **municipal seats — town centres**, not grave sites. The "
+        "source gives no grave coordinates, so every grave in a municipality is "
+        "drawn at the same civic centre point. Read this as a municipality-level "
+        "count, never as a location."
+    )
+    geo_cols = {"municipality_lat", "municipality_lon"}
+    if geo_cols.issubset(fosas.columns):
+        muni = (
+            registry.assign(graves=graves)
+            .dropna(subset=["municipality_lat", "municipality_lon"])
+            .groupby(
+                ["state", "municipality", "municipality_lat", "municipality_lon"],
+                as_index=False,
+            )["graves"]
+            .sum()
+        )
+        ungeocoded = int(registry["municipality_lat"].isna().sum())
+        if muni.empty:
+            st.info("No municipal-seat coordinates available.")
         else:
-            st.info("No geocoded locations available for mapping.")
-    except Exception as e:
-        st.error(f"Could not load Stage 2 data: {e}")
+            import pydeck as pdk
+
+            # Area scales with the count, so 40 graves does not look like 4.
+            muni["radius"] = (muni["graves"] ** 0.5) * 4500
+            st.pydeck_chart(
+                pdk.Deck(
+                    map_style=None,
+                    initial_view_state=pdk.ViewState(
+                        latitude=23.6, longitude=-102.5, zoom=4.3, pitch=0
+                    ),
+                    layers=[
+                        pdk.Layer(
+                            "ScatterplotLayer",
+                            data=muni,
+                            get_position="[municipality_lon, municipality_lat]",
+                            get_radius="radius",
+                            get_fill_color=[122, 31, 31, 140],
+                            pickable=True,
+                        )
+                    ],
+                    tooltip={
+                        "text": "{municipality}, {state}\n{graves} graves recorded"
+                    },
+                )
+            )
+            if ungeocoded:
+                st.caption(
+                    f"{ungeocoded:,} records are not drawn: no municipal-seat "
+                    "coordinate was available for their municipality."
+                )
+    else:
+        st.info("This dataset carries no municipality coordinates.")
+
+    st.divider()
+
+    # --------------------------------------------------- hand-coded seed rows
+    st.subheader(f"Hand-coded find events ({len(coded)})")
+    if coded.empty:
+        st.info("No journalism-coded rows present.")
+    else:
+        st.caption(
+            "The only rows with real attribution. Far too few to generalise from — "
+            "shown so the coding schema stays visible while the dataset grows. "
+            "See docs/stage2-schema.md."
+        )
+        st.dataframe(
+            coded[[
+                "date", "state", "municipality", "collective", "led_by",
+                "graves_found", "bodies_found", "confidence", "source_outlet",
+            ]],
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            f"Attribution among these {len(coded)} events: "
+            + ", ".join(
+                f"{k} {v}" for k, v in coded["led_by"].value_counts().items()
+            )
+            + ". A count this small is an illustration, not a measurement."
+        )
+
+    st.divider()
+    st.caption(
+        "Stage 2 is in progress. The question it exists to answer — how much "
+        "recovery work is done by collectives versus the state — cannot be "
+        "answered by either source here: the registry has no attribution, and the "
+        "coded sample is tiny. Expanding the coded set is the work that remains."
+    )

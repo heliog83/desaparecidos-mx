@@ -23,6 +23,7 @@ geopandas>=0.14
 
 # Dashboard
 streamlit>=1.31
+pydeck>=0.8            # municipality map on the dashboard's Stage-2 tab
 
 # Notebooks
 jupyterlab>=4.0
