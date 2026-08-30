@@ -143,7 +143,8 @@ the natural deepening.
 
 **STAGE 2 STARTED:** `docs/stage2-schema.md` (coding schema, one-row-per-find-event, body≠remains,
 led_by attribution), `data/stage2/clandestine_finds.csv` (5 LOW-confidence illustrative seeds from
-journalism — NOT a census), `src/stage2_validate.py` (schema/enum validator). Anchor: 22,621 found dead.
+journalism — NOT a census), `src/stage2_validate.py` (schema/enum validator). Anchor: 23,483 found dead
+(2026-08-15 freeze; this line read 22,621 from the superseded June pull).
 Next: expand from Quinto Elemento / FUNDENL / news; never present seeds as totals.
 
 **CRITICAL framing (see docs/methodology.md):** the dataset is the STOCK of people *still missing*,

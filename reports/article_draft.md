@@ -325,7 +325,7 @@ and they do not agree with each other. Animal Político put the resulting gap at
 
 Jalisco is also where the contradiction from section 6 concentrates. Of the 4,765
 confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
-more than any other state. The same investigation found a further 2,137 disappearances
+second only to Estado de México's 2,691, and a ninth of everything Jalisco redacts. The same investigation found a further 2,137 disappearances
 between 2019 and mid-2024 that were never registered anywhere at all: not redacted,
 simply absent.
 
@@ -373,9 +373,9 @@ people are missing from that register.
 
 The human-rights centre Tlachinollan, which has tracked the state for decades,
 describes prosecutors who stall investigations unless families force them open, and a
-forensic service that has effectively collapsed. Nationally, between 2% and 6% of
-disappearance cases are ever prosecuted; there have been 36 sentences in the entire
-country [4].
+forensic service that has effectively collapsed. In Guerrero it documents that between
+2% and 6% of disappearance cases are ever prosecuted; nationally there have been 36
+sentences in the entire country [4].
 
 The modern searching-mothers movement was, in an important sense, born here. When the
 43 students from Ayotzinapa disappeared in September 2014, families searching the hills
@@ -417,10 +417,11 @@ what is happening, even where it is.
 
 The practical consequence for anyone using this data: **a cross-state comparison of
 the RNPDNO measures institutional publication practice at least as much as it
-measures disappearance.** Jalisco and Guerrero differ by a factor of seven in what
-they publish and barely at all in what the violence looks like. Any map, ranking or
-model built on those numbers without saying so is describing bureaucracies while
-appearing to describe victims.
+measures disappearance.** Jalisco redacts seven times as much of its register as
+Guerrero while recording less than half Guerrero's homicide rate — the publication gap
+runs opposite to the violence gap, not alongside it. Any map, ranking or model built on
+those numbers without saying so is describing bureaucracies while appearing to describe
+victims.
 
 And there are two different ways to vanish from the record, which the same chart
 cannot show at once: **fields redacted inside the registry, and people never entered

@@ -1,8 +1,15 @@
 # What Are We Counting? — Methodology & Data Caveats
 
 This file is the project's conscience. Every chart and claim inherits these caveats. Read it
-before interpreting any number. Findings here come from interrogating `data/external/data.csv`
-(133,566 records, RNPDNO mirror) on 2026-06-19; re-run `src/interrogate.py` to refresh.
+before interpreting any number.
+
+**Two vintages, and they do not merge.** Record-level findings (redaction shares, field
+completeness, per-state rates) come from the pinned RNPDNO mirror snapshot of
+**2025-12-02**, 133,566 records, interrogated 2026-06-19 — re-run `src/interrogate.py`
+to refresh. Aggregate outcome totals come from the live dashboard API captured for the
+**2026-08-15** publication freeze. Every figure in the article is labelled with the one
+it uses. Reading a number from one against a number from the other gives a wrong
+answer.
 
 ## TL;DR — the one thing to never forget
 **This dataset is the *stock of people still missing*, not the *flow of all disappearances*.**
@@ -30,9 +37,24 @@ that fear — and largely refuted it:**
   long-term disappearances, while the post-2007 surge sweeps in many quickly-located people (and the
   contested 2023 *censo* may inflate recent "locations" — see §3 note).
 - We now **can** compute resolution/recovery rates — at the aggregate (year/state) level — via the
-  flow endpoints. National: 135,092 still missing, 268,171 located, **22,621 found dead**.
+  flow endpoints. National, at the 2026-08-15 freeze: **134,268 still missing, 272,985 located
+  (249,502 alive and 23,483 found dead), of 407,253 records**. (An earlier draft of this file
+  quoted 135,092 / 268,171 / 22,621 from the 2026-06-19 pull; those are superseded.)
 - Lesson recorded honestly: our first "recent acceleration overstates incidence" caveat was itself
   overstated. Better data corrected it. See figs `08_incidence_vs_stock` and `09_resolution_by_year`.
+- **But "not survivorship" is not the same as "more violence" (added 2026-08-29).** Refuting the
+  stock artifact says the cohorts really did grow; it says nothing about *why*. Tested against
+  SESNSP homicide victims (`src/incidence_vs_homicide.py`, article fig I), the two series rise
+  together 2015–2018 and then part: 2019→2024 homicides −13.4% while recorded disappearances
+  +43.4%, r = 0.28 across 2015–2025. Part of the growth is intake capacity — the búsqueda
+  commissions created by the 2017 Ley General took 5.0% of records for disappearance-year 2017 and
+  47.7% for 2025 (non-confidential records only, so 63.2% of the registry). **Treat registry growth
+  as growth in the registry, never as a measured change in how many people disappear.**
+- The substitution hypothesis — that deaths are relabelled as disappearances to flatter the homicide
+  count — is **not supported** (`src/outcome_vs_homicide.py`, article fig J). Of the +10,905 records
+  gained for 2019–2024, 61.7% are found alive, 36.8% still missing, 1.4% found dead; and homicides
+  plus registry found-dead fell together, 36,638 → 32,133. What this cannot rule out: a body never
+  found enters neither statistic, and nothing here sizes that gap.
 
 ## 3. Two categories lumped together
 - **Desaparecida** = absence presumed linked to a *crime* (e.g. forced disappearance).
@@ -71,12 +93,21 @@ Consequences:
 - Charts use **different denominators**: state counts/rates use all 133k; year/age/sex charts
   use only the ~84k non-confidential (and ~90% of those with a usable date). Always state the base.
 - **Cross-state comparison is confounded by redaction practice.** A state can rank "high" partly
-  because its prosecutor redacts more (Jalisco 67%, Nayarit 66% vs national 37%), not only because
+  because its prosecutor redacts more (Jalisco 66.9%, Nayarit 66.2% vs national 36.8%), not only because
   more people vanish there. Redaction share is itself a transparency variable, not noise.
 
 ## 5. The two date fields are effectively one
 `FECHA_REGISTRO` ≈ `FECHA_DESAPARICION` (registration lag: median 0 days, 99.5% same year), so
 `FECHA_REGISTRO` carries no independent signal about reporting delay. Don't analyze "lag".
+
+**Why (established 2026-08-29).** The two fields differ in only 32% of non-confidential
+records, and where they differ the gap is hours or days, not months. `FECHA_REGISTRO` is
+therefore the moment the *originating authority took the report*, not the moment the
+record entered the federal registry. Records for disappearance years long before RNPDNO
+existed carry pre-2017 registration dates, which a genuine registry-entry field could not.
+Consequence: **the mirror cannot measure retrospective registration at all.** Any attempt
+to estimate how much of a year's cohort was added later — the natural test for whether
+registry growth reflects reporting expansion — is not answerable from this field.
 
 ## 6. Structural blind spots (true of the registry itself, not just our copy)
 - **Only reported cases.** Underreporting (fear, distrust of authorities, mixed-status families)
@@ -140,9 +171,10 @@ All correlations reproduce from `src/stat_correlations.py` against
    national count only **+6.1%** (among non-confidential) — a minor headline risk. BUT it is highly
    state-dependent: **Zacatecas +42%, Chiapas +29%, Chihuahua +27%** vs. ~0% in Tamaulipas/Veracruz/
    Sonora. So state comparisons must fix the category choice, and heavy `NO LOCALIZADA` use is worth
-   reading against the §3 minimization note. The 37% confidential bucket remains the larger unknown.
-3. ✅ **RESOLVED (`src/crosscheck.py`).** National drift vs the official RNPDNO figure (134,481 on
-   2026-05-27) is **−0.7%** — our mirror is a slightly earlier but recent snapshot, trustworthy as a
-   cross-section. Per-state drift is 0–7%, mostly negative (mirror just behind latest). **Jalisco is
+   reading against the §3 minimization note. The 36.8% confidential bucket remains the larger unknown.
+3. ✅ **RESOLVED (`src/crosscheck.py`).** National drift between the mirror and the live registry is
+   **−0.11%** as measured at the 2026-08-15 refresh (see `data-refresh-2026-08-15.md`); an earlier
+   check against the 2026-05-27 official figure of 134,481 put it at −0.7%. Either way the mirror is
+   a slightly earlier but recent snapshot, trustworthy as a cross-section. Per-state drift is 0–7%, mostly negative (mirror just behind latest). **Jalisco is
    the outlier** (ours +7.7% vs the May figure, yet below the June ">15,000" claim): sources disagree
    by thousands, so treat Jalisco's number with explicit care in any output.
