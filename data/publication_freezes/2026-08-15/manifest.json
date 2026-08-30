@@ -150,6 +150,7 @@
     "derived/flow_by_state.csv": "9b343e97c942fe47e8908f4ab562c1eebdca38e73a4ae91ae941ef02f4d13916",
     "derived/flow_by_year.csv": "b3a9638fdea29f9dba0219811115971f7a9a1c663d481aadd5e6682fc2947551",
     "derived/flow_totales.csv": "f20041d8514d00418237d5f35005ba235b4140f12630b7e1b1cd2c09f47fc757",
+    "derived/incidence_vs_homicide.csv": "e2728ced12e42b19cb1e8c99d1be987f4199146f2f30b32eca18ecad92555b34",
     "derived/map_paths.json": "9c307676dac07dae64e35d81f4b0de583cfab72858b4e632a4ec6c8f9e3f170b",
     "derived/rnpdno_clean.parquet": "4f4c749ef45df189bab720e15df650598875ad2066946c0d636e4c343ff038bc",
     "derived/state_opacity_enriched.csv": "508638c107f5f15561a3e0ae92b62dbdba53d21dd1aae9dbaedccba46bcfac76",
@@ -192,6 +193,14 @@
         "derived/state_opacity_typology.csv"
       ],
       "note": "Generated 2026-06-22 by the opacity typology scripts from the same 2025-12-02 record-level snapshot as the rest of the freeze."
+    },
+    {
+      "date": "2026-08-29",
+      "reason": "Added the annual series behind article fig I (recorded disappearances against homicide victims), so that chart is reproducible and hash-verified like the rest of the article's data.",
+      "added": [
+        "derived/incidence_vs_homicide.csv"
+      ],
+      "note": "Disappearances from this freeze's flow_by_year.csv; homicide victims from SESNSP timeseries_victimas.csv (gitignored, 23 MB, sha256 bd69ab2b9e70eb3bf923db936d826468bb8b560287347588db972d3013263ff1). 2025 is annualised from 10 reported months and flagged provisional."
     }
   ]
 }

@@ -51,7 +51,8 @@ Three things stand out.
 
 - **The registry has grown more than tenfold in eighteen years.** It holds about
   3,000 records for 2007, the year the militarised drug war began, and 37,124 for
-  2025 [1].
+  2025 [1]. That is growth in *the registry*, which is not the same thing as growth
+  in disappearances — see the next figure.
 - **A third of the people in it are still missing.** 134,268 of 407,253 — and the
   still-missing share of each year's cohort has barely shifted since 2008, while the
   cohorts themselves kept growing.
@@ -78,7 +79,43 @@ a decade later. Nothing here credits any institution with finding anyone.
 (The 2000–2005 bars look dramatic in percentage form but cover only a few hundred
 records each, so the piece draws no trend from them.)
 
-## 2. Where unresolved stock is greatest per resident
+## 2. But is the country more violent, or better at recording?
+
+**[FIG I — `figures/article/I_incidence_vs_homicide.png`]**
+*Caption: Recorded disappearances and homicide victims, 2015–2025, both indexed to
+2015. Complete years are drawn solid; 2025 is provisional in both series and drawn
+detached. Sources: RNPDNO aggregate flow, publication freeze 2026-08-15 [1]; SESNSP
+victim time series, which begins in January 2015 and sets the start year [2].*
+
+A tenfold rise invites one obvious reading — that the country simply became more
+violent — and for a decade the data support it. Between 2015 and 2018 recorded
+disappearances and homicide victims climb together.
+
+Then they part. From 2019 to 2024, homicide victims fall 13.4%, from 34,721 to
+30,060, while recorded disappearances rise 43.4%, from 25,151 to 36,056. Across
+2015–2025 the two series correlate at only r = 0.28. Whatever drove the registry's
+recent growth, worsening lethal violence does not account for it.
+
+Part of the answer is that the country built the machinery to record more. The 2017
+General Law created local search commissions, and they now take nearly half of all
+reports: 5.0% of records for 2017 came through a search commission, against 47.7%
+for 2025, with the remainder shifting away from prosecutors and toward a public
+online portal that did not meaningfully exist before 2020 [3]. A family that once
+had to persuade a prosecutor now has somewhere else to go. That breakdown can only
+be computed for records whose fields are public, so it describes 63.2% of the
+registry and assumes the redacted remainder behaves no differently — which is
+exactly the assumption the rest of this piece is about.
+
+This does not make the rise an illusion. Two official series moving apart is a fact
+about the two series; falling homicides say nothing about how honestly
+disappearances are recorded, and a disappearance is not a homicide. But it does
+mean the tenfold figure cannot be read as a measure of how much worse the violence
+became. It measures a registry — one whose reach, rules and staffing all changed
+inside the period it covers.
+
+---
+
+## 3. Where unresolved stock is greatest per resident
 
 **[FIG B — `figures/article/B_rate_map.png`]**
 *Caption: Unresolved disappearances per 100,000 residents by state, from the
@@ -86,7 +123,7 @@ record-level registry snapshot of 2025-12-02. Tamaulipas (359), Zacatecas (226)
 and Sinaloa (211) lead by rate; Estado de México (82) and CDMX (79), the leaders
 in absolute counts, fall to around 80. Note: on the live registry consulted
 2026-08-15, CDMX's unresolved count has since fallen by ~1,300 (a rate of ~64) —
-see §5b. Microdata vintage 2025-12-02 [3]; live comparison [1].*
+see §6b. Microdata vintage 2025-12-02 [3]; live comparison [1].*
 
 Mexico's disappeared are not distributed the way Mexicans are. Estado de México and
 Mexico City register the most cases in absolute terms, which is unsurprising: they
@@ -101,7 +138,7 @@ practice all affect where a state appears.
 This is the ordinary way to read registry data, and for one paragraph it works.
 Hold onto it. The next chart takes it apart.
 
-## 3. The wall: one in three records is blank
+## 4. The wall: one in three records is blank
 
 **[FIG C — `figures/article/C_confidential_share.png`]**
 *Caption: Share of each state's unresolved records marked CONFIDENCIAL in the public
@@ -117,7 +154,7 @@ every chart in this piece says so.
 The redaction is not evenly spread. Jalisco redacts two of every three records.
 Guerrero, one of the most violent states in the country, redacts one in eleven.
 
-## 4. State violence does not explain confidentiality
+## 5. State violence does not explain confidentiality
 
 **[FIG D — `figures/article/D_redaction_vs_rate.png`]**
 *Caption: Confidential share vs cumulative homicide-victim rate, 2015–2025, by
@@ -153,7 +190,7 @@ tracks danger — as the explanation for why Jalisco sits at 67% and Guerrero at
 
 So what does account for the difference?
 
-## 5. Who decides a record goes dark
+## 6. Who decides a record goes dark
 
 **[FIG E — `figures/article/E_consent_accounting.png`]**
 *Caption: The CNB's own accounting of publication consent, Aug 2020 (73,388
@@ -224,14 +261,14 @@ outside. What the shape of the data does show is that the *timing* of publicatio
 governed by administrative operations rather than by when families decide, and that
 the two cannot be separated from the public record.
 
-That is the version-history counterpart to section 5. Together they support a claim
+That is the version-history counterpart to section 6. Together they support a claim
 that is narrower than "the state is hiding people" and harder to dismiss: the
 registry's most basic public property — *how much of it you can read* — is rewritten
 in bulk, state by state, with no published log of who authorised a change or why, and
 no field that distinguishes a redaction a family asked for from one that a missing form
 produced.
 
-## 6. Jalisco: opacity by redaction
+## 7. Jalisco: opacity by redaction
 
 **[FIG F — `figures/article/F_jalisco_divergence.png`]**
 *Caption: Jalisco's registry conflict, 2020–2026: blanket confidentiality declared
@@ -254,7 +291,7 @@ and they do not agree with each other. Animal Político put the resulting gap at
 2,986 people. The state government's answer, in January 2024, was a communiqué titled
 "Jalisco does not manipulate its registry, nor erase figures."
 
-Jalisco is also where the contradiction from section 5 concentrates. Of the 4,765
+Jalisco is also where the contradiction from section 6 concentrates. Of the 4,765
 confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
 more than any other state. The same investigation found a further 2,137 disappearances
 between 2019 and mid-2024 that were never registered anywhere at all: not redacted,
@@ -275,7 +312,7 @@ The state with the most redacted registry in Mexico is also the state where civi
 society keeps producing the evidence its registry lacks. Those are not two facts about
 Jalisco. They are one fact, seen from two sides.
 
-## 7. Guerrero: the limits of official counts
+## 8. Guerrero: the limits of official counts
 
 **[FIG G — `figures/article/G_two_modes.png`]**
 *Caption: Guerrero's registry holds ~3,800–4,500 records. In Iguala alone, three
@@ -329,7 +366,7 @@ show why coverage before that point must be investigated separately. The project
 cannot measure Guerrero's under-registration from these sources because the official
 and collective lists have not been linked person by person.
 
-## 8. What this means — and what we cannot claim
+## 9. What this means — and what we cannot claim
 
 No chart in this piece supports the sentence "the state deliberately hides its
 disappeared." I looked for it and could not find it, and the honest reason is that
@@ -383,11 +420,13 @@ because the dashboard counts records it will not display. Totals: 407,253 record
 249,502 recorded found alive, 23,483 found dead, 134,268 disappeared or not located.
 Frozen with source hashes at `data/publication_freezes/2026-08-15/`.
 
-**[2] Homicide and state-capacity variables — vintage 2015–2025 cumulative.**
-SESNSP homicide victims aggregated 2015–2025 per 100,000; INEGI ENCIG 2025
-(corruption prevalence) and PIBE 2024 (GDP per capita). Matched to all 32 states.
-Used only for the correlations in §4 and the negative controls in
-`docs/methodology.md` §7.
+**[2] Homicide and state-capacity variables — vintage 2015–2025.**
+SESNSP homicide victims: aggregated 2015–2025 per 100,000 and matched to all 32
+states for the correlations in §5 and the negative controls in
+`docs/methodology.md` §7; and as a national annual series for fig I, where the
+file's January 2015 start sets that chart's start year and its October 2025 end
+makes the final year provisional. Also INEGI ENCIG 2025 (corruption prevalence) and
+PIBE 2024 (GDP per capita).
 
 **[3] Record-level microdata — vintage 2025-12-02 (frozen).** Every field-level figure:
 redaction shares, per-capita rates, and the state rankings in figs B, C and D. Source:
@@ -434,15 +473,15 @@ piece reports uncertainty as uncertainty and does not present proxies as counts.
 
 ## DECISION — the article stays whole (settled 2026-08-16)
 
-A split of §6 and §7 into a separate piece was proposed and **declined**. The article
-ships as one piece, §1 through §8. Recorded here so it is not reopened.
+A split of §7 and §8 into a separate piece was proposed and **declined**. The article
+ships as one piece, §1 through §9. Recorded here so it is not reopened.
 
-The argument for splitting was that the piece does two jobs: §1–§5b are registry
-forensics built on national data, while §6 and §7 switch to reported case studies with
+The argument for splitting was that the piece does two jobs: §1–§6b are registry
+forensics built on national data, while §7 and §8 switch to reported case studies with
 named people and sources the quantitative sections never use. They are also the two
 longest sections.
 
-The argument that won: §7 carries fig G and the two-modes idea, and §8 resolves on it.
+The argument that won: §8 carries fig G and the two-modes idea, and §9 resolves on it.
 Splitting would leave the first article closing on a claim the reader had never been
 shown, and would strip out the most original framing in the piece to leave a more
 conventional data story behind. The case material is what makes the national analysis
@@ -450,7 +489,7 @@ land as something other than an audit.
 
 Consequence for the follow-up: the madres buscadoras piece (Stage 2) is a genuine
 sequel built on new data — find-events, collective attribution — not a spin-off of
-material removed from this one. §8's closing line already sets that up.
+material removed from this one. §9's closing line already sets that up.
 
 ## FIGURE PRODUCTION NOTES (the data-viz workplan)
 
@@ -474,12 +513,12 @@ the whole set.
 
 New figures — ALL BUILT (baseline styling; restyle pass pending):
 
-- **fig 20 — consent accounting (for §5).** BUILT: `src/consent_accounting.py` →
+- **fig 20 — consent accounting (for §6).** BUILT: `src/consent_accounting.py` →
   `figures/20_consent_accounting.png`. Stacked bar of the 73,388 Aug-2020 records:
   77.4% "no consent info" / family-asked split 52/47 refuse/agree. Data hardcoded
   from the oficio (pp. 5, 11) — cited, not derived. Known issue: labels cramped on
   the two narrow segments.
-- **fig 21 — Jalisco divergence timeline (for §6).** BUILT: `src/jalisco_divergence.py`
+- **fig 21 — Jalisco divergence timeline (for §7).** BUILT: `src/jalisco_divergence.py`
   → `figures/21_jalisco_registry_divergence.png`. Documented snapshots (markers, not
   a series): federal 14,944 (Apr 2022) → 15,012 (May 2023, i.e. +68 in 13 months
   while the state issued 1,260 bulletins — annotated as "the freeze") → 15,015
@@ -490,7 +529,7 @@ New figures — ALL BUILT (baseline styling; restyle pass pending):
   Six event markers 2020–2026. CAVEAT kept in footer: registry definitions differ;
   the 2026 federal drop coincides with the announced recount (A dónde van los
   desaparecidos, 2026-01-08) — say "coincides", do not assert cause.
-- **fig 22 — parallel evidence systems (for §7).** BUILT:
+- **fig 22 — parallel evidence systems (for §8).** BUILT:
   `src/two_modes.py` → `figures/22_two_modes_of_opacity.png`. Left: Jalisco's
   documented denominator and redaction path. Right: Guerrero's official statewide
   stock and the Iguala collective record shown as separate evidence boxes, with

@@ -445,7 +445,7 @@ def inline(t: str) -> str:
 
 
 def parse_body(md: str) -> str:
-    """Convert the article body (§1..§8) into HTML."""
+    """Convert the article body (§1..§9) into HTML."""
     body = md.split("## 1.", 1)[1]
     body = "## 1." + body.split("## Methods note", 1)[0]
 
@@ -467,7 +467,7 @@ def parse_body(md: str) -> str:
             continue
 
         # A figure marker and its caption share one block (no blank line between them).
-        m = re.match(r"^\*\*\[FIG\s+([A-H])\s*[—-]\s*`([^`]+)`\]\*\*\s*(.*)$", b, flags=re.S)
+        m = re.match(r"^\*\*\[FIG\s+([A-I])\s*[—-]\s*`([^`]+)`\]\*\*\s*(.*)$", b, flags=re.S)
         if m:
             letter, path, rest = m.group(1), m.group(2), m.group(3).strip()
             cap = ""
