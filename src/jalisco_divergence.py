@@ -18,6 +18,7 @@ Data Cívica (Dec 2023 censo/borrados); Proceso 2024-01-23 (denial); ZonaDocs
 """
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from matplotlib.gridspec import GridSpec
 
 import article_style as st
 from datetime import date
@@ -32,60 +33,93 @@ sta = [(date(2023, 3, 31), 13976), (date(2025, 2, 28), 15426),
        (date(2025, 12, 31), 16064)]
 
 events = [
-    (date(2020, 8, 12), "Fiscalía declares ALL its\nsubmissions non-publishable\n(CNB oficio to INAI)"),
-    (date(2022, 3, 1), "State stops feeding\nthe federal registry"),
-    (date(2023, 12, 14), 'Federal "censo";\nerased-names\ncontroversy'),
-    (date(2024, 1, 23), '"Jalisco does not\nmanipulate its registry"\n(official denial)'),
-    (date(2025, 3, 5), "Teuchitlán extermination site\nfound by Guerreros Buscadores"),
-    (date(2026, 1, 8), "New federal\nrecount announced"),
+    (date(2020, 8, 12), "Fiscalía declares all its submissions non-publishable (CNB oficio to INAI)"),
+    (date(2022, 3, 1), "State stops feeding the federal registry"),
+    (date(2023, 12, 14), "Federal \u201Ccenso\u201D; erased-names controversy"),
+    (date(2024, 1, 23), "\u201CJalisco does not manipulate its registry\u201D (official denial)"),
+    (date(2025, 3, 5), "Teuchitlán extermination site found by Guerreros Buscadores"),
+    (date(2026, 1, 8), "New federal recount announced"),
 ]
 
-fig, ax = plt.subplots(figsize=(11, 5.5))
+fig = plt.figure(figsize=(11.5, 7.6))
+# Events used to be vertical lines carrying stacked text through the plot area, where
+# the labels collided with each other and with the data. They now live in their own
+# strip under the axis, numbered, with the wording in a key below.
+gs = GridSpec(2, 1, height_ratios=[5, 1], hspace=0.08, figure=fig)
+ax = fig.add_subplot(gs[0])
+axe = fig.add_subplot(gs[1], sharex=ax)
 
-for d, label in events:
-    ax.axvline(d, color=C_EVENT, lw=0.8, ls=":", alpha=0.6, zorder=1)
+XMIN, XMAX = date(2020, 3, 1), date(2026, 11, 1)
 
-ax.scatter(*zip(*fed), color=C_FED, marker="o", s=52, zorder=3,
-           label="Federal registry (RNPDNO) — documented snapshots")
-ax.scatter(*zip(*sta), color=C_STATE, marker="s", s=52, zorder=3,
-           label="Jalisco state registry — documented snapshots")
+for i, (d, _) in enumerate(events, 1):
+    ax.axvline(d, color=C_EVENT, lw=0.7, ls=":", alpha=0.28, zorder=1)
 
-# the last two federal pulls are only ~8 weeks apart: stagger so labels don't collide
-fed_offsets = [(0, -16)] * (len(fed) - 2) + [(-16, -18), (14, 6)]
+# Connectors show the ORDER of documented quotes, not a measured path between them.
+ax.plot(*zip(*fed), color=C_FED, lw=1.0, ls=(0, (5, 4)), alpha=0.55, zorder=2)
+ax.plot(*zip(*sta), color=C_STATE, lw=1.0, ls=(0, (5, 4)), alpha=0.55, zorder=2)
+ax.scatter(*zip(*fed), color=C_FED, marker="o", s=58, zorder=3,
+           label="Federal registry (RNPDNO)")
+ax.scatter(*zip(*sta), color=C_STATE, marker="s", s=58, zorder=3,
+           label="Jalisco state registry (SISOVID / REPD)")
+
+fed_offsets = [(0, -17)] * (len(fed) - 2) + [(-17, -19), (15, 7)]
 for (d, v), off in zip(fed, fed_offsets):
     ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=off,
-                ha="center", fontsize=8.5, color=C_FED, weight="bold")
-for d, v in sta:
-    ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=(0, 9),
-                ha="center", fontsize=8.5, color=C_STATE, weight="bold")
+                ha="center", fontsize=9, color=C_FED, weight="bold")
+sta_offsets = [(0, -18)] + [(0, 10)] * (len(sta) - 1)
+for (d, v), off in zip(sta, sta_offsets):
+    ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=off,
+                ha="center", fontsize=9, color=C_STATE, weight="bold")
 
-# event labels staggered along the top; first one left-anchored so it clears the axis
-tops = [16950, 18050, 16950, 18050, 16950, 18050]
-for i, ((d, label), y) in enumerate(zip(events, tops)):
-    ha = "left" if i == 0 else "center"
-    ax.text(d, y, label, ha=ha, va="top", fontsize=7.5, color=C_EVENT)
+# The freeze: anchored to the span it describes rather than floating.
+ax.annotate("", xy=(fed[0][0], 14580), xytext=(fed[1][0], 14580),
+            arrowprops=dict(arrowstyle="<->", color=C_FED, lw=1.0))
+ax.text(date(2022, 10, 25), 14430,
+        "federal count grew by 68 in 13 months\nwhile the state issued 1,260 search bulletins",
+        ha="center", va="top", fontsize=8.5, color=C_FED, style="italic")
 
-# the freeze annotation
-ax.annotate("federal count grew by only 68\nwhile the state issued 1,260\nsearch bulletins",
-            xy=(date(2022, 10, 15), 14990), xytext=(date(2021, 6, 1), 13500),
-            fontsize=8.5, color=C_FED, style="italic",
-            arrowprops=dict(arrowstyle="-", color=C_FED, lw=0.8))
+ax.set_ylim(12300, 16900)
+ax.set_xlim(XMIN, XMAX)
+ax.set_ylabel("People recorded disappeared in Jalisco")
+ax.grid(axis="y", color=st.MUTED, alpha=0.2, lw=0.7)
+ax.set_axisbelow(True)
+ax.spines[["top", "right", "bottom"]].set_visible(False)
+ax.tick_params(axis="x", length=0, labelbottom=False)
+ax.legend(loc="upper left", frameon=False, fontsize=9.5)
+ax.set_title("One state, two registries: Jalisco's federal and state counts diverge",
+             fontsize=13.5, weight="bold", loc="left", pad=30)
+ax.text(0, 1.015, "Documented snapshots only. The dashed connector shows the order of "
+                  "published quotes, not a measured path between them.",
+        transform=ax.transAxes, fontsize=9.5, color=st.MUTED)
 
-ax.set_ylim(12300, 18100)
-ax.set_xlim(date(2020, 3, 1), date(2026, 11, 1))
-ax.xaxis.set_major_locator(mdates.YearLocator())
-ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-ax.spines[["top", "right"]].set_visible(False)
-ax.set_title("One state, two registries: Jalisco's federal and state counts of the disappeared diverge",
-             fontsize=13, weight="bold", loc="left", pad=14)
-ax.legend(loc="lower left", frameon=False, fontsize=9)
-ax.text(0, -0.13,
-        "Markers are documented snapshots, not a continuous series; registry definitions differ. "
-        "Sources: El Informador (2023-05-09), SinEmbargo (2025), Grupo Animal (2025), RNPDNO API pulls "
-        "(2026-06-19 and 2026-08-15). Consulted 2026-08-15.",
-        transform=ax.transAxes, fontsize=7.5, color="#666666")
+# ---- event strip -------------------------------------------------------------
+axe.set_xlim(XMIN, XMAX)
+axe.set_ylim(0, 1)
+axe.axhline(0.62, color=st.MUTED, lw=0.9)
+for i, (d, _) in enumerate(events, 1):
+    axe.plot([d], [0.62], marker="o", ms=15, color=st.PAPER,
+             mec=C_EVENT, mew=1.0, zorder=3)
+    axe.text(d, 0.62, str(i), ha="center", va="center", fontsize=8.5,
+             color=C_EVENT, weight="bold", zorder=4)
+axe.xaxis.set_major_locator(mdates.YearLocator())
+axe.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+axe.set_yticks([])
+axe.spines[["top", "left", "right"]].set_visible(False)
+axe.tick_params(axis="x", labelsize=10)
 
-fig.tight_layout()
-fig.savefig("reports/figures/21_jalisco_registry_divergence.png", dpi=200, bbox_inches="tight")
+col = [events[:3], events[3:]]
+for c, (chunk, x) in enumerate(zip(col, (0.055, 0.53))):
+    start = c * 3
+    text = "\n".join(f"({start + i + 1})  {label}" for i, (_, label) in enumerate(chunk))
+    fig.text(x, 0.175, text, fontsize=8.5, color=C_EVENT, va="top", linespacing=1.9)
+
+fig.text(0.055, 0.022,
+         "Markers are documented snapshots, not a continuous series, and the two registries define their populations\n"
+         "differently, so the gap between them is not a measured undercount. Sources: El Informador (2023-05-09), SinEmbargo\n"
+         "(2025), Grupo Animal (2025), RNPDNO API pulls (2026-06-19, 2026-08-15). Consulted 2026-08-15.",
+         fontsize=7.5, color="#666666", va="bottom")
+
+fig.subplots_adjust(left=0.075, right=0.98, top=0.90, bottom=0.27)
+fig.savefig("reports/figures/21_jalisco_registry_divergence.png", dpi=200)
 print("wrote reports/figures/21_jalisco_registry_divergence.png")
 st.save(fig, "F_jalisco_divergence.png")

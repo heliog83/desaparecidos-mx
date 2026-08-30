@@ -6,7 +6,7 @@
   const NS = "http://www.w3.org/2000/svg";
   const COLORS = { alive: "#3c6e91", dead: "#2b2b2b", missing: "#7a1f1f", muted: "#9a9e9a" };
   const fmt = new Intl.NumberFormat("en-US");
-  const pct = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 1 });
+  const pct = new Intl.NumberFormat("en-US", { style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   const svgNode = (tag, attrs = {}, text = "") => {
     const n = document.createElementNS(NS, tag);
@@ -88,8 +88,8 @@
       const margin = { top: 48, right: 18, bottom: 45, left: width < 520 ? 50 : 66 };
       const innerW = width - margin.left - margin.right;
       const innerH = height - margin.top - margin.bottom;
-      const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
-      svg.append(svgNode("title", {}, "Recorded disappearances by year and current registry outcome"));
+      const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}`, role: "img",
+        "aria-label": "Recorded disappearances by year and current registry outcome" });
       svg.append(svgNode("desc", {}, "Bars for found alive, found dead and still missing."));
       const years = DATA.outcomes;
       const totals = years.map((d) => d.alive + d.dead + d.missing);
@@ -254,10 +254,10 @@
     };
     const stateHtml = (d) => `<strong>${d.label}</strong><br>`
       + `Unresolved <strong>${fmt.format(d.count)}</strong><br>`
-      + `Rate ${d.rate.toFixed(1)} per 100,000<br>`
+      + `Rate ${Math.round(d.rate)} per 100,000<br>`
       + `Confidential ${fmt.format(d.confidential_count)} (${pct.format(d.confidential_share)})<br>`
       + `<span class="tooltip-vintage">Snapshot: 2 Dec 2025</span>`;
-    const stateAria = (d) => `${d.label}: ${fmt.format(d.count)} unresolved records, ${d.rate.toFixed(1)} per 100,000, ${pct.format(d.confidential_share)} confidential`;
+    const stateAria = (d) => `${d.label}: ${fmt.format(d.count)} unresolved records, ${Math.round(d.rate)} per 100,000, ${pct.format(d.confidential_share)} confidential`;
 
     function draw() {
       canvas.querySelectorAll("svg").forEach((n) => n.remove());
@@ -265,7 +265,6 @@
       const spec = specs[metric];
       const palette = PALETTES[metric];
       const svg = svgNode("svg", { viewBox: "0 0 900 520", role: "img", "aria-label": `Map of Mexico coloured by ${spec.title}` });
-      svg.append(svgNode("title", {}, `Mexico: ${spec.title}`));
       svg.append(svgNode("desc", {}, "Each state can be focused or pointed to for unresolved count, rate and confidential share."));
       DATA.map_paths.forEach((feature) => {
         const d = stateByCode.get(feature.cve);
@@ -294,7 +293,7 @@
       legend.innerHTML = spec.labels.map((label, i) =>
         `<span><i style="background:${palette[i]}"></i>${label}</span>`).join("");
       const d = stateByCode.get(selected);
-      detail.innerHTML = d ? `<strong>${d.label}</strong><span><b>${fmt.format(d.count)}</b> unresolved</span><span><b>${d.rate.toFixed(1)}</b> per 100,000</span><span><b>${fmt.format(d.confidential_count)}</b> confidential (${pct.format(d.confidential_share)})</span><span>Snapshot: 2 Dec 2025</span>` : "";
+      detail.innerHTML = d ? `<strong>${d.label}</strong><span><b>${fmt.format(d.count)}</b> unresolved</span><span><b>${Math.round(d.rate)}</b> per 100,000</span><span><b>${fmt.format(d.confidential_count)}</b> confidential (${pct.format(d.confidential_share)})</span><span>Snapshot: 2 Dec 2025</span>` : "";
     }
     root.querySelectorAll("button[data-mode]").forEach((button) => button.addEventListener("click", () => {
       metric = button.dataset.mode; buttonMode(root, metric); draw();
@@ -316,7 +315,7 @@
     let metric = "rate";
     let selected = "TAMAULIPAS";
     const metrics = {
-      rate:         { key: "rate",               label: "per 100,000", format: (v) => v.toFixed(1) },
+      rate:         { key: "rate",               label: "per 100,000", format: (v) => String(Math.round(v)) },
       count:        { key: "count",              label: "records",     format: (v) => fmt.format(v) },
       confidential: { key: "confidential_share", label: "confidential", format: (v) => pct.format(v) },
     };
@@ -360,7 +359,7 @@
       bars.append(medRow);
 
       const selectedRow = DATA.states.find((d) => d.name === selected);
-      if (selectedRow) detail.innerHTML = `<strong>${selectedRow.label}</strong><span><b>${fmt.format(selectedRow.count)}</b> unresolved records</span><span><b>${selectedRow.rate.toFixed(1)}</b> per 100,000</span><span><b>${pct.format(selectedRow.confidential_share)}</b> confidential</span><span>Snapshot: 2 Dec 2025</span>`;
+      if (selectedRow) detail.innerHTML = `<strong>${selectedRow.label}</strong><span><b>${fmt.format(selectedRow.count)}</b> unresolved records</span><span><b>${Math.round(selectedRow.rate)}</b> per 100,000</span><span><b>${pct.format(selectedRow.confidential_share)}</b> confidential</span><span>Snapshot: 2 Dec 2025</span>`;
     }
     select.addEventListener("change", () => { selected = select.value; render(); });
     root.querySelectorAll("button[data-mode]").forEach((b) => b.addEventListener("click", () => {
@@ -382,7 +381,7 @@
     let sortKey = "confidential_share";
     const HIGHLIGHT = { "JALISCO": true, "GUERRERO": true, "NAYARIT": true, "COLIMA": true, "YUCATAN": true };
     // Formatter depends on which metric is being sorted
-    const fmtVal = (key, v) => key === "confidential_share" ? pct.format(v) : v.toFixed(1);
+    const fmtVal = (key, v) => key === "confidential_share" ? pct.format(v) : String(Math.round(v));
 
     function draw() {
       canvas.querySelectorAll("svg").forEach((n) => n.remove());
@@ -399,7 +398,8 @@
       const xv = (v) => margin.left + (v / maxVal) * innerW;
       const natAvg = DATA.states.reduce((s, d) => s + d.confidential_share, 0) / DATA.states.length;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
-      svg.append(svgNode("title", {}, "Confidential share of unresolved records by state"));
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", "Confidential share of unresolved records by state");
 
       // Median reference line
       const medX = xv(medVal);
@@ -417,7 +417,7 @@
         }, d.label));
         const rect = svgNode("rect", { x: margin.left, y: yy + 2, width: barW, height: rowH - 4, fill: barColor, tabindex: 0 });
         rect.setAttribute("aria-label", `${d.label}: ${fmtVal(sortKey, d[sortKey])}`);
-        const tipHtml = `<strong>${d.label}</strong><br>Confidential <strong>${pct.format(d.confidential_share)}</strong> (${fmt.format(d.confidential_count)} of ${fmt.format(d.count)})<br>Rate ${d.rate.toFixed(1)} per 100,000<br><span class="tooltip-vintage">Snapshot: 2 Dec 2025</span>`;
+        const tipHtml = `<strong>${d.label}</strong><br>Confidential <strong>${pct.format(d.confidential_share)}</strong> (${fmt.format(d.confidential_count)} of ${fmt.format(d.count)})<br>Rate ${Math.round(d.rate)} per 100,000<br><span class="tooltip-vintage">Snapshot: 2 Dec 2025</span>`;
         rect.addEventListener("mouseenter", (e) => { const [px, py] = pointerIn(e, canvas); showTip(tip, tipHtml, px, py); });
         rect.addEventListener("mousemove", (e) => { const [px, py] = pointerIn(e, canvas); showTip(tip, tipHtml, px, py); });
         rect.addEventListener("mouseleave", () => hideTip(tip));
@@ -452,7 +452,7 @@
     const varSelect = root.querySelector("#scatter-var");
     const HIGHLIGHT = { "JALISCO": "#7a1f1f", "GUERRERO": "#3c6e91", "COLIMA": "#5a8a3a", "YUCATAN": "#7a5aaa" };
     const VAR_META = {
-      homicide_rate:      { label: "Homicide rate per 100k (2015\u20132025)",     fmt: (v) => v.toFixed(1) },
+      homicide_rate:      { label: "Homicide rate per 100k, cumulative (2015\u20132025)", fmt: (v) => String(Math.round(v)) },
       pibe_per_capita:    { label: "GDP per capita (MXN 2018)",                    fmt: (v) => `$${fmt.format(Math.round(v/1000))}k` },
       corruption_per100k: { label: "Corruption prevalence per 100k (2025)",       fmt: (v) => fmt.format(Math.round(v)) },
       kidnapping_per100k: { label: "Kidnapping rate per 100k (2015\u20132025)",   fmt: (v) => v.toFixed(3) },
@@ -478,7 +478,8 @@
       const sx = (v) => margin.left + (v / xmax) * innerW;
       const sy = (v) => margin.top + innerH - v * innerH;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
-      svg.append(svgNode("title", {}, `Confidential share vs ${xMeta.label}`));
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", `Confidential share vs ${xMeta.label}`);
       // Grid
       for (let i = 0; i <= 4; i++) {
         const yv = i / 4, yy = sy(yv);
@@ -508,7 +509,7 @@
         const fill = hiColor || "#9a9e9a";
         const rdot = hiColor ? 11 : 7.5;
         const circle = svgNode("circle", { cx, cy, r: rdot, fill, opacity: hiColor ? 1 : 0.7, tabindex: 0 });
-        const tipHtml = `<strong>${d.label}</strong><br>Confidential <strong>${pct.format(d.confidential_share)}</strong><br>${xMeta.label}: <strong>${xMeta.fmt(d[xKey])}</strong><br>Unresolved ${fmt.format(d.count)} \u00B7 Rate ${d.rate.toFixed(1)}`;
+        const tipHtml = `<strong>${d.label}</strong><br>Confidential <strong>${pct.format(d.confidential_share)}</strong><br>${xMeta.label}: <strong>${xMeta.fmt(d[xKey])}</strong><br>Unresolved ${fmt.format(d.count)} \u00B7 Rate ${Math.round(d.rate)}`;
         circle.setAttribute("aria-label", `${d.label}: confidential ${pct.format(d.confidential_share)}`);
         if (hiColor && width >= 420) {
           svg.append(svgNode("text", { x: cx + 14, y: cy + 4, class: "chart-label", fill: hiColor }, d.label));
@@ -570,7 +571,8 @@
       const x = (i) => margin.left + (values.length === 1 ? innerW / 2 : i / (values.length - 1) * innerW);
       const y = (v) => margin.top + innerH - (v - ymin) / (ymax - ymin) * innerH;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
-      svg.append(svgNode("title", {}, `Registry snapshots for ${selected}`));
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", `Registry snapshots for ${selected}`);
       for (let i = 0; i <= 4; i++) {
         const v = ymin + (ymax - ymin) * i / 4, yy = y(v);
         svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right, y1: yy, y2: yy, class: "chart-grid" }));
