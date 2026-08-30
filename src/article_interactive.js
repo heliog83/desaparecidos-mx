@@ -112,20 +112,66 @@
       svg.append(svgNode("line", { x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + innerH, class: "chart-axis" }));
       svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right, y1: margin.top + innerH, y2: margin.top + innerH, class: "chart-axis" }));
 
+      // Presidential terms as SPANS, not just start lines. Labelling only the
+      // boundaries left the first bars with no name against them and made it
+      // ambiguous whether a label belonged to the period left or right of its
+      // line. Each label is now centred over the years it covers.
       const SEXENIOS = [
-        [2006, "Calder\u00F3n"], [2012, "Pe\u00F1a Nieto"],
-        [2018, "L\u00F3pez Obrador"], [2024, "Sheinbaum"],
+        [2000, 2006, "Fox"], [2006, 2012, "Calder\u00F3n"],
+        [2012, 2018, "Pe\u00F1a Nieto"], [2018, 2024, "L\u00F3pez Obrador"],
+        [2024, 2100, "Sheinbaum"],
       ];
       const firstYear = years[0].year;
-      SEXENIOS.forEach(([startYear, name]) => {
-        const idx = startYear - firstYear;
-        if (idx < 0 || idx >= years.length) return;
-        const gx = margin.left + idx * step;
-        svg.append(svgNode("line", { x1: gx, x2: gx, y1: margin.top, y2: margin.top + innerH, class: "chart-sexenio" }));
-        if (width >= 560) {
-          svg.append(svgNode("text", { x: gx + 3, y: margin.top - 8, "text-anchor": "start", class: "chart-sexenio-label" }, name));
+      const lastYear = years[years.length - 1].year;
+      SEXENIOS.forEach(([startYear, endYear, name]) => {
+        // Divider at the term start, except at the axis itself.
+        if (startYear > firstYear && startYear <= lastYear) {
+          const gx = margin.left + (startYear - firstYear) * step;
+          svg.append(svgNode("line", { x1: gx, x2: gx, y1: margin.top, y2: margin.top + innerH, class: "chart-sexenio" }));
         }
+        if (width < 620) return;
+        const from = Math.max(startYear, firstYear);
+        const to = Math.min(endYear, lastYear + 1);
+        if (to <= from) return;
+        const centre = margin.left + ((from - firstYear) + (to - from) / 2) * step;
+        svg.append(svgNode("text", { x: centre, y: margin.top - 9, "text-anchor": "middle", class: "chart-sexenio-label" }, name));
       });
+
+      // Smoothed trend behind the bars: a 3-year centred moving average, so the
+      // shape of the series reads at a glance without smoothing away the bars
+      // themselves. Single-series views only \u2014 a trend through a stacked or
+      // share view would describe nothing in particular.
+      const trendMode = ["missing", "alive", "dead"].includes(mode);
+      if (trendMode && years.length > 2) {
+        const raw = years.map((d) => d[mode]);
+        const avg = raw.map((_, i) => {
+          const lo = Math.max(0, i - 1);
+          const hi = Math.min(raw.length - 1, i + 1);
+          let sum = 0;
+          for (let k = lo; k <= hi; k += 1) sum += raw[k];
+          return sum / (hi - lo + 1);
+        });
+        const pts = avg.map((v, i) => [margin.left + i * step + step / 2, y(v)]);
+        // Quadratic segments through the data points via their midpoints: smooth
+        // curve, no overshoot below zero the way a naive cubic can produce.
+        let d = `M${pts[0][0]},${pts[0][1]}`;
+        for (let i = 1; i < pts.length - 1; i += 1) {
+          const mx = (pts[i][0] + pts[i + 1][0]) / 2;
+          const my = (pts[i][1] + pts[i + 1][1]) / 2;
+          d += ` Q${pts[i][0]},${pts[i][1]} ${mx},${my}`;
+        }
+        // Close with a straight run to the final point. Reusing the previous
+        // point as a control here sends the handle backwards and kinks the curve
+        // at the right edge \u2014 the last year is exactly where the eye lands.
+        const end = pts[pts.length - 1];
+        d += ` L${end[0]},${end[1]}`;
+        const base = margin.top + innerH;
+        svg.append(svgNode("path", {
+          d: `${d} L${end[0]},${base} L${pts[0][0]},${base} Z`,
+          fill: COLORS[mode], "fill-opacity": 0.14, stroke: "none",
+        }));
+        svg.append(svgNode("path", { d, fill: "none", stroke: COLORS[mode], class: "chart-trend" }));
+      }
 
       const isSingle = ["missing", "alive", "dead"].includes(mode);
       years.forEach((d, i) => {
@@ -154,9 +200,10 @@
         }
       });
 
-      const legendItems = mode === "missing" ? [["Still missing \u2014 each bar starts at zero", COLORS.missing]]
-        : mode === "alive"   ? [["Found alive \u2014 each bar starts at zero", COLORS.alive]]
-        : mode === "dead"    ? [["Found dead \u2014 each bar starts at zero", COLORS.dead]]
+      const trendNote = " \u00B7 line = 3-year average";
+      const legendItems = mode === "missing" ? [["Still missing \u2014 each bar starts at zero" + trendNote, COLORS.missing]]
+        : mode === "alive"   ? [["Found alive \u2014 each bar starts at zero" + trendNote, COLORS.alive]]
+        : mode === "dead"    ? [["Found dead \u2014 each bar starts at zero" + trendNote, COLORS.dead]]
         : [["Found alive", COLORS.alive], ["Found dead", COLORS.dead], ["Still missing", COLORS.missing]];
       const legendStep = innerW / legendItems.length;
       legendItems.forEach(([label, color], index) => {
@@ -167,7 +214,7 @@
       canvas.append(svg);
       summary.innerHTML = mode === "share"
         ? "Shares describe each cohort\u2019s <strong>current registry status</strong>; they do not show when a person was located."
-        : mode === "missing" ? "Every red bar starts at <strong>zero</strong>, so annual still-missing counts can be compared directly. These are current outcomes, not the number newly missing that year."
+        : mode === "missing" ? "Read one bar as: of everyone recorded as disappearing that year, this many are <strong>still unlocated today</strong>. It is not the number of reports filed that year \u2014 anyone since found alive or dead has moved out of this bar."
         : mode === "alive"   ? "Every blue bar starts at <strong>zero</strong>, so annual found-alive counts can be compared directly. These are current registry statuses."
         : mode === "dead"    ? "Every dark bar starts at <strong>zero</strong>, so annual found-dead counts can be compared directly. These are current registry statuses."
         : "Each stacked bar is a recorded year-of-disappearance cohort, not a cumulative total.";

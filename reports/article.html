@@ -68,9 +68,14 @@
   }
   dl.fields { margin:0; display:flex; flex-direction:column; gap:11px; }
   .frow { display:grid; grid-template-columns:minmax(0,15em) 1fr; gap:14px; align-items:baseline; }
-  dl.fields dt {
+  dl.fields dt { display:flex; flex-direction:column; gap:2px; }
+  dl.fields .fname {
     font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:#6B706C;
     text-transform:uppercase; overflow-wrap:anywhere;
+  }
+  dl.fields .fgloss {
+    font-family:var(--sans); font-size:12px; color:#9AA09A; letter-spacing:0;
+    text-transform:none;
   }
   dl.fields dd { margin:0; font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:var(--ink); }
   dl.fields dd.redacted { color:#7A1F1F; }
@@ -220,7 +225,8 @@
 .chart-grid { stroke:#e2e4e1; stroke-width:1; }
 /* Presidential-term rules: reference only, deliberately unstyled by party. */
 .chart-sexenio { stroke:#9aa09a; stroke-width:1; stroke-dasharray:2 3; }
-.chart-sexenio-label { font-size:9.5px; fill:#6f746f; letter-spacing:.02em; }
+.chart-sexenio-label { font-size:12px; font-weight:600; fill:#5c615c; letter-spacing:.01em; }
+.chart-trend { stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:.55; }
 .chart-label { fill:#343634; font:12px var(--sans); }
 .chart-muted { fill:#707570; font:11px var(--sans); }
 .chart-value { fill:var(--ink); font:600 12px var(--sans); }
@@ -341,7 +347,7 @@
     </p>
     <h1>The Redacted Crisis</h1>
     <p class="subtitle">What Mexico's public registry leaves unseen</p>
-    <p class="standfirst">On 15 August 2026 Mexico's official registry counted <strong>134,268 people still missing</strong>. In the latest comparable record-level snapshot, dated 2 December 2025, <strong>36.8% of unresolved records revealed only the state</strong>; every other public field was redacted. This is the story of how publication decisions shape what the public can see.</p>
+    <p class="standfirst">On 15 August 2026 Mexico's official registry counted <strong>134,268 people still missing</strong>. That live registry publishes only totals, so field-level detail comes from the last record-level snapshot, dated 2 December 2025. In it, 63.2% of unresolved records carried the ordinary public fields &#8212; date, age, sex, municipality, case status. The other <strong>36.8% revealed only the state</strong>. This is the story of how publication decisions shape what the public can see.</p>
 
 
     <section class="status-snapshot" aria-labelledby="status-title">
@@ -370,12 +376,12 @@
     <div class="record">
       <p class="rlabel">What a confidential record contains</p>
       <dl class="fields">
-<div class="frow"><dt>ENTIDAD</dt><dd class="val">JALISCO</dd></div>
-<div class="frow"><dt>FECHA_DESAPARICION</dt><dd class="val redacted">CONFIDENCIAL</dd></div>
-<div class="frow"><dt>SEXO</dt><dd class="val redacted">CONFIDENCIAL</dd></div>
-<div class="frow"><dt>EDAD</dt><dd class="val redacted">CONFIDENCIAL</dd></div>
-<div class="frow"><dt>MUNICIPIO</dt><dd class="val redacted">CONFIDENCIAL</dd></div>
-<div class="frow"><dt>ESTATUS_VICTIMA</dt><dd class="val redacted">CONFIDENCIAL</dd></div>
+<div class="frow"><dt><span class="fname">ENTIDAD</span><span class="fgloss">State</span></dt><dd class="val">JALISCO</dd></div>
+<div class="frow"><dt><span class="fname">FECHA_DESAPARICION</span><span class="fgloss">Date of disappearance</span></dt><dd class="val redacted">CONFIDENCIAL</dd></div>
+<div class="frow"><dt><span class="fname">SEXO</span><span class="fgloss">Sex</span></dt><dd class="val redacted">CONFIDENCIAL</dd></div>
+<div class="frow"><dt><span class="fname">EDAD</span><span class="fgloss">Age</span></dt><dd class="val redacted">CONFIDENCIAL</dd></div>
+<div class="frow"><dt><span class="fname">MUNICIPIO</span><span class="fgloss">Municipality</span></dt><dd class="val redacted">CONFIDENCIAL</dd></div>
+<div class="frow"><dt><span class="fname">ESTATUS_VICTIMA</span><span class="fgloss">Case status</span></dt><dd class="val redacted">CONFIDENCIAL</dd></div>
       </dl>
     </div>
     <p class="record-note">The field structure above is illustrative, not one person's
@@ -390,7 +396,7 @@
 <figure class="interactive-figure" data-chart="outcomes">
 <div class="chart-shell">
   <h3 class="chart-heading">Recorded disappearances, by year and current outcome</h3>
-  <p class="chart-subtitle">Year of disappearance, 2000&#8211;2025. Use &#8220;Still missing&#8221; for a zero-based comparison; hover or focus for exact values.</p>
+  <p class="chart-subtitle">Grouped by the year a person disappeared, 2000&#8211;2025, and coloured by where their case stands <em>now</em>. Use &#8220;Still missing&#8221; for a zero-based comparison; hover or focus for exact values.</p>
   <div class="chart-controls" aria-label="Outcome chart display">
     <span class="chart-control-label">View</span>
     <button type="button" data-mode="absolute" aria-pressed="true">All outcomes</button>
@@ -719,20 +725,66 @@
       svg.append(svgNode("line", { x1: margin.left, x2: margin.left, y1: margin.top, y2: margin.top + innerH, class: "chart-axis" }));
       svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right, y1: margin.top + innerH, y2: margin.top + innerH, class: "chart-axis" }));
 
+      // Presidential terms as SPANS, not just start lines. Labelling only the
+      // boundaries left the first bars with no name against them and made it
+      // ambiguous whether a label belonged to the period left or right of its
+      // line. Each label is now centred over the years it covers.
       const SEXENIOS = [
-        [2006, "Calder\u00F3n"], [2012, "Pe\u00F1a Nieto"],
-        [2018, "L\u00F3pez Obrador"], [2024, "Sheinbaum"],
+        [2000, 2006, "Fox"], [2006, 2012, "Calder\u00F3n"],
+        [2012, 2018, "Pe\u00F1a Nieto"], [2018, 2024, "L\u00F3pez Obrador"],
+        [2024, 2100, "Sheinbaum"],
       ];
       const firstYear = years[0].year;
-      SEXENIOS.forEach(([startYear, name]) => {
-        const idx = startYear - firstYear;
-        if (idx < 0 || idx >= years.length) return;
-        const gx = margin.left + idx * step;
-        svg.append(svgNode("line", { x1: gx, x2: gx, y1: margin.top, y2: margin.top + innerH, class: "chart-sexenio" }));
-        if (width >= 560) {
-          svg.append(svgNode("text", { x: gx + 3, y: margin.top - 8, "text-anchor": "start", class: "chart-sexenio-label" }, name));
+      const lastYear = years[years.length - 1].year;
+      SEXENIOS.forEach(([startYear, endYear, name]) => {
+        // Divider at the term start, except at the axis itself.
+        if (startYear > firstYear && startYear <= lastYear) {
+          const gx = margin.left + (startYear - firstYear) * step;
+          svg.append(svgNode("line", { x1: gx, x2: gx, y1: margin.top, y2: margin.top + innerH, class: "chart-sexenio" }));
         }
+        if (width < 620) return;
+        const from = Math.max(startYear, firstYear);
+        const to = Math.min(endYear, lastYear + 1);
+        if (to <= from) return;
+        const centre = margin.left + ((from - firstYear) + (to - from) / 2) * step;
+        svg.append(svgNode("text", { x: centre, y: margin.top - 9, "text-anchor": "middle", class: "chart-sexenio-label" }, name));
       });
+
+      // Smoothed trend behind the bars: a 3-year centred moving average, so the
+      // shape of the series reads at a glance without smoothing away the bars
+      // themselves. Single-series views only \u2014 a trend through a stacked or
+      // share view would describe nothing in particular.
+      const trendMode = ["missing", "alive", "dead"].includes(mode);
+      if (trendMode && years.length > 2) {
+        const raw = years.map((d) => d[mode]);
+        const avg = raw.map((_, i) => {
+          const lo = Math.max(0, i - 1);
+          const hi = Math.min(raw.length - 1, i + 1);
+          let sum = 0;
+          for (let k = lo; k <= hi; k += 1) sum += raw[k];
+          return sum / (hi - lo + 1);
+        });
+        const pts = avg.map((v, i) => [margin.left + i * step + step / 2, y(v)]);
+        // Quadratic segments through the data points via their midpoints: smooth
+        // curve, no overshoot below zero the way a naive cubic can produce.
+        let d = `M${pts[0][0]},${pts[0][1]}`;
+        for (let i = 1; i < pts.length - 1; i += 1) {
+          const mx = (pts[i][0] + pts[i + 1][0]) / 2;
+          const my = (pts[i][1] + pts[i + 1][1]) / 2;
+          d += ` Q${pts[i][0]},${pts[i][1]} ${mx},${my}`;
+        }
+        // Close with a straight run to the final point. Reusing the previous
+        // point as a control here sends the handle backwards and kinks the curve
+        // at the right edge \u2014 the last year is exactly where the eye lands.
+        const end = pts[pts.length - 1];
+        d += ` L${end[0]},${end[1]}`;
+        const base = margin.top + innerH;
+        svg.append(svgNode("path", {
+          d: `${d} L${end[0]},${base} L${pts[0][0]},${base} Z`,
+          fill: COLORS[mode], "fill-opacity": 0.14, stroke: "none",
+        }));
+        svg.append(svgNode("path", { d, fill: "none", stroke: COLORS[mode], class: "chart-trend" }));
+      }
 
       const isSingle = ["missing", "alive", "dead"].includes(mode);
       years.forEach((d, i) => {
@@ -761,9 +813,10 @@
         }
       });
 
-      const legendItems = mode === "missing" ? [["Still missing \u2014 each bar starts at zero", COLORS.missing]]
-        : mode === "alive"   ? [["Found alive \u2014 each bar starts at zero", COLORS.alive]]
-        : mode === "dead"    ? [["Found dead \u2014 each bar starts at zero", COLORS.dead]]
+      const trendNote = " \u00B7 line = 3-year average";
+      const legendItems = mode === "missing" ? [["Still missing \u2014 each bar starts at zero" + trendNote, COLORS.missing]]
+        : mode === "alive"   ? [["Found alive \u2014 each bar starts at zero" + trendNote, COLORS.alive]]
+        : mode === "dead"    ? [["Found dead \u2014 each bar starts at zero" + trendNote, COLORS.dead]]
         : [["Found alive", COLORS.alive], ["Found dead", COLORS.dead], ["Still missing", COLORS.missing]];
       const legendStep = innerW / legendItems.length;
       legendItems.forEach(([label, color], index) => {
@@ -774,7 +827,7 @@
       canvas.append(svg);
       summary.innerHTML = mode === "share"
         ? "Shares describe each cohort\u2019s <strong>current registry status</strong>; they do not show when a person was located."
-        : mode === "missing" ? "Every red bar starts at <strong>zero</strong>, so annual still-missing counts can be compared directly. These are current outcomes, not the number newly missing that year."
+        : mode === "missing" ? "Read one bar as: of everyone recorded as disappearing that year, this many are <strong>still unlocated today</strong>. It is not the number of reports filed that year \u2014 anyone since found alive or dead has moved out of this bar."
         : mode === "alive"   ? "Every blue bar starts at <strong>zero</strong>, so annual found-alive counts can be compared directly. These are current registry statuses."
         : mode === "dead"    ? "Every dark bar starts at <strong>zero</strong>, so annual found-dead counts can be compared directly. These are current registry statuses."
         : "Each stacked bar is a recorded year-of-disappearance cohort, not a cumulative total.";

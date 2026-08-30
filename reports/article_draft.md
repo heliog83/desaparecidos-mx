@@ -18,9 +18,11 @@ Working titles (pick one):
 3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
 
 Standfirst: *On 15 August 2026 Mexico's official registry counted 134,268 people still
-missing. In the latest comparable record-level snapshot, dated 2 December 2025, 36.8%
-of unresolved records revealed only the state; every other public field was redacted.
-This is the story of how publication decisions shape what the public can see.*
+missing. That live registry publishes only totals, so field-level detail comes from the
+last record-level snapshot, dated 2 December 2025. In it, 63.2% of unresolved records
+carried the ordinary public fields — date, age, sex, municipality, case status. The
+other 36.8% revealed only the state. This is the story of how publication decisions
+shape what the public can see.*
 
 ---
 

@@ -55,13 +55,17 @@ SUBTITLE = "What Mexico's public registry leaves unseen"
 
 # Field readout for the hero: exactly what the public registry returns for a
 # confidential record. Structure only — no person, no invented identifiers.
+# (registry field name, plain-language gloss, value, redacted). The raw names are
+# the point — this is literally what the registry returns — but FECHA_DESAPARICION
+# and ESTATUS_VICTIMA mean nothing to a reader who has never opened the file, so
+# each carries a gloss underneath.
 HERO_FIELDS = [
-    ("ENTIDAD", "JALISCO", False),
-    ("FECHA_DESAPARICION", "CONFIDENCIAL", True),
-    ("SEXO", "CONFIDENCIAL", True),
-    ("EDAD", "CONFIDENCIAL", True),
-    ("MUNICIPIO", "CONFIDENCIAL", True),
-    ("ESTATUS_VICTIMA", "CONFIDENCIAL", True),
+    ("ENTIDAD", "State", "JALISCO", False),
+    ("FECHA_DESAPARICION", "Date of disappearance", "CONFIDENCIAL", True),
+    ("SEXO", "Sex", "CONFIDENCIAL", True),
+    ("EDAD", "Age", "CONFIDENCIAL", True),
+    ("MUNICIPIO", "Municipality", "CONFIDENCIAL", True),
+    ("ESTATUS_VICTIMA", "Case status", "CONFIDENCIAL", True),
 ]
 
 
@@ -304,10 +308,12 @@ def standfirst(totals: dict[str, int]) -> str:
     missing = totals["TotalDesaparecidos"]
     return (
         f"On 15 August 2026 Mexico's official registry counted <strong>{missing:,} people "
-        "still missing</strong>. In the latest comparable record-level snapshot, dated "
-        "2 December 2025, <strong>36.8% of unresolved records revealed only the state</strong>; "
-        "every other public field was redacted. This is the story of how publication "
-        "decisions shape what the public can see."
+        "still missing</strong>. That live registry publishes only totals, so field-level "
+        "detail comes from the last record-level snapshot, dated 2 December 2025. In it, "
+        "63.2% of unresolved records carried the ordinary public fields \u2014 date, age, "
+        "sex, municipality, case status. The other <strong>36.8% revealed only the "
+        "state</strong>. This is the story of how publication decisions shape what the "
+        "public can see."
     )
 
 
@@ -320,7 +326,7 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
         return f"""<figure class="interactive-figure" data-chart="outcomes">
 <div class="chart-shell">
   <h3 class="chart-heading">Recorded disappearances, by year and current outcome</h3>
-  <p class="chart-subtitle">Year of disappearance, 2000–2025. Use “Still missing” for a zero-based comparison; hover or focus for exact values.</p>
+  <p class="chart-subtitle">Grouped by the year a person disappeared, 2000–2025, and coloured by where their case stands <em>now</em>. Use “Still missing” for a zero-based comparison; hover or focus for exact values.</p>
   <div class="chart-controls" aria-label="Outcome chart display">
     <span class="chart-control-label">View</span>
     <button type="button" data-mode="absolute" aria-pressed="true">All outcomes</button>
@@ -514,9 +520,15 @@ def parse_methods(md: str) -> str:
 
 def hero_record() -> str:
     rows = []
-    for field, value, redacted in HERO_FIELDS:
+    for field, gloss, value, redacted in HERO_FIELDS:
         cls = "val redacted" if redacted else "val"
-        rows.append(f'<div class="frow"><dt>{field}</dt><dd class="{cls}">{value}</dd></div>')
+        rows.append(
+            f'<div class="frow">'
+            f'<dt><span class="fname">{field}</span>'
+            f'<span class="fgloss">{gloss}</span></dt>'
+            f'<dd class="{cls}">{value}</dd>'
+            f'</div>'
+        )
     return "\n".join(rows)
 
 
@@ -643,9 +655,14 @@ TEMPLATE = """<!DOCTYPE html>
   }}
   dl.fields {{ margin:0; display:flex; flex-direction:column; gap:11px; }}
   .frow {{ display:grid; grid-template-columns:minmax(0,15em) 1fr; gap:14px; align-items:baseline; }}
-  dl.fields dt {{
+  dl.fields dt {{ display:flex; flex-direction:column; gap:2px; }}
+  dl.fields .fname {{
     font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:#6B706C;
     text-transform:uppercase; overflow-wrap:anywhere;
+  }}
+  dl.fields .fgloss {{
+    font-family:var(--sans); font-size:12px; color:#9AA09A; letter-spacing:0;
+    text-transform:none;
   }}
   dl.fields dd {{ margin:0; font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:var(--ink); }}
   dl.fields dd.redacted {{ color:#7A1F1F; }}
