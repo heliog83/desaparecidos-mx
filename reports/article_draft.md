@@ -113,6 +113,30 @@ mean the tenfold figure cannot be read as a measure of how much worse the violen
 became. It measures a registry — one whose reach, rules and staffing all changed
 inside the period it covers.
 
+**[FIG J — `figures/article/J_outcome_vs_homicide.png`]**
+*Caption: Each bar is one year of disappearance, split by where the case stands in
+the registry now, with that year's homicide victims overlaid. Sources: RNPDNO
+aggregate flow, publication freeze 2026-08-15 [1]; SESNSP [2].*
+
+There is a darker reading of the same divergence: that deaths are being recorded as
+disappearances, so the homicide statistic improves without anything improving. The
+registry's own outcome split does not support it.
+
+Of the 10,905 records the registry gained for 2019–2024, **61.7% are people it now
+records as found alive.** Another 36.8% are still missing. Just 1.4% — 156 people —
+are found dead. Relabelled homicide victims would have to land in the dead or
+still-missing columns; instead the growth is dominated by people who turned up
+alive. Homicides plus the registry's own found-dead count fell together over those
+years, from 36,638 to 32,133, where a shuffle between the two categories would have
+held that total roughly flat.
+
+What this cannot rule out is quieter and more troubling. A body that is never found
+enters neither statistic — not the homicide count, because no victim is ever named,
+and not the registry's found-dead column, because nobody is ever found. That channel
+is real, and Teuchitlán is what it looks like when one instance of it surfaces.
+Nothing here measures its size. The claim this section can defend is narrow: the
+registry's growth is not the homicide count in disguise.
+
 ---
 
 ## 3. Where unresolved stock is greatest per resident
@@ -143,13 +167,21 @@ Hold onto it. The next chart takes it apart.
 **[FIG C — `figures/article/C_confidential_share.png`]**
 *Caption: Share of each state's unresolved records marked CONFIDENCIAL in the public
 registry. National: 36.8%. Jalisco: 66.9%. Nayarit: 66.2%. Guerrero 9.1%, Colima 9.0%.
-A confidential record retains exactly one public fact — the state. Vintage 2025-12-02 [3].*
+A confidential record retains exactly one public fact — the state. Read the bottom of
+this ranking with care: it measures redaction among records that reached the registry,
+so a short bar means little was hidden, not that little was missed — see §8. Vintage
+2025-12-02 [3].*
 
 Here is what "consulting the public registry" actually gets you: for 36.8% of
 unresolved records, every field is redacted — no date, no age, no sex, no
 municipality, no case status. One fact survives: the state. This is why national
 trend charts and state comparisons are built on different denominators, and why
 every chart in this piece says so.
+
+The top of this ranking is the easier half to read. The bottom is the trap. A state
+sits low here when it redacts little of what it holds — which says nothing at all
+about how much it holds. Guerrero's 9.1% is the lowest bar on the chart and the
+weakest evidence of openness in this piece; §8 is about why.
 
 The redaction is not evenly spread. Jalisco redacts two of every three records.
 Guerrero, one of the most violent states in the country, redacts one in eleven.

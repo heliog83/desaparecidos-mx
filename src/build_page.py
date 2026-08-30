@@ -467,7 +467,11 @@ def parse_body(md: str) -> str:
             continue
 
         # A figure marker and its caption share one block (no blank line between them).
-        m = re.match(r"^\*\*\[FIG\s+([A-I])\s*[—-]\s*`([^`]+)`\]\*\*\s*(.*)$", b, flags=re.S)
+        m = re.match(r"^\*\*\[FIG\s+([A-Z])\s*[—-]\s*`([^`]+)`\]\*\*\s*(.*)$", b, flags=re.S)
+        if b.lstrip().startswith("**[FIG") and not m:
+            # Silent fallthrough would render the marker as body prose and drop the
+            # figure. A too-narrow letter class did exactly that, twice.
+            raise SystemExit(f"FAIL: malformed figure marker: {b.splitlines()[0]!r}")
         if m:
             letter, path, rest = m.group(1), m.group(2), m.group(3).strip()
             cap = ""
