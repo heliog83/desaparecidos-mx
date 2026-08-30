@@ -95,8 +95,10 @@ MPLBACKEND=Agg python src/consent_accounting.py    # figure E
 MPLBACKEND=Agg python src/jalisco_divergence.py    # figure F
 MPLBACKEND=Agg python src/two_modes.py             # figure G
 MPLBACKEND=Agg python src/version_audit.py         # figure H
+MPLBACKEND=Agg python src/international_comparison.py  # figure 28
 python src/stage2_import.py                        # CNB grave registry -> Stage 2
 python src/stage2_validate.py                      # schema gate for Stage-2 files
+python src/check_figures.py                        # figure numbers unique + contiguous
 ```
 
 `MPLBACKEND=Agg` matters: several scripts inherit `plt.show()` from the notebooks they

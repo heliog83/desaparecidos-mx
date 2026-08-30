@@ -52,8 +52,13 @@ manifest — an input nobody hashed is an unaudited number. Then it compares the
 embedded chart data and headline values against that freeze. If it fails, fix the
 source prose or data; do not patch the generated HTML.
 
-Both commands run on a clean checkout with no external data: the derived tables and
-the cached map geometry are committed. Changing the article's *numbers* is therefore
+`python src/check_figures.py` is a separate, cheap check worth running after adding
+or renumbering any figure: numbers are assigned by hand across ~20 scripts, and it
+catches two scripts claiming the same number, two files sharing one on disk, stale
+outputs no script writes any more, and gaps in the sequence.
+
+Both article commands run on a clean checkout with no external data: the derived
+tables and the cached map geometry are committed. Changing the article's *numbers* is therefore
 a deliberate act — cut a new freeze with `src/publication_freeze.py` and bump
 `PUBLICATION_FREEZE` — not something a stray `fetch_flow.py` run can do silently.
 
