@@ -24,6 +24,11 @@ __pycache__/
 .ipynb_checkpoints/
 .python-version
 
+# Agent config: launch.json is shared project config and stays tracked, but
+# settings.local.json is per-developer — Claude Code appends permission grants to
+# it, so tracking it turns every approval into a repo diff.
+.claude/settings.local.json
+
 # OS / editor / sync conflicts
 .DS_Store
 .vscode/
