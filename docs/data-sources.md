@@ -71,3 +71,28 @@ No single clean dataset exists. Build a structured table from these:
 - "Bodies" vs. "remains" vs. "bone fragments" are not interchangeable; keep them as separate fields.
 - Attribution (collective-led vs. state-led) is often ambiguous in reporting — code an explicit
   confidence level.
+
+## Added 2026-08-29 (used in the article, not in any pipeline)
+
+Neither of these is a dataset this repo derives from. Both are cited journalism whose
+figures are quoted, not recomputed, and neither is merged with the registry numbers.
+
+- **Unidentified bodies in state custody, 2006–2023.** Efraín Tzuc and Mayela Sánchez,
+  "Cierra sexenio de AMLO con más de 72,100 cuerpos sin identificar", Quinto Elemento
+  Lab / A dónde van los desaparecidos, 2024-09-24.
+  <https://quintoelab.org/project/sexenio-amlo-72-mil-cuerpos-crisis-forense> — data and
+  methodology at <https://quintoelab.org/project/crisis-forense-2024>.
+  72,172 bodies entered Semefos and were never identified; 48,108 (67%) went to common
+  graves; 13,272 have been unidentified over a decade; 34,699 entered 2019–2023.
+  Compiled from transparency requests to all 32 state forensic services plus the FGR.
+  **Treat as a floor:** Morelos refused to respond, and it counts whole cadavers, not
+  unindividuated remains. The overlap with the RNPDNO's 134,268 is unknown and cannot
+  be derived from public data — never subtract or add these figures.
+
+- **Registry field completeness, snapshot 2023-08-23.** Data Cívica, "Volver a
+  desaparecer", <https://volveradesaparecer.datacivica.org/> — reported by Sandra
+  Rojas, La Cadera de Eva, 2024-03-20,
+  <https://lacaderadeeva.com/actualidad/amlo-borra-11-mil-nombres-de-registro-de-desapariciones-en-mexico/9593>.
+  Audit of the 110,964-record public RNPDNO version: reporter contact left blank in 7
+  of 10 records. Also the source for the 10,953 erased names (not yet used in the
+  article — see §6b, which currently has to leave the deletion question open).

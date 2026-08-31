@@ -130,12 +130,27 @@ alive. Homicides plus the registry's own found-dead count fell together over tho
 years, from 36,638 to 32,133, where a shuffle between the two categories would have
 held that total roughly flat.
 
-What this cannot rule out is quieter and more troubling. A body that is never found
-enters neither statistic — not the homicide count, because no victim is ever named,
-and not the registry's found-dead column, because nobody is ever found. That channel
-is real, and Teuchitlán is what it looks like when one instance of it surfaces.
-Nothing here measures its size. The claim this section can defend is narrow: the
-registry's growth is not the homicide count in disguise.
+What this cannot rule out is quieter and more troubling, and it has two forms. A body
+that is never found enters neither statistic — not the homicide count, because no
+victim is ever named, and not the registry's found-dead column, because nobody is
+ever found. That channel is real, and Teuchitlán is what it looks like when one
+instance of it surfaces.
+
+The second form is not unmeasured at all. Between 2006 and 2023, **72,172 bodies
+entered Mexico's forensic services and were never given a name back** [6]. Two thirds
+of them, 48,108, were sent to cemetery common graves. Nearly a fifth — 13,272 — have
+been unidentified for more than a decade. These people were found. They are in the
+state's own custody. And because nobody knows who they are, they cannot be matched to
+anyone in the registry, so they sit in neither the found-dead column nor, in most
+cases, anywhere a searching family can reach. The count is a floor, not a total: the
+Fiscalía of Morelos declined to answer the transparency requests, and the figure
+counts whole bodies, not the bone fragments that clandestine graves mostly yield.
+
+So the gap between the two series on this chart is not simply unknown. Part of it has
+already been counted, by journalists rather than by the state. The claim this section
+can defend stays narrow — the registry's growth is not the homicide count in disguise
+— but the reason the two counts fail to meet is partly a forensic backlog with a
+number attached to it.
 
 ---
 
@@ -246,7 +261,18 @@ invoking family refusals it has never had to evidence.
 
 When INAI later ordered the CNB to release a public database (resolution RRA
 09082/20), the commission resisted — citing family consent it could not produce —
-and eventually delivered 50,204 records out of 175,371.
+and eventually delivered 50,204 records out of 175,371, withholding 71%.
+
+There is a simpler reason the consent paperwork is missing, and it is visible in the
+registry's own fields. When Data Cívica audited the public version the CNB published
+in August 2023 — 110,964 records — it found that the contact details of the person
+who reported the disappearance had been left blank in **seven of every ten cases**
+[7]. That is the field an authority would need in order to ask a family anything at
+all. Lawyers at Centro Prodh report families who gave their details to authorities in
+2017 and 2020 and were never entered into the system, and put the consequence
+plainly: it ends up looking as though the families are the ones who withheld the
+information. A registry that did not record how to reach seven families in ten cannot
+then explain its silence by saying the families did not speak.
 
 Journalists then closed the loop. In 2024, ZonaDocs found 4,765 cases across six
 states that are marked confidential in the registry *while having active public
@@ -487,6 +513,23 @@ Rights Watch, 2019-01-14 (Los Otros Desaparecidos de Iguala); Proceso, 2026-04-0
 
 **[5] Redaction over time — vintage Apr–Dec 2025.** Ten pinned monthly snapshots of
 the mirror, upstream commit SHAs in `src/version_audit.py`.
+
+**[6] Unidentified bodies — vintage 2006–2023.** Efraín Tzuc and Mayela Sánchez,
+"Cierra sexenio de AMLO con más de 72,100 cuerpos sin identificar", Quinto Elemento
+Lab / A dónde van los desaparecidos, 2024-09-24
+(`quintoelab.org/project/sexenio-amlo-72-mil-cuerpos-crisis-forense`; data and
+methodology at `quintoelab.org/project/crisis-forense-2024`). Compiled from
+transparency requests to all 32 state forensic services and the FGR. **A floor, not a
+total:** Morelos refused to respond, and the count covers whole cadavers entering
+Semefos, excluding unindividuated remains. Not derived from any dataset in this
+repository and not merged with the registry figures — the overlap between the 72,172
+and the 134,268 is unknown and, by construction, unknowable from public data.
+
+**[7] Registry field completeness — vintage 2023-08-23.** Data Cívica, "Volver a
+desaparecer" (`volveradesaparecer.datacivica.org`), reported by Sandra Rojas, La
+Cadera de Eva, 2024-03-20. Audit of the 110,964-record public RNPDNO version of
+2023-08-23: reporter contact left blank in 7 of 10 records. Centro Prodh (César
+Contreras) on families whose details were given and never entered.
 
 Cross-checks: category sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA moves the
 national count +6.1%, but Zacatecas +42%); confidential records are counted as people

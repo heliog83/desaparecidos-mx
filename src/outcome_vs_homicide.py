@@ -13,9 +13,14 @@ people who turned up alive. Homicides plus the registry's own found-dead count a
 fell over the same years (36,638 -> 32,133), where a pure shuffle between the two
 categories would hold that combined total roughly flat.
 
-What this does NOT rule out, and the caption says so: a body that is never found
-enters neither statistic. That channel is mechanically real and this data cannot
-size it. The chart rules out the strong version of the claim, not the weak one.
+What this does NOT rule out, and the caption says so, has two forms. A body that is
+never found enters neither statistic; that channel is mechanically real and this data
+cannot size it. But a second form has been counted: 72,172 bodies entered Mexico's
+forensic services between 2006 and 2023 and were never identified (Quinto Elemento
+Lab / A donde van los desaparecidos, 2024-09-24). Those people were found and are in
+state custody, and precisely because they are unidentified they cannot be matched to
+any registry record. The chart rules out the strong version of the substitution
+claim, not the weak one, and the weak one has a documented floor.
 
 Note also that SESNSP counts victims named in investigation files, not bodies, so
 it is not a clean count of deaths either.
@@ -131,9 +136,12 @@ def build(rows: list[dict]) -> None:
         "2019-2024, 61.7% are recorded found alive, 36.8% still missing and 1.4% found dead, "
         "and homicides plus registry found-dead fell from 36,638 to 32,133 over the same years. "
         "That is evidence against deaths being relabelled as disappearances. It is not evidence "
-        "that nobody disappears violently: a body that is never found enters neither statistic, "
-        "and this data cannot size that gap. SESNSP counts victims named in investigation files, "
-        "not bodies.", width=118))
+        "that nobody disappears violently. A body never found enters neither statistic; and "
+        "separately, 72,172 bodies entered Mexico's forensic services between 2006 and 2023 "
+        "without ever being identified, so they cannot be matched to any registry record either "
+        "(Quinto Elemento Lab / A donde van los desaparecidos, 2024-09-24; a floor, since Morelos "
+        "did not respond). SESNSP counts victims named in investigation files, not bodies.",
+        width=118))
     fig.tight_layout(rect=(0, 0.13, 1, 1))
 
     numbered = ROOT / "reports" / "figures" / "27_outcome_vs_homicide.png"
