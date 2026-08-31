@@ -43,6 +43,7 @@ FLOW_TOTALS = FREEZE_DERIVED / "flow_totales.csv"
 STATE_DATA = FREEZE_DERIVED / "state_opacity_enriched.csv"
 STATE_RATES = FREEZE_DERIVED / "state_rates.csv"
 SNAPSHOT_DATA = FREEZE_DERIVED / "confidencial_panel.csv"
+COMPARE_DATA = FREEZE_DERIVED / "incidence_vs_homicide.csv"
 
 # Cached SVG state outlines. The 4.8 MB source GeoJSON is gitignored, so the build
 # reads this 64 KB derived cache and a clean checkout needs no external assets.
@@ -222,8 +223,27 @@ def chart_data() -> dict:
                 "total": _number(row["total"], integer=True),
                 "conf": _number(row["conf"], integer=True),
             })
+    # Fig J: registry outcomes beside homicide victims, 2015 onward. Two separate
+    # populations that overlap by an unknown amount, never a sum — the chart says so.
+    outcome_by_year = {row["year"]: row for row in outcomes}
+    compare = []
+    with COMPARE_DATA.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            year = int(row["year"])
+            base = outcome_by_year.get(year)
+            if not base:
+                continue
+            compare.append({
+                "year": year,
+                "alive": base["alive"],
+                "dead": base["dead"],
+                "missing": base["missing"],
+                "homicides": _number(row["homicide_victims_annualised"], integer=True),
+                "provisional": row["provisional"] == "1",
+            })
+
     return {"outcomes": outcomes, "states": states, "snapshots": snapshots,
-            "map_paths": map_paths()}
+            "compare": compare, "map_paths": map_paths()}
 
 
 def flow_totals() -> dict[str, int]:
@@ -340,6 +360,24 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
 </div>
 {fallback}
 <figcaption><span class="figlabel">Fig. A</span> {inline(caption)}</figcaption>
+</figure>"""
+    if letter == "J":
+        return f"""<figure class="interactive-figure" data-chart="compare">
+<div class="chart-shell">
+  <h3 class="chart-heading">Did the missing deaths become disappearances?</h3>
+  <p class="chart-subtitle">Each bar is one year of disappearance, split by where the case stands <em>now</em>. Homicide victims for the same year are a separate count, shown for comparison.</p>
+  <p class="chart-note"><strong>These two counts are not added, and neither contains the other.</strong> The bars count people reported disappeared. The homicide line counts victims named in homicide investigation files. A person can be in both only if they were reported missing <em>and</em> later found dead <em>and</em> investigated as a homicide — at most the dark band, and the true overlap is not published.</p>
+  <div class="chart-controls" aria-label="Comparison chart display">
+    <span class="chart-control-label">View</span>
+    <button type="button" data-mode="growth" aria-pressed="true">Where the growth went</button>
+    <button type="button" data-mode="homicides" aria-pressed="false">Against homicides</button>
+    <button type="button" data-mode="change" aria-pressed="false">Change 2019&#8211;2024</button>
+  </div>
+  <div class="chart-canvas"><div class="chart-tooltip" role="tooltip"></div></div>
+  <div class="chart-summary" aria-live="polite"></div>
+</div>
+{fallback}
+<figcaption><span class="figlabel">Fig. J</span> {inline(caption)}</figcaption>
 </figure>"""
     if letter == "B":
         return f"""<figure class="interactive-figure" data-chart="map">

@@ -58,6 +58,13 @@
 }
 .chart-heading { margin:0 0 3px; font-size:20px; line-height:1.25; font-weight:600; }
 .chart-subtitle { margin:0 0 14px; color:#666b67; font-size:13.5px; line-height:1.4; }
+/* Standing caveat that must survive every view change, so it sits in the markup
+   rather than in the per-mode summary line. */
+.chart-note {
+  margin:0 0 14px; padding:10px 13px; border-left:3px solid #7a1f1f;
+  background:rgba(122,31,31,.05); color:#4a4e4b; font-size:12.5px; line-height:1.5;
+}
+.chart-note strong { color:var(--ink); }
 .chart-controls { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 14px; align-items:center; }
 .chart-control-label { font-size:12px; font-weight:600; color:#4f5450; text-transform:uppercase; letter-spacing:.05em; margin-right:2px; }
 .chart-controls label { font-size:13px; color:#4f5450; }

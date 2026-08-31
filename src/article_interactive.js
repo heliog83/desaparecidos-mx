@@ -608,10 +608,159 @@
     draw();
   }
 
+  // Fig J. The registry outcome split beside homicide victims. The two are
+  // DIFFERENT POPULATIONS with an unpublished overlap, so no view ever stacks,
+  // sums or nests them, and the homicide series is drawn in its own colour and
+  // mark so it cannot be mistaken for a component of the bars.
+  function initCompare(root) {
+    const canvas = root.querySelector(".chart-canvas");
+    const tip = root.querySelector(".chart-tooltip");
+    const summary = root.querySelector(".chart-summary");
+    const rows = DATA.compare;
+    if (!rows || !rows.length) return;
+    const HOM = "#c8791f";
+    const FROM = 2019, TO = 2024;
+    const at = (y) => rows.find((r) => r.year === y);
+    const delta = {
+      alive: at(TO).alive - at(FROM).alive,
+      dead: at(TO).dead - at(FROM).dead,
+      missing: at(TO).missing - at(FROM).missing,
+      homicides: at(TO).homicides - at(FROM).homicides,
+    };
+    const growth = delta.alive + delta.dead + delta.missing;
+    let mode = "growth";
+
+    function draw() {
+      clear(canvas);
+      canvas.append(tip);
+      hideTip(tip);
+      const width = Math.max(300, canvas.clientWidth);
+      const height = width < 520 ? 340 : 400;
+      const margin = { top: 30, right: 18, bottom: 46, left: width < 520 ? 52 : 68 };
+      const innerW = width - margin.left - margin.right;
+      const innerH = height - margin.top - margin.bottom;
+      const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}`, role: "img",
+        "aria-label": "Registry outcomes compared with homicide victims" });
+
+      if (mode === "change") {
+        // Diverging bars: the single clearest answer to "did the deaths move?".
+        const items = [
+          ["Found alive", delta.alive, COLORS.alive],
+          ["Still missing", delta.missing, COLORS.missing],
+          ["Found dead", delta.dead, COLORS.dead],
+          ["Homicide victims", delta.homicides, HOM],
+        ];
+        const maxAbs = Math.max(...items.map(([, v]) => Math.abs(v))) * 1.25;
+        const y = (v) => margin.top + innerH / 2 - (v / maxAbs) * (innerH / 2);
+        const step = innerW / items.length;
+        const bw = Math.min(96, step * 0.5);
+        svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right,
+          y1: y(0), y2: y(0), class: "chart-axis" }));
+        items.forEach(([label, v, colour], i) => {
+          const cx = margin.left + step * (i + 0.5);
+          const top = v >= 0 ? y(v) : y(0);
+          const rect = svgNode("rect", { x: cx - bw / 2, y: top, width: bw,
+            height: Math.max(1, Math.abs(y(v) - y(0))), fill: colour, tabindex: 0 });
+          rect.setAttribute("aria-label", `${label}: ${v >= 0 ? "up" : "down"} ${fmt.format(Math.abs(v))} between ${FROM} and ${TO}`);
+          svg.append(rect);
+          svg.append(svgNode("text", { x: cx, y: v >= 0 ? y(v) - 8 : y(v) + 17,
+            "text-anchor": "middle", class: "chart-label" },
+            `${v >= 0 ? "+" : "\u2212"}${fmt.format(Math.abs(v))}`));
+          svg.append(svgNode("text", { x: cx, y: margin.top + innerH + 30,
+            "text-anchor": "middle", class: "chart-label" }, label));
+        });
+        canvas.append(svg);
+        summary.innerHTML = `Between ${FROM} and ${TO} the registry gained <strong>${fmt.format(growth)}</strong> records for those years: <strong>${pct.format(delta.alive / growth)}</strong> of that growth is people found alive, ${pct.format(delta.missing / growth)} still missing, and <strong>${pct.format(delta.dead / growth)}</strong> found dead. Homicide victims fell by ${fmt.format(Math.abs(delta.homicides))} over the same years. Deaths moving into the disappeared column would have to show up in the dark bar; it barely moves.`;
+        return;
+      }
+
+      const totals = rows.map((r) => r.alive + r.dead + r.missing);
+      const ymax = Math.max(...totals, ...rows.map((r) => r.homicides)) * 1.08;
+      const y = (v) => margin.top + innerH - (v / ymax) * innerH;
+      const step = innerW / rows.length;
+      const bw = Math.min(46, step * 0.66);
+
+      for (let i = 0; i <= 4; i += 1) {
+        const v = (ymax / 4) * i;
+        const yy = y(v);
+        svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right, y1: yy, y2: yy, class: "chart-grid" }));
+        svg.append(svgNode("text", { x: margin.left - 8, y: yy + 4, "text-anchor": "end", class: "chart-label" },
+          v >= 1000 ? `${Math.round(v / 1000)}k` : String(Math.round(v))));
+      }
+      svg.append(svgNode("line", { x1: margin.left, x2: width - margin.right,
+        y1: margin.top + innerH, y2: margin.top + innerH, class: "chart-axis" }));
+
+      const dim = mode === "homicides";
+      rows.forEach((d, i) => {
+        const x = margin.left + i * step + (step - bw) / 2;
+        let cumulative = 0;
+        [["alive", d.alive], ["dead", d.dead], ["missing", d.missing]].forEach(([key, val]) => {
+          const top = y(cumulative + val), bottom = y(cumulative);
+          const rect = svgNode("rect", { x, y: top, width: bw,
+            height: Math.max(0, bottom - top), fill: COLORS[key],
+            "fill-opacity": dim ? 0.3 : 1, tabindex: 0 });
+          const total = d.alive + d.dead + d.missing;
+          const html = `<strong>${d.year}</strong>${d.provisional ? " (provisional)" : ""}<br>`
+            + `Reported disappeared <strong>${fmt.format(total)}</strong><br>`
+            + `&nbsp;&nbsp;found alive ${fmt.format(d.alive)}<br>`
+            + `&nbsp;&nbsp;found dead ${fmt.format(d.dead)}<br>`
+            + `&nbsp;&nbsp;still missing ${fmt.format(d.missing)}<br>`
+            + `<span style="color:${HOM}">Homicide victims ${fmt.format(d.homicides)}</span><br>`
+            + `<span class="tooltip-vintage">A separate count of different people \u2014 not part of the ${fmt.format(total)}.</span>`;
+          rect.setAttribute("aria-label", `${d.year}: ${key}, ${fmt.format(val)} people`);
+          rect.addEventListener("mouseenter", (e) => { const [px, py] = pointerIn(e, canvas); showTip(tip, html, px, py); });
+          rect.addEventListener("mousemove", (e) => { const [px, py] = pointerIn(e, canvas); showTip(tip, tip.innerHTML, px, py); });
+          rect.addEventListener("mouseleave", () => hideTip(tip));
+          rect.addEventListener("focus", () => showTip(tip, html, x, top));
+          rect.addEventListener("blur", () => hideTip(tip));
+          svg.append(rect);
+          cumulative += val;
+        });
+        if (i % (width < 520 ? 2 : 1) === 0) {
+          svg.append(svgNode("text", { x: margin.left + i * step + step / 2,
+            y: margin.top + innerH + 24, "text-anchor": "middle", class: "chart-label" },
+            String(d.year)));
+        }
+      });
+
+      if (mode === "homicides") {
+        const solid = rows.filter((r) => !r.provisional);
+        const path = solid.map((d, i) => `${i ? "L" : "M"}${margin.left + rows.indexOf(d) * step + step / 2},${y(d.homicides)}`).join(" ");
+        svg.append(svgNode("path", { d: path, fill: "none", stroke: HOM, "stroke-width": 2.6,
+          "stroke-linecap": "round", "stroke-linejoin": "round" }));
+        const lastSolid = solid[solid.length - 1];
+        const prov = rows[rows.length - 1];
+        if (prov.provisional) {
+          svg.append(svgNode("path", {
+            d: `M${margin.left + rows.indexOf(lastSolid) * step + step / 2},${y(lastSolid.homicides)}`
+             + `L${margin.left + rows.indexOf(prov) * step + step / 2},${y(prov.homicides)}`,
+            fill: "none", stroke: HOM, "stroke-width": 1.6, "stroke-dasharray": "3 3" }));
+        }
+        rows.forEach((d, i) => {
+          svg.append(svgNode("circle", { cx: margin.left + i * step + step / 2,
+            cy: y(d.homicides), r: 4, fill: d.provisional ? "#ffffff" : HOM,
+            stroke: HOM, "stroke-width": 1.6 }));
+        });
+      }
+
+      canvas.append(svg);
+      summary.innerHTML = mode === "homicides"
+        ? `The orange line is homicide victims, a <strong>separate count of different people</strong> \u2014 it is not part of the bars and the two must never be added. From ${FROM} to ${TO} it falls by ${fmt.format(Math.abs(delta.homicides))} while the bars grow by ${fmt.format(growth)}. 2025 is provisional in both.`
+        : `Each bar is one year of disappearance, split by where those cases stand today. The bars grow, and it is the blue band \u2014 people later found alive \u2014 that grows. Switch to \u201CChange ${FROM}\u2013${TO}\u201D for the size of each movement.`;
+    }
+
+    root.querySelectorAll("button[data-mode]").forEach((b) => b.addEventListener("click", () => {
+      mode = b.dataset.mode; buttonMode(root, mode); draw();
+    }));
+    new ResizeObserver(draw).observe(canvas);
+    draw();
+  }
+
   document.querySelectorAll('[data-chart="outcomes"]').forEach(initOutcomes);
   document.querySelectorAll('[data-chart="map"]').forEach(initMap);
   document.querySelectorAll('[data-chart="states"]').forEach(initStates);
   document.querySelectorAll('[data-chart="confidential"]').forEach(initConfidential);
   document.querySelectorAll('[data-chart="scatter"]').forEach(initScatter);
   document.querySelectorAll('[data-chart="snapshots"]').forEach(initSnapshots);
+  document.querySelectorAll('[data-chart="compare"]').forEach(initCompare);
 })();
