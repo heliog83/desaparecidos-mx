@@ -1,0 +1,16 @@
+claim,actual,draft_expected,tolerance,status
+Mirror rows,133566.0,133566.0,0.0,PASS
+Unique victim IDs,133566.0,133566.0,0.0,PASS
+Confidential records,49136.0,49136.0,0.0,PASS
+National confidential share,0.3678780527978677,0.368,0.0006,PASS
+Jalisco confidential share,0.6694755193956123,0.67,0.006,PASS
+Nayarit confidential share,0.6618090452261306,0.66,0.006,PASS
+Guerrero confidential share,0.09050078598697507,0.09,0.006,PASS
+Colima confidential share,0.08958333333333333,0.09,0.006,PASS
+Jalisco unresolved records,13766.0,13766.0,0.0,PASS
+Jalisco confidential records,9216.0,9216.0,0.0,PASS
+Guerrero unresolved records,4453.0,4453.0,0.0,PASS
+"Version audit starts at 44,035 confidential",44035.0,44035.0,0.0,PASS
+"Version audit ends at 49,136 confidential",49136.0,49136.0,0.0,PASS
+"Confidential records increased by 5,101",5101.0,5101.0,0.0,PASS
+Confidential made up about 77% of net growth,0.7700785024154589,0.77,0.005,PASS
