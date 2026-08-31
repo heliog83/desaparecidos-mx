@@ -285,7 +285,7 @@ signed anything and wants maximum visibility. Her son's record is confidential.
 least one blanket state policy — and no public field distinguishes them.**
 
 
-### 5b. The public totals sometimes move in batches
+### 6b. The totals move in batches — and once, somebody checked
 
 **[FIG H — `figures/article/H_confidencial_batches.png`]**
 *Caption: CONFIDENCIAL records per state across ten monthly snapshots of the public
@@ -310,12 +310,60 @@ them in eight months, roughly one in five. We can see the direction and the size
 that reversal but not its mechanism: the registry does not say whether those
 records were deleted, reclassified, resolved, or moved.
 
+For one episode, that question has been answered — and not by the registry.
+
+In August 2023 the National Search Commission published a person-level version of
+the register containing 110,964 names. In December, after the federal government's
+*Estrategia Nacional de Búsqueda Generalizada* — the *censo* — the equivalent public
+version held 94,283. Data Cívica compared the two and found **10,953 names present in
+the first and absent from the second** [8]. The official explanation was that most had
+been located. Data Cívica is careful about what its own method can establish: it can
+show that a name left the register, and it cannot show whether the person was found,
+is alive, or is safe, because the removals came with no case-by-case verification and
+no notification to families.
+
+Quinto Elemento Lab tested the other side of the same operation. Of the 16,681 people
+the censo declared located, it reconstructed 11,026 names — the remaining 4,607 were
+published redacted — and crossed them against missing-persons lists held by collectives,
+the FGR's own *¿Has visto a...?* search notices, the UN Committee on Enforced
+Disappearances' urgent actions, and dirty-war case files. That produced 85 candidates.
+Ten journalists then contacted families and accompanying collectives one by one, and
+confirmed **30 people who were listed as located and had not come home** [9]. Nine more
+had recent search reports the team could not confirm directly. Two had been erased from
+the register altogether.
+
+The individual cases show how a location gets recorded. Miguel Ángel Hernández Guzmán
+disappeared in Orizaba, Veracruz, in May 2019, at 27. The men who took him are serving
+sentences for forced disappearance and have never said where he is; the FGR still
+circulates a notice asking whether anyone has seen him; the censo lists him as located.
+His mother, Lorena Guzmán, searches clandestine graves. *"It is not true that my son has
+been located,"* she told the reporters. *"That is a lie."* José Marco Antonio Márquez
+Sandoval was recorded as located on the strength of a DNA match to a single arm bone,
+which his family disputes, and then removed from the register entirely. *"I do not accept
+my son as found because of a piece of arm bone they found,"* said his mother, Leticia
+Sandoval Zúñiga.
+
+The reporters also obtained the call log behind the census visits: more than 18,000 calls
+placed from a federal call centre in October 2023, of which over 86% went unanswered. In
+four documented cases officials recorded either that nobody answered or that the family
+said their relative had not come back — and all four folios appear on the located list.
+
+Thirty confirmed cases out of 16,681 is not proof that the census was fabricated, and
+this piece does not claim it was. What those thirty establish is narrower and harder to
+argue with: **"located" is a status the register asserts, not a fact it verifies.** The
+Interior Secretary, Luisa María Alcalde, said of the 16,681 that the government had
+"certainty of their whereabouts", and that no record had been or would be erased. Both
+statements are contradicted by documented cases. Karla Quintana, who resigned as
+National Search Commissioner during the exercise, has said publicly that its purpose was
+to reduce the numbers.
+
 Step changes, flat totals during reclassification, batch deletions: these patterns are
 **consistent with administrative processing** — records handled in bulk, by an office,
 on an office's schedule. They are not proof that the underlying consent decisions are
 fabricated. Families do decide, and some of those decisions are surely real; a backlog
 of genuine consent forms entered in one batch would look much like this from the
-outside. What the shape of the data does show is that the *timing* of publication is
+outside. But the census shows what bulk processing can produce when nobody checks it
+afterwards, and it is the only episode in this period where anyone did check. What the shape of the data does show is that the *timing* of publication is
 governed by administrative operations rather than by when families decide, and that
 the two cannot be separated from the public record.
 
@@ -530,6 +578,25 @@ desaparecer" (`volveradesaparecer.datacivica.org`), reported by Sandra Rojas, La
 Cadera de Eva, 2024-03-20. Audit of the 110,964-record public RNPDNO version of
 2023-08-23: reporter contact left blank in 7 of 10 records. Centro Prodh (César
 Contreras) on families whose details were given and never entered.
+
+**[8] Erased names — comparison of two 2023 public versions.** Data Cívica, "Volver a
+desaparecer" (`volveradesaparecer.datacivica.org`; open data at
+`volveradesaparecer.datacivica.org/datos-abiertos`), scraped 2024-03-01; reported by
+Sandra Rojas, La Cadera de Eva, 2024-03-20. 10,953 names in the 110,964-record version
+of 2023-08-23 and absent from the 94,283-record post-census version. **Data Cívica's own
+limit, quoted rather than softened:** the comparison establishes that a record left the
+register, not that the person was found, alive or safe.
+
+**[9] "Located" people still missing.** Efraín Tzuc, "Decenas de personas 'localizadas'
+por el Gobierno siguen desaparecidas", Quinto Elemento Lab / A dónde van los
+desaparecidos, 2024-03-06
+(`quintoelab.org/project/decenas-personas-localizadas-censo-siguen-desaparecidas`).
+16,681 declared located; 11,026 names reconstructed, 4,607 redacted; crossed against
+collective lists, FGR "¿Has visto a...?" notices, UN CED urgent actions and dirty-war
+files to 85 candidates; 30 confirmed still missing by ten journalists contacting
+families and collectives. Also the source for the October 2023 call-centre log. Named
+individuals and quotations are published in that investigation with their families'
+participation.
 
 Cross-checks: category sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA moves the
 national count +6.1%, but Zacatecas +42%); confidential records are counted as people

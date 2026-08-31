@@ -89,10 +89,25 @@ figures are quoted, not recomputed, and neither is merged with the registry numb
   unindividuated remains. The overlap with the RNPDNO's 134,268 is unknown and cannot
   be derived from public data — never subtract or add these figures.
 
-- **Registry field completeness, snapshot 2023-08-23.** Data Cívica, "Volver a
-  desaparecer", <https://volveradesaparecer.datacivica.org/> — reported by Sandra
-  Rojas, La Cadera de Eva, 2024-03-20,
+- **Registry field completeness and erased names, 2023 public versions.** Data Cívica,
+  "Volver a desaparecer", <https://volveradesaparecer.datacivica.org/> (open data:
+  `/datos-abiertos`) — reported by Sandra Rojas, La Cadera de Eva, 2024-03-20,
   <https://lacaderadeeva.com/actualidad/amlo-borra-11-mil-nombres-de-registro-de-desapariciones-en-mexico/9593>.
-  Audit of the 110,964-record public RNPDNO version: reporter contact left blank in 7
-  of 10 records. Also the source for the 10,953 erased names (not yet used in the
-  article — see §6b, which currently has to leave the deletion question open).
+  Two findings used in §6 and §6b: reporter contact left blank in 7 of 10 records of the
+  110,964-record version of 2023-08-23; and 10,953 names present there but absent from
+  the 94,283-record post-census version, scraped 2024-03-01. **Data Cívica's stated
+  limit, which the article quotes rather than softens:** the comparison shows a record
+  left the register, not that the person was found, alive or safe.
+
+- **People listed as "located" who remain missing.** Efraín Tzuc, "Decenas de personas
+  'localizadas' por el Gobierno siguen desaparecidas", Quinto Elemento Lab / A dónde van
+  los desaparecidos, 2024-03-06,
+  <https://quintoelab.org/project/decenas-personas-localizadas-censo-siguen-desaparecidas>.
+  Of 16,681 declared located, 11,026 names reconstructed (4,607 published redacted),
+  crossed against collective lists, FGR "¿Has visto a...?" notices, UN CED urgent actions
+  and dirty-war files → 85 candidates → 30 confirmed still missing by ten journalists
+  contacting families and collectives. Also the October 2023 call-centre log (18,000+
+  calls, 86% unanswered). **Scope discipline:** 30 of 16,681 does not establish that the
+  census was fabricated, and the article does not say it does — it establishes that
+  "located" is asserted, not verified. Named individuals and quotations are published in
+  that investigation with their families' participation; do not extend them beyond it.
