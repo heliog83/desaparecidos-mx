@@ -8,8 +8,8 @@
   as the canonical article.** Artifacts are agent-specific and previously allowed a
   stale file from a different checkout to be published.
 - The canonical article is the repository-generated `reports/article.html`.
-- Before every handoff or publication, run `python src/build_page.py` followed by
-  `python src/check_article.py`. A failed check blocks delivery. Both are
+- Before every handoff or publication, run `python3 src/build_page.py` followed by
+  `python3 src/check_article.py`. A failed check blocks delivery. Both are
   standard-library only and run on a clean checkout.
 - The article's numbers are pinned to the publication freeze named by
   `PUBLICATION_FREEZE` in `src/build_page.py` (currently `2026-08-15`), whose derived
@@ -19,7 +19,7 @@
   freeze with `src/publication_freeze.py` and bumping the constant, never editing
   data in place.
 - Preview locally at `http://127.0.0.1:8794/article.html` after running
-  `python -m http.server 8794 --directory reports`.
+  `python3 -m http.server 8794 --directory reports`.
 - Current validated aggregate vintage: **2026-08-15 — 407,253 total records;
   249,502 found alive; 23,483 found dead; 134,268 still missing.** Figure A contains
   352,294 records assigned to 2000–2025. The 36.8% confidentiality figure belongs to

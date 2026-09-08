@@ -35,9 +35,9 @@ The HTML is reproducible output. It must never acquire independent edits.
 From the repository root:
 
 ```bash
-python src/build_page.py
-python src/check_article.py
-python -m http.server 8794 --directory reports
+python3 src/build_page.py
+python3 src/check_article.py
+python3 -m http.server 8794 --directory reports
 ```
 
 Open:

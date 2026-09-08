@@ -70,8 +70,8 @@ data is committed under `data/publication_freezes/2026-08-15/`, so a clean check
 can run:
 
 ```bash
-python src/build_page.py     # -> reports/article.html
-python src/check_article.py  # hash-verifies the freeze, then the HTML against it
+python3 src/build_page.py     # -> reports/article.html
+python3 src/check_article.py  # hash-verifies the freeze, then the HTML against it
 ```
 
 That reproduces the committed `reports/article.html` byte for byte.
@@ -120,7 +120,7 @@ require `check_article.py` to pass, and commit the source and generated HTML tog
 tool or link to `claude.ai/code/artifact/...`. Preview locally with:
 
 ```bash
-python -m http.server 8794 --directory reports
+python3 -m http.server 8794 --directory reports
 ```
 
 Then open `http://127.0.0.1:8794/article.html`. If public hosting is requested later,

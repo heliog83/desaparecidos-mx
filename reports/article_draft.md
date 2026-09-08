@@ -9,7 +9,7 @@ Every figure is reproducible from `src/`; every number carries a consultation da
 
 Delivery note: this markdown is the narrative source and `reports/article.html` is its
 generated local output. Do not publish or update this article through Claude Artifacts.
-Build with `python src/build_page.py`, validate with `python src/check_article.py`, and
+Build with `python3 src/build_page.py`, validate with `python3 src/check_article.py`, and
 preview at `http://127.0.0.1:8794/article.html` using the repository's local server.
 
 Working titles (pick one):
@@ -521,7 +521,7 @@ cutoff dates. Reading a number from one against a number from the other will giv
 wrong answer.
 
 **[1] Aggregate outcomes — vintage 2026-08-15 (live).** All-record totals and the
-by-year outcome breakdown in fig A. Source: RNPDNO public dashboard API, captured
+by-year outcome breakdown in fig A. Source: [RNPDNO public dashboard](https://versionpublicarnpdno.segob.gob.mx/), captured
 2026-08-15 23:49 America/Mexico_City. Covers every record including confidential ones,
 because the dashboard counts records it will not display. Totals: 407,253 records —
 249,502 recorded found alive, 23,483 found dead, 134,268 disappeared or not located.
@@ -565,8 +565,8 @@ the mirror, upstream commit SHAs in `src/version_audit.py`.
 **[6] Unidentified bodies — vintage 2006–2023.** Efraín Tzuc and Mayela Sánchez,
 "Cierra sexenio de AMLO con más de 72,100 cuerpos sin identificar", Quinto Elemento
 Lab / A dónde van los desaparecidos, 2024-09-24
-(`quintoelab.org/project/sexenio-amlo-72-mil-cuerpos-crisis-forense`; data and
-methodology at `quintoelab.org/project/crisis-forense-2024`). Compiled from
+([investigation](https://quintoelab.org/project/sexenio-amlo-72-mil-cuerpos-crisis-forense); data and
+[methodology](https://quintoelab.org/project/crisis-forense-2024)). Compiled from
 transparency requests to all 32 state forensic services and the FGR. **A floor, not a
 total:** Morelos refused to respond, and the count covers whole cadavers entering
 Semefos, excluding unindividuated remains. Not derived from any dataset in this
@@ -574,14 +574,13 @@ repository and not merged with the registry figures — the overlap between the 
 and the 134,268 is unknown and, by construction, unknowable from public data.
 
 **[7] Registry field completeness — vintage 2023-08-23.** Data Cívica, "Volver a
-desaparecer" (`volveradesaparecer.datacivica.org`), reported by Sandra Rojas, La
+desaparecer" ([project](https://volveradesaparecer.datacivica.org/)), reported by Sandra Rojas, La
 Cadera de Eva, 2024-03-20. Audit of the 110,964-record public RNPDNO version of
 2023-08-23: reporter contact left blank in 7 of 10 records. Centro Prodh (César
 Contreras) on families whose details were given and never entered.
 
 **[8] Erased names — comparison of two 2023 public versions.** Data Cívica, "Volver a
-desaparecer" (`volveradesaparecer.datacivica.org`; open data at
-`volveradesaparecer.datacivica.org/datos-abiertos`), scraped 2024-03-01; reported by
+desaparecer" ([project](https://volveradesaparecer.datacivica.org/); [open data](https://volveradesaparecer.datacivica.org/datos-abiertos)), scraped 2024-03-01; reported by
 Sandra Rojas, La Cadera de Eva, 2024-03-20. 10,953 names in the 110,964-record version
 of 2023-08-23 and absent from the 94,283-record post-census version. **Data Cívica's own
 limit, quoted rather than softened:** the comparison establishes that a record left the
@@ -590,7 +589,7 @@ register, not that the person was found, alive or safe.
 **[9] "Located" people still missing.** Efraín Tzuc, "Decenas de personas 'localizadas'
 por el Gobierno siguen desaparecidas", Quinto Elemento Lab / A dónde van los
 desaparecidos, 2024-03-06
-(`quintoelab.org/project/decenas-personas-localizadas-censo-siguen-desaparecidas`).
+([investigation](https://quintoelab.org/project/decenas-personas-localizadas-censo-siguen-desaparecidas)).
 16,681 declared located; 11,026 names reconstructed, 4,607 redacted; crossed against
 collective lists, FGR "¿Has visto a...?" notices, UN CED urgent actions and dirty-war
 files to 85 candidates; 30 confirmed still missing by ten journalists contacting
@@ -609,8 +608,8 @@ reproduce from `src/` in the project repository
 [data refresh audit](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/data-refresh-2026-08-15.md); source audit:
 [source audit](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/publication_data_audit_2026-08-15.md).
 
-Ethics line (keep): behind every record is a person and a searching family. This
-piece reports uncertainty as uncertainty and does not present proxies as counts.
+Behind every record is a person and a searching family. This piece reports
+uncertainty as uncertainty and does not present proxies as counts.
 
 ---
 

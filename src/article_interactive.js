@@ -287,6 +287,12 @@
           draw();
           document.dispatchEvent(new CustomEvent("state-select", { detail: { name: d.name } }));
         });
+        path.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            path.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+          }
+        });
         svg.append(path);
       });
       canvas.append(svg);

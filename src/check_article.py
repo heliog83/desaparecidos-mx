@@ -9,20 +9,24 @@ Two independent gates:
 2. Article fidelity — the embedded chart dataset and the headline numbers in the
    HTML match what the build derives from those same inputs.
 
-Run after ``python src/build_page.py`` and before publishing.
+Run after ``python3 src/build_page.py`` and before publishing.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import re
+from pathlib import Path
 
 from build_page import (
+    DRAFT,
+    FIGDIR,
     FREEZE,
     FREEZE_MANIFEST,
     OUT,
     PUBLICATION_FREEZE,
     chart_data,
+    figure_asset_names,
     flow_totals,
     map_paths,
 )
@@ -34,8 +38,11 @@ BUILD_INPUTS = (
     "derived/state_opacity_enriched.csv",
     "derived/state_rates.csv",
     "derived/confidencial_panel.csv",
+    "derived/incidence_vs_homicide.csv",
     "derived/map_paths.json",
 )
+
+ARTICLE_ASSET_HASHES = "article_asset_hashes_sha256"
 
 
 def verify_freeze() -> tuple[int, int]:
@@ -74,8 +81,33 @@ def verify_freeze() -> tuple[int, int]:
     return verified, unchecked
 
 
+def verify_article_assets() -> int:
+    """Hash-check every PNG that the article build embeds from reports/figures."""
+    manifest = json.loads(FREEZE_MANIFEST.read_text(encoding="utf-8"))
+    hashes = manifest.get(ARTICLE_ASSET_HASHES, {})
+    assets = [f"reports/figures/article/{name}" for name in figure_asset_names(
+        DRAFT.read_text(encoding="utf-8")
+    )]
+    unhashed = [rel for rel in assets if rel not in hashes]
+    if unhashed:
+        raise SystemExit(f"FAIL: article assets missing from freeze manifest: {unhashed}")
+
+    for rel in assets:
+        path = FIGDIR / Path(rel).name
+        if not path.exists():
+            raise SystemExit(f"FAIL: article asset is absent: {rel}")
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != hashes[rel]:
+            raise SystemExit(
+                f"FAIL: {rel} does not match the freeze manifest\n"
+                f"  expected {hashes[rel]}\n  actual   {actual}"
+            )
+    return len(assets)
+
+
 def main() -> None:
     verified, unchecked = verify_freeze()
+    article_assets = verify_article_assets()
 
     page = OUT.read_text(encoding="utf-8")
     match = re.search(
@@ -124,7 +156,8 @@ def main() -> None:
 
     print(
         f"PASS: freeze {PUBLICATION_FREEZE} intact — {verified} files hash-verified, "
-        f"{unchecked} gitignored raw sources not checkable here."
+        f"{unchecked} gitignored raw sources not checkable here; "
+        f"{article_assets} embedded article figures hash-verified."
     )
     print(
         "PASS: article HTML matches source data — "

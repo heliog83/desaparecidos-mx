@@ -14,8 +14,8 @@ the current delivery contract.
 3. **Build and validate locally:**
 
    ```bash
-   python src/build_page.py
-   python src/check_article.py
+   python3 src/build_page.py
+   python3 src/check_article.py
    ```
 
    Publication or handoff is blocked unless both commands succeed. Both are
@@ -27,7 +27,7 @@ the current delivery contract.
 4. **Preview the generated file locally:**
 
    ```bash
-   python -m http.server 8794 --directory reports
+   python3 -m http.server 8794 --directory reports
    ```
 
    Open `http://127.0.0.1:8794/article.html`.

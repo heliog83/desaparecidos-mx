@@ -37,3 +37,11 @@ __pycache__/
 *(1)*
 *conflicted copy*
 *.tmp
+
+# Agent/scratch working directories. These have held the CNB oficio PDF and
+# NotebookLM packets; they must never be swept into a commit by `git add -A`,
+# least of all before the repository is made public.
+all_in_one/
+notebookLM_packets/
+tmp/
+source_manifest.md

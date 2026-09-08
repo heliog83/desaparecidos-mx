@@ -15,7 +15,7 @@ article's numbers means cutting a new freeze with src/publication_freeze.py and
 bumping PUBLICATION_FREEZE deliberately.
 
 Output: reports/article.html  (~2 MB, mostly embedded PNGs)
-Run:    python src/build_page.py
+Run:    python3 src/build_page.py
 """
 from __future__ import annotations
 
@@ -68,6 +68,38 @@ HERO_FIELDS = [
     ("MUNICIPIO", "Municipality", "CONFIDENCIAL", True),
     ("ESTATUS_VICTIMA", "Case status", "CONFIDENCIAL", True),
 ]
+
+# Text alternatives state each figure's finding rather than merely repeating its
+# label. They are used for both static plates and interactive-chart fallbacks.
+FIGURE_ALT_TEXT = {
+    "A": "Stacked annual bars show Mexico's 2000 to 2025 disappearance cohorts by current registry status: found alive, found dead, or still missing.",
+    "B": "Map of Mexico shows unresolved registry records per 100,000 residents, highest in Tamaulipas, Zacatecas, and Sinaloa.",
+    "C": "Ranked bars show confidential shares of unresolved records by state, from about 67 percent in Jalisco to about 9 percent in Guerrero and Colima.",
+    "D": "Scatter plot shows no positive relationship between a state's homicide-victim rate and the confidential share of its unresolved records.",
+    "E": "Consent accounting for 73,388 records shows no consent information for 77.4 percent; among records with information, family refusals and agreements are similar in number.",
+    "F": "Timeline shows Jalisco's state and federal disappearance registries diverging while confidentiality, omitted records, and later recounts are documented.",
+    "G": "Paired bars compare Guerrero's statewide registry count with 623 cases documented by three Iguala collectives; the bars overlap by an unknown amount and are not additive.",
+    "H": "Lines across ten 2025 snapshots show confidential registry records changing in state-level batches rather than smoothly over time.",
+    "I": "Indexed annual series show recorded disappearances rising from 2019 to 2024 while homicide victims decline; 2025 is provisional.",
+    "J": "Annual disappearance cohorts are split by current outcome beside homicide victims, showing 2019 to 2024 growth is mostly cases now recorded found alive rather than found dead.",
+}
+
+
+def figure_asset_names(md: str | None = None) -> tuple[str, ...]:
+    """Return the PNG names referenced by the article's figure markers."""
+    source = md if md is not None else DRAFT.read_text(encoding="utf-8")
+    matches = re.findall(
+        r"^\*\*\[FIG\s+([A-Z])\s*[—-]\s*`figures/article/([^`/]+\.png)`\]\*\*",
+        source,
+        flags=re.M,
+    )
+    letters = [letter for letter, _ in matches]
+    if len(letters) != len(set(letters)):
+        raise ValueError("article draft contains duplicate figure letters")
+    missing_alt = sorted(set(letters) - set(FIGURE_ALT_TEXT))
+    if missing_alt:
+        raise ValueError(f"article figures lack alt text: {missing_alt}")
+    return tuple(name for _, name in matches)
 
 
 def img_uri(name: str) -> str:
@@ -277,6 +309,9 @@ def validate_article_inputs(md: str, data: dict, totals: dict[str, int]) -> None
         raise ValueError(f"article draft is stale; missing source-derived figures: {absent}")
     if "Two panels:" in md:
         raise ValueError("Figure A is now one interactive chart; remove the old two-panel caption")
+    missing_figures = [name for name in figure_asset_names(md) if not (FIGDIR / name).is_file()]
+    if missing_figures:
+        raise ValueError(f"article figure assets are missing: {missing_figures}")
 
     latest = max(row["snapshot"] for row in data["snapshots"])
     latest_rows = [row for row in data["snapshots"] if row["snapshot"] == latest]
@@ -340,7 +375,7 @@ def standfirst(totals: dict[str, int]) -> str:
 def interactive_figure(letter: str, caption: str, image_name: str) -> str | None:
     fallback = (
         f'<details class="static-fallback"><summary>Show static version</summary>'
-        f'<img src="{img_uri(image_name)}" alt="Static Figure {letter}" loading="lazy"></details>'
+        f'<img src="{img_uri(image_name)}" alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy"></details>'
     )
     if letter == "A":
         return f"""<figure class="interactive-figure" data-chart="outcomes">
@@ -482,8 +517,43 @@ def inline(t: str) -> str:
     return t
 
 
-def parse_body(md: str) -> str:
+# A citation marker is [1]..[9]. The negative lookahead keeps it from eating the
+# "[label](url)" markdown links inline() has not rewritten yet, and figure markers
+# are letters, not digits, so they are never matched.
+CITATION_RE = re.compile(r"\[([1-9])\](?!\()")
+
+# Editorial scaffolding that must never reach a reader. "Ethics line (keep):" once
+# shipped in the published page; this turns that class of leak into a build failure.
+EDITORIAL_MARKERS = ("(keep)", "(pick one)", "DRAFT —", "publish as expandable box")
+
+
+def new_citation_state() -> dict:
+    """Shared counter so body and methods citations get unique, stable ids."""
+    return {"counts": {}, "first": {}}
+
+
+def linkify_citations(fragment: str, state: dict) -> str:
+    """Turn in-text [n] markers into links into the source list.
+
+    Records the id of each source's first citation in ``state["first"]`` so the
+    source entry can offer a link back to where the reader broke off.
+    """
+    def repl(m: re.Match) -> str:
+        n = m.group(1)
+        state["counts"][n] = state["counts"].get(n, 0) + 1
+        ref_id = f"cite-{n}-{state['counts'][n]}"
+        state["first"].setdefault(n, ref_id)
+        return (
+            f'<a class="fnref" id="{ref_id}" href="#source-{n}">'
+            f'<span class="sr-only">Source </span>[{n}]</a>'
+        )
+
+    return CITATION_RE.sub(repl, fragment)
+
+
+def parse_body(md: str, state: dict | None = None) -> str:
     """Convert the article body (§1..§9) into HTML."""
+    state = new_citation_state() if state is None else state
     body = md.split("## 1.", 1)[1]
     body = "## 1." + body.split("## Methods note", 1)[0]
 
@@ -521,7 +591,7 @@ def parse_body(md: str) -> str:
             else:
                 out.append(
                     f'<figure class="plate">\n'
-                    f'<img src="{img_uri(Path(path).name)}" alt="Figure {letter}" loading="lazy">\n'
+                    f'<img src="{img_uri(Path(path).name)}" alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy">\n'
                     f'<figcaption><span class="figlabel">Fig. {letter}</span> '
                     f"{inline(cap)}</figcaption>\n</figure>"
                 )
@@ -549,15 +619,40 @@ def parse_body(md: str) -> str:
     # close each section before the next opens, and at the end
     hchunks = hchunks.replace('<section class="sec">', "</section>\n<section class=\"sec\">")
     hchunks = hchunks.replace("</section>\n<section class=\"sec\">", '<section class="sec">', 1)
-    return hchunks + "\n</section>"
+    return linkify_citations(hchunks + "\n</section>", state)
 
 
-def parse_methods(md: str) -> str:
+def parse_methods(md: str, state: dict | None = None) -> str:
+    state = new_citation_state() if state is None else state
     chunk = md.split("## Methods note", 1)[1]
     chunk = chunk.split("---", 1)[0]
     chunk = chunk.split("\n", 1)[1]  # drop the rest of the heading line
     paras = [" ".join(p.split()) for p in re.split(r"\n\s*\n", chunk.strip()) if p.strip()]
-    return "\n".join(f"<p>{inline(p)}</p>" for p in paras)
+
+    rendered: list[str] = []
+    for para in paras:
+        block = f"<p>{inline(para)}</p>"
+        m = re.match(r"^<p><strong>\[([1-9])\]", block)
+        if not m:
+            rendered.append(linkify_citations(block, state))
+            continue
+
+        # A source entry. Its own leading [n] is the label, not a citation of
+        # itself, so it is held back while the rest of the entry is linked.
+        n = m.group(1)
+        head, rest = block.split(f"[{n}]", 1)
+        rest = linkify_citations(rest, state)
+        target = state["first"].get(n)
+        back = (
+            f' <a class="fnback" href="#{target}" '
+            f'aria-label="Back to the first citation of source {n}">&#8617;</a>'
+            if target else ""
+        )
+        opened = head.replace("<p>", '<p id="source-%s">' % n, 1)
+        block = f"{opened}[{n}]{rest}"
+        rendered.append(block[: -len("</p>")] + back + "</p>")
+
+    return "\n".join(rendered)
 
 
 def hero_record() -> str:
@@ -611,6 +706,21 @@ def build() -> str:
     data = chart_data()
     totals = flow_totals()
     validate_article_inputs(md, data, totals)
+    citations = new_citation_state()
+    body_html = parse_body(md, citations)
+    methods_html = parse_methods(md, citations)
+    for marker in EDITORIAL_MARKERS:
+        for where, frag in (("body", body_html), ("methods", methods_html)):
+            if marker in frag:
+                raise SystemExit(
+                    f"FAIL: editorial marker {marker!r} would publish in the {where}"
+                )
+    cited = set(citations["first"])
+    defined = set(re.findall(r'<p id="source-([1-9])">', methods_html))
+    if cited - defined:
+        raise SystemExit(f"FAIL: cited but undefined sources: {sorted(cited - defined)}")
+    if defined - cited:
+        raise SystemExit(f"FAIL: sources defined but never cited: {sorted(defined - cited)}")
     data_json = json.dumps(data, ensure_ascii=True, separators=(",", ":"))
     data_json = data_json.replace("<", "\\u003c").replace("&", "\\u0026")
     return ascii_safe(TEMPLATE.format(
@@ -619,8 +729,8 @@ def build() -> str:
         hero=hero_record(),
         standfirst=standfirst(totals),
         status=national_status(totals),
-        body=parse_body(md),
-        methods=parse_methods(md),
+        body=body_html,
+        methods=methods_html,
         interactive_css=_assert_ascii(INTERACTIVE_CSS),
         chart_data=data_json,
         interactive_js=_assert_ascii(INTERACTIVE_JS),
@@ -753,6 +863,26 @@ TEMPLATE = """<!DOCTYPE html>
     font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
     color:var(--redact); margin-right:9px;
   }}
+
+  /* ---- citations ---- */
+  /* The marker is a jump target as well as a label, so it gets a real hit area
+     without opening a gap in the line it sits in. */
+  a.fnref {{
+    font-family:var(--sans); font-size:.72em; font-weight:600; vertical-align:.42em;
+    text-decoration:none; color:var(--redact); padding:0 .12em; white-space:nowrap;
+  }}
+  a.fnref:hover {{ text-decoration:underline; }}
+  a.fnback {{ text-decoration:none; color:var(--redact); font-size:15px; padding-left:.2em; }}
+  a.fnback:hover {{ text-decoration:underline; }}
+  :target {{ scroll-margin-top:24px; }}
+  .methods p:target {{
+    background:var(--plate); outline:2px solid var(--redact); outline-offset:6px;
+  }}
+  .sr-only {{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }}
+  @media (prefers-reduced-motion:no-preference) {{ html {{ scroll-behavior:smooth; }} }}
 
   /* ---- methods ---- */
   .methods {{ margin-top:76px; border-top:2px solid var(--ink); padding-top:26px; }}
