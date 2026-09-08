@@ -261,7 +261,7 @@ invoking family refusals it has never had to evidence.
 
 When INAI later ordered the CNB to release a public database (resolution RRA
 09082/20), the commission resisted — citing family consent it could not produce —
-and eventually delivered 50,204 records out of 175,371, withholding 71%.
+and eventually delivered 50,204 records out of 175,371, withholding 71% [4].
 
 There is a simpler reason the consent paperwork is missing, and it is visible in the
 registry's own fields. When Data Cívica audited the public version the CNB published
@@ -279,7 +279,7 @@ states that are marked confidential in the registry *while having active public
 search notices* — posters with names and photographs, issued by the same
 authorities. Officials admitted no risk assessment underlies the classification.
 María de Jesús Solís, whose son disappeared in Zapopan in 2020, said she never
-signed anything and wants maximum visibility. Her son's record is confidential.
+signed anything and wants maximum visibility. Her son's record is confidential [4].
 
 **The redaction flag mixes genuine family requests, missing consent paperwork and at
 least one blanket state policy — and no public field distinguishes them.**
@@ -551,7 +551,11 @@ both carry their live figures in the caption. `src/crosscheck.py` reports the fu
 per-state drift table.
 
 **[4] Documentary and journalistic sources**, each with its own date: Oficio
-SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07); ZonaDocs,
+SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07); A dónde van
+los desaparecidos, 2021-04-08, on INAI resolution RRA 09082/20 (December 2020) and the
+two that followed it — the order to publish a public-version database, the CNB's
+inability to produce the consent declarations it cited, and the eventual delivery of
+50,204 of 175,371 records; ZonaDocs,
 "El engaño estadístico", 2024-11-21 (active notices marked confidential; Jalisco
 under-registration); El Informador, 2023-05-09 (Jalisco federal/state divergence);
 Animal Político (the 2022 reporting gap); Tlachinollan, "Guerrero: territorio de
