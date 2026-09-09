@@ -92,19 +92,23 @@ violent — and for a decade the data support it. Between 2015 and 2018 recorded
 disappearances and homicide victims climb together.
 
 Then they part. From 2019 to 2024, homicide victims fall 13.4%, from 34,721 to
-30,060, while recorded disappearances rise 43.4%, from 25,151 to 36,056. Across
-2015–2025 the two series correlate at only r = 0.28. Whatever drove the registry's
-recent growth, worsening lethal violence does not account for it.
+30,060, while recorded disappearances rise 43.4%, from 25,151 to 36,056. Across the
+complete years 2015–2024, the two series correlate at approximately r = 0.53;
+extending the series through provisional 2025 reduces the correlation to r = 0.28,
+but because 2025 annualises ten months of homicide reporting while recent disappearance
+cohorts are still filling in, the completed-year series is the primary comparison.
+Whatever drove the registry's recent growth, worsening lethal violence does not
+account for it.
 
 Part of the answer is that the country built the machinery to record more. The 2017
-General Law created local search commissions, and they now take nearly half of all
-reports: 5.0% of records for 2017 came through a search commission, against 47.7%
-for 2025, with the remainder shifting away from prosecutors and toward a public
-online portal that did not meaningfully exist before 2020 [3]. A family that once
-had to persuade a prosecutor now has somewhere else to go. That breakdown can only
-be computed for records whose fields are public, so it describes 63.2% of the
-registry and assumes the redacted remainder behaves no differently — which is
-exactly the assumption the rest of this piece is about.
+General Law created local search commissions. Among unresolved records with public
+fields in the 2025-12-02 mirror, 5.0% of cases for 2017 came through a search
+commission, against 47.7% for 2025, with the remainder shifting away from prosecutors
+and toward a public online portal that did not meaningfully exist before 2020 [3].
+A family that once had to persuade a prosecutor now has somewhere else to go.
+Crucially, this breakdown applies only to unresolved records whose fields are public
+(63.2% of the mirror snapshot); neither the confidential records nor resolved cases
+can be assumed to follow the same intake pattern.
 
 This does not make the rise an illusion. Two official series moving apart is a fact
 about the two series; falling homicides say nothing about how honestly
@@ -254,13 +258,15 @@ The government's own paperwork says otherwise. In August 2020 the National Searc
 Commission (CNB) wrote to the transparency institute (INAI) asking how to build the
 public registry — and admitted, in its own tables, that **for 77.4% of records
 nobody knew whether the family had consented or not**, largely because the records
-predate the law. Where no paperwork exists, the default is silence. And in a
-footnote, the CNB recorded something remarkable: the Fiscalía of Jalisco had
+predate the law. In the proceeding, the CNB described a withholding practice
+under which records without affirmative consent paperwork were kept out of public
+versions. And in a footnote, the CNB recorded that the Fiscalía of Jalisco had
 declared that *everything* it sends to the national registry is non-publishable,
-invoking family refusals it has never had to evidence.
+invoking family refusals without producing any supporting documentation in the
+public proceeding.
 
 When INAI later ordered the CNB to release a public database (resolution RRA
-09082/20), the commission resisted — citing family consent it could not produce —
+09082/20), the commission resisted — citing missing consent documentation —
 and eventually delivered 50,204 records out of 175,371, withholding 71% [4].
 
 There is a simpler reason the consent paperwork is missing, and it is visible in the
@@ -393,15 +399,18 @@ fully participating in the national count.
 From 2022, under then-governor Enrique Alfaro, Jalisco largely stopped reporting
 disappearances to the RNPDNO and logged them in its own state registry instead. The
 country now has two official counts of Jalisco's disappeared, kept by two governments,
-and they do not agree with each other. Animal Político put the resulting gap at up to
-2,986 people. The state government's answer, in January 2024, was a communiqué titled
-"Jalisco does not manipulate its registry, nor erase figures."
+and they do not agree with each other. By the article's own comparison of public
+snapshots, the resulting gap now reaches roughly 3,000 people — following earlier
+divergence documented by El Informador [4]. The state government's answer, in January
+2024, was a communiqué titled "Jalisco does not manipulate its registry, nor erase
+figures."
 
 Jalisco is also where the contradiction from section 6 concentrates. Of the 4,765
 confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
-second only to Estado de México's 2,691, and a ninth of everything Jalisco redacts. The same investigation found a further 2,137 disappearances
-between 2019 and mid-2024 that were never registered anywhere at all: not redacted,
-simply absent.
+second only to Estado de México's 2,691, and a ninth of everything Jalisco redacts. The
+same investigation found a further 2,137 disappearances between 2019 and mid-2024 that
+state authorities registered locally with official search notices but omitted from the
+federal registry: not redacted inside the national count, but withheld from it entirely.
 
 What the registry would not record, families recorded themselves. On 5 March 2025 the
 collective Guerreros Buscadores de Jalisco entered Rancho Izaguirre, a property outside
@@ -421,29 +430,34 @@ Jalisco. They are one fact, seen from two sides.
 ## 8. Guerrero: the limits of official counts
 
 **[FIG G — `figures/article/G_two_modes.png`]**
-*Caption: Guerrero's registry holds ~3,800–4,500 records. In Iguala alone, three
-family collectives jointly document 623 cases. The two bars count different things
-and may overlap: some of the 623 are certainly also in the state's register, and we
-cannot say how many. Tlachinollan credits collective searches with 260 bodies
-recovered in Iguala, of which 69 were identified and returned to families. Sources:
-Tlachinollan, HRW [4]; registry figures 2025-12-02 microdata [3].*
+*Caption: Guerrero's state register held roughly 3,800 records per Tlachinollan's
+2022 report ("Guerrero: territorio de personas desaparecidas"), while the
+federal RNPDNO mirror snapshot (2025-12-02) documents 4,453 unresolved records.
+In Iguala alone, three family collectives jointly document 623 cases. The two
+bars count different things and may overlap: some of the 623 are certainly also
+in the state or federal register, and we cannot say how many. Tlachinollan
+credits collective searches with 260 bodies recovered in Iguala, of which 69
+were identified and returned to families. Sources: Tlachinollan, HRW [4];
+registry figures 2025-12-02 microdata [3].*
 
 On the redaction chart, Guerrero appears unusually open: 9% confidential, against
 Jalisco's 67%. But a low confidential share describes only records that have entered
 the federal stock. It cannot tell us how completely the registry covers disappearances
 known to families and collectives.
 
-The state's registry holds roughly 3,800 records. In Iguala alone — one city — three
+In 2022 reporting, the human-rights centre Tlachinollan documented roughly 3,800
+records in Guerrero's state registry; in the federal 2025-12-02 mirror snapshot,
+unresolved records for the state reached 4,453. In Iguala alone — one city — three
 family collectives jointly document 623 cases.
 
-Those two numbers are not a subtraction, and it matters that we say so. **They may
+Those numbers are not a subtraction, and it matters that we say so. **They may
 overlap, and we cannot measure by how much.** Some of the 623 Iguala cases are
 certainly also registered with the state; others, by the collectives' account, are
 not. Without case-level identifiers on both sides — which no public source provides —
 there is no way to net one against the other. The comparison is worth making because
 of the ratio it implies: three collectives in one city hold a caseload equal to a
-sixth of the entire state register. It is not worth making as an estimate of how many
-people are missing from that register.
+seventh of the federal register (and a sixth of the 2022 state count). It is not
+worth making as an estimate of how many people are missing from that register.
 
 The human-rights centre Tlachinollan, which has tracked the state for decades,
 describes prosecutors who stall investigations unless families force them open, and a
@@ -461,10 +475,13 @@ Iguala, of which 69 were identified and returned to their families. In Acapulco 
 records a different outcome: 70 people found alive, and 55 identified bodies returned
 [4].
 
-The under-registration is not history. During Holy Week searches in 2026, in Iguala and
-Buenavista de Cuéllar, three families approached the searching mothers to report
-disappearances they had never reported to any authority. That is the gap happening in
-real time: people becoming known to a collective before they are known to the state.
+The under-registration is not history. During Holy Week searches in 2026, in Buenavista
+de Cuéllar and Iguala, eight families approached searching mothers from the collective
+Familiares en Búsqueda María Herrera — five in Buenavista and three in Iguala — to report
+disappearances after official channels had stalled. One woman in Iguala whose father had
+been missing six months recounted that authorities had made no progress and told her to
+stop inquiring. That is the gap happening in real time: families turning to search
+collectives because the state has ceased to look.
 
 A low confidential share, then, is not a clean bill of health. Jalisco documents how
 fields can disappear after a record enters the registry. Guerrero's family records
@@ -558,7 +575,7 @@ inability to produce the consent declarations it cited, and the eventual deliver
 50,204 of 175,371 records; ZonaDocs,
 "El engaño estadístico", 2024-11-21 (active notices marked confidential; Jalisco
 under-registration); El Informador, 2023-05-09 (Jalisco federal/state divergence);
-Animal Político (the 2022 reporting gap); Tlachinollan, "Guerrero: territorio de
+Animal Político, 2026-02-09 (Jalisco's halt in federal reporting since 2022 and state registry divergence); Tlachinollan, "Guerrero: territorio de
 personas desaparecidas" (Iguala and Acapulco recoveries, prosecution rates); Human
 Rights Watch, 2019-01-14 (Los Otros Desaparecidos de Iguala); Proceso, 2026-04-03
 (Holy Week searches). Web sources consulted 2026-07-06 unless stated.
