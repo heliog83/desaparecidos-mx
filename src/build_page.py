@@ -56,6 +56,9 @@ MEXICO_GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
 
 TITLE = "The Redacted Crisis"
 SUBTITLE = "What Mexico's public registry leaves unseen"
+# Where .github/workflows/pages.yml publishes the page. Change this if the host or a
+# custom domain changes, so search engines and social cards point to the right copy.
+CANONICAL_URL = "https://heliog83.github.io/desaparecidos-mx/"
 DESCRIPTION = (
     "A data investigation of Mexico's registry of disappeared people: 134,268 still "
     "missing on 15 August 2026, and 36.8% of unresolved records in the last "
@@ -810,6 +813,7 @@ def build() -> str:
         title=TITLE,
         subtitle=SUBTITLE,
         description=html.escape(DESCRIPTION, quote=True),
+        canonical=CANONICAL_URL,
         hero=hero_record(),
         standfirst=standfirst(md, totals),
         status=national_status(totals),
@@ -828,7 +832,9 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{description}">
+<link rel="canonical" href="{canonical}">
 <meta property="og:type" content="article">
+<meta property="og:url" content="{canonical}">
 <meta property="og:title" content="{title}: {subtitle}">
 <meta property="og:description" content="{description}">
 <meta name="twitter:card" content="summary">
@@ -1052,6 +1058,7 @@ TEMPLATE = """<!DOCTYPE html>
     <span>Stage 1 of 2</span>
     <span>Figures reproducible from source</span>
     <span>Data consulted 2026-08-15</span>
+    <span>Text &amp; figures <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a> &middot; code MIT</span>
   </footer>
 </div>
 <script type="application/json" id="article-chart-data">{chart_data}</script>

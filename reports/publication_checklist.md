@@ -18,12 +18,12 @@ else is blocking.
       (the §2 conclusion now says a partial shift of deaths into "still missing"
       *cannot be excluded*), C-05 (§9) and the new §6b paragraph on the March 2026
       reclassification. Read `audit/article_draft_corrections.diff`.
-- [ ] **G-2 Reader-facing reproducibility links work.** The repository is private, so the
+- [x] **G-2 Reader-facing reproducibility links work.** (2026-10-12: repository made public at the author's choice; full history scanned first: no raw data, PDFs or secrets) The repository is private, so the
       methods-note links to GitHub are dead for readers. Make it public (the `.gitignore`
       already excludes the oficio and scratch packets; check `git ls-files` once more),
       publish a public mirror of `src/`, `docs/` and the freeze, or archive them (e.g.
       Zenodo DOI) and relink.
-- [ ] **G-3 Licence.** Add `LICENSE` (suggested: CC BY 4.0 for text and figures, MIT for
+- [x] **G-3 Licence.** (2026-10-12: `LICENSE` MIT for code; `LICENSE-CONTENT.md` CC BY 4.0 for text, figures and derived tables, plus third-party data terms) Add `LICENSE` (suggested: CC BY 4.0 for text and figures, MIT for
       code) and a data-terms note for the RNPDNO, the lapanquecita mirror, SESNSP and INEGI.
 
 ## Strongly recommended before publication
@@ -39,7 +39,7 @@ else is blocking.
 - [x] **R-5a** E-3 applied (§6 + Fig K), validated.
 - [x] **R-5b** E-1 applied (standfirst), validated.
 - [ ] **R-5c** Decide on E-2 (compress §2), E-4 (split §6b), E-5 (headline).
-- [ ] **R-6** Set the canonical URL once the host is chosen: add
+- [x] **R-6** (done: https://heliog83.github.io/desaparecidos-mx/) Set the canonical URL once the host is chosen: add
       `<link rel="canonical">` and `og:url` in `src/build_page.py`'s template. No URL
       was guessed.
 - [ ] **R-7** Commit the complete unit: draft, build, JS/CSS, figure scripts, 3 PNGs +

@@ -720,6 +720,10 @@ reproduce from `src/` in the project repository
 [data refresh audit](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/data-refresh-2026-08-15.md); source audit:
 [source audit](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/publication_data_audit_2026-08-15.md).
 
+Text and figures are published under CC BY 4.0 and the code under the MIT licence;
+third-party data keep their own terms
+([licence](https://github.com/heliog83/desaparecidos-mx/blob/main/LICENSE-CONTENT.md)).
+
 Behind every record is a person and a searching family. This piece reports
 uncertainty as uncertainty and does not present proxies as counts.
 

@@ -5,8 +5,9 @@ can still be measured through it.**
 
 More than 134,000 people are currently registered as disappeared or not-located in
 Mexico. In the frozen record-level mirror dated 2 December 2025, **36.8% of unresolved
-records contained a single public fact: the state.** Every other field — date, age,
-sex, municipality and case status — was replaced by the word `CONFIDENCIAL`.
+records kept only two public facts: the state, and the office that filed the report.**
+Every descriptive field — date, age, sex, municipality and case status — was replaced
+by the word `CONFIDENCIAL`.
 
 This project quantifies that redaction, tests several explanations for it and documents
 how administrative decisions shape what the public can see. The available data do not
@@ -40,14 +41,21 @@ reclassified ~2,500 existing records in two months while its total barely moved 
 snapshots do not reveal whether the cause was consent, correction, resolution, deletion
 or another operation.
 
-**4. Official and family records provide different views.**
+**4. Which office filed a case can matter as much as the case.**
+Within the same state, the confidential share differs sharply by filing office: in
+Estado de México 3% of records filed by the state prosecutor versus 36% filed by the
+state search commission; Nuevo León 32% vs 93%; Jalisco 64% vs 90%. The gap is 30+
+points in 6 of 17 comparable states and under 10 in 8. Descriptive, since case mix
+differs by channel (article fig K, `src/filing_authority.py`).
+
+**5. Official and family records provide different views.**
 Jalisco redacts 67% of its registry. Guerrero redacts 9%, while three collectives
 document 623 cases in the city of Iguala. The person-level overlap is unknown, so these
 figures cannot be added or subtracted; they establish parallel systems of evidence, not
 a measured undercount.
 
-**5. Recent recorded cohorts are much larger.**
-For most cohorts since 2008, roughly two-thirds are currently classified as located,
+**6. Recent recorded cohorts are much larger.**
+For most cohorts since 2012, roughly two-thirds are currently classified as located,
 even as annual recorded volume more than tripled. Because the aggregate data contain a
 year of disappearance but no date of location, this pattern cannot measure search speed
 or show how many people were found in any particular year.
@@ -72,6 +80,7 @@ can run:
 ```bash
 python3 src/build_page.py     # -> reports/article.html
 python3 src/check_article.py  # hash-verifies the freeze, then the HTML against it
+python3 src/check_claims.py   # recomputes 64 numbers in the prose from the freeze
 ```
 
 That reproduces the committed `reports/article.html` byte for byte.
@@ -139,8 +148,9 @@ validated HTML. See [docs/working-with-agents.md](docs/working-with-agents.md).
 **The mirror is no longer updated.** It published monthly from April 2025 and stopped
 after 2025-12-02; our copy is byte-identical to the last upstream commit. So the project
 carries two vintages on purpose: flow figures are current, field-level figures are a
-December 2025 cross-section. National drift between them is 0.11%, but it is not uniform
-by state — `src/crosscheck.py` reports it, and per-state claims are labelled accordingly.
+December 2025 cross-section. The mirror sits 0.5% below the live total (−2.1% for
+records with a known state, because the mirror files more records under an unknown
+state), and drift is not uniform by state — `src/crosscheck.py` reports it, and per-state claims are labelled accordingly.
 Full audit: [docs/data-refresh-2026-08-15.md](docs/data-refresh-2026-08-15.md).
 
 ## What this data cannot tell you
@@ -166,19 +176,30 @@ data/
   stage2/      hand-coded clandestine-find events — ILLUSTRATIVE SEEDS, not a census
 src/           pipeline: fetch -> clean -> analyse -> figures -> page
 notebooks/     exploratory work (03-06 were extracted into src/opacity_*.py)
-reports/       article draft, article.html, figures/ (numbered) + figures/article/ (A-H)
+reports/       article draft, article.html, figures/ (numbered) + figures/article/ (A-K),
+               publication audit (publication_audit.md, claim_registry.csv, ...)
 dashboard/     Streamlit app
 docs/          methodology, data sources, opacity mechanism, per-state case files
 ```
 
 ## Status
 
-Stage 1 is complete: pipeline, dashboard, eight publication figures, and the article.
+Stage 1 is complete: pipeline, dashboard, eleven publication figures, and the article,
+audited before publication (`reports/publication_audit.md`).
 
 Stage 2 — measuring what the search collectives themselves find — is **scoped but not
 built**. `data/stage2/clandestine_finds.csv` holds five low-confidence illustrative
 records and a validator. It is not a dataset yet, and it must never be presented as a
 count.
+
+## Licence
+
+- **Text, figures and derived tables** (`reports/`, `docs/`, `data/publication_freezes/*/derived/`,
+  `data/stage2/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See
+  [LICENSE-CONTENT.md](LICENSE-CONTENT.md).
+- **Code** (`src/`, `dashboard/`, `notebooks/`): [MIT](LICENSE).
+- **Third-party data keep their own terms** and are not relicensed here. See
+  [LICENSE-CONTENT.md](LICENSE-CONTENT.md#third-party-data).
 
 ## Ethics
 
