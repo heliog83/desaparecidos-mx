@@ -61,6 +61,8 @@ Severity: **B** blocker · **H** high · **M** medium · **L** low.
 
 | A-07 | Standfirst | **E-1 adopted (author request, 2026-10-12):** the standfirst now leads with the record-level blackout, the batch movement (≈2,500 records in one state in two months) and the filing-office gap (30–60 points in six states). Two phrases from the proposal were dropped as unsupported: "for more than a third of the unresolved records it publishes" (blended the Aug-2026 and Dec-2025 vintages) and "which office files a case matters more than where the family lives" (never tested). `build_page.py` now reads the standfirst from the draft instead of a second hard-coded copy | `check_claims.py` STAND-* |
 
+| A-08 | §6b, Fig F caption and PNG | **Unverifiable June-2026 values dropped (author decision, 2026-10-12).** CDMX 6,086 and Jalisco 12,776 came from a 2026-06-19 pull that was overwritten and never archived (searched: main checkout, all worktrees, git history). §6b now goes straight from December 2025 to August 2026 (5,915), and Fig F from March 2025 (15,015) to August 2026 (12,964). Neither the reversal claim nor the ~3,000 gap depended on the June point | freeze `flow_by_state.csv` |
+
 ### Changes to E-3 while applying it (the proposal was wrong in three places)
 
 - The proposal's grouping put the **national** search commission (CNB, 4,950 records) in with the state commissions, and **federal** prosecutors (FGR and legacy PGR offices, 2,384 records) in with the state prosecutors. The article's wording ("state prosecutors", "the state's search commission") needed state offices only. With them separated, Nuevo León is 32% vs **93%** (was 91%) and Jalisco 64% vs **90%** (was 84%). Estado de México is unchanged.
@@ -69,9 +71,7 @@ Severity: **B** blocker · **H** high · **M** medium · **L** low.
 
 ## Left as is, and why
 
-- **June-2026 values** (CDMX 6,086; Jalisco 12,776). These are documented in
-  `docs/data-refresh-2026-08-15.md`, but the raw pull isn't retained. They're kept, and
-  flagged UNVERIFIABLE in the registry. Either restore the pull or drop the June points.
+- **June-2026 values:** resolved by A-08 (dropped).
 - **72,172 unidentified bodies; Tlachinollan, HRW and Proceso figures; Data Cívica 2023
   erased names.** These are external figures. They're correctly attributed in the draft
   and consistent with project notes, but this audit didn't re-fetch them.

@@ -200,14 +200,14 @@ def build_claims() -> list[tuple[str, str, str]]:
 
     # ---- live by state (vintage 2026-08-15) ---------------------------------
     live = {r[""].strip(): int(num(r["desap_y_nollocal"])) for r in rows("flow_by_state.csv")}
-    add("LIVE-CDMX", f"by August, {live['CIUDAD DE MEXICO']:,}", "CDMX live")
+    add("LIVE-CDMX", f"By August 2026 the live registry showed {live['CIUDAD DE MEXICO']:,}", "CDMX live")
     add("LIVE-CDMX-D", f"shed {cdmx1 - live['CIUDAD DE MEXICO']:,}", "CDMX fall")
     live_states = sum(v for k, v in live.items() if k != "SE DESCONOCE")
     add("DRIFT-01", f"against {live_states:,} live ({(st_total / live_states - 1) * 100:.1f}%)".replace("-", "−"),
         "state-assigned drift")
     add("DRIFT-02", f"against {live['SE DESCONOCE']:,} live", "live unknown-state records")
     jal_live = live["JALISCO"]
-    add("LIVE-JAL", f"{jal_live:,}", "Jalisco live")
+    add("LIVE-JAL", f"stood at {jal_live:,} in August 2026", "Jalisco live")
 
     # ---- fig K: confidentiality by filing authority (2025-12-02) --------------
     fa: dict[str, dict[str, tuple[int, int]]] = {}

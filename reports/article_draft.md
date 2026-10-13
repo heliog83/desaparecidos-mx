@@ -2,8 +2,8 @@
 
 Draft v1.1, 2026-08-15 (data refreshed; see `docs/data-refresh-2026-08-15.md`).
 Visual-led web article. ~2,900 words + 8 figures.
-Language: drafted in English; decide EN/ES (or both) before publication — the natural
-home for this piece (and its sources) is Spanish-language.
+Language: English (author decision, 2026-10-12). A Spanish edition remains a possible
+follow-up.
 Every figure is reproducible from `src/`; every number carries a consultation date in
 `docs/`. Figure production notes at the end.
 
@@ -361,9 +361,9 @@ noting it cannot confirm they are the same records [10].
 
 The reversals do not stop at the edge of the panel. Mexico City's unresolved count
 climbed steadily all through 2025, from 6,025 in April to 7,242 in December — and
-then gave the entire increase back. By June 2026 the live registry showed 6,086;
-by August, 5,915. A capital that had been adding cases for a year shed 1,327 of
-them in eight months, roughly one in five. We can see the direction and the size of
+then gave the entire increase back. By August 2026 the live registry showed 5,915:
+a capital that had been adding cases for a year shed 1,327 of them in eight months,
+roughly one in five. We can see the direction and the size of
 that reversal but not its mechanism: the registry does not say whether those
 records were deleted, reclassified, resolved, or moved.
 
@@ -446,8 +446,8 @@ produced.
 (2020), the state stops feeding the national registry in favour of its own (2022),
 "erased" names controversy (2023), official denial (2024), Teuchitlán (2025), new
 federal recount (2026) [4]. The two registries move independently and now differ by
-roughly 3,000 people — the federal count fell to 12,776 by June 2026 and has since
-edged back to 12,964, while the state's stands near 16,000. Markers are documented
+roughly 3,000 people — the federal count stood at 12,964 in August 2026, down from
+15,015 in March 2025, while the state's stood near 16,000 at the end of 2025. Markers are documented
 snapshots, not a continuous series, and the two registries define their counts
 differently.*
 
@@ -776,9 +776,9 @@ New figures — ALL BUILT (baseline styling; restyle pass pending):
   → `figures/21_jalisco_registry_divergence.png`. Documented snapshots (markers, not
   a series): federal 14,944 (Apr 2022) → 15,012 (May 2023, i.e. +68 in 13 months
   while the state issued 1,260 bulletins — annotated as "the freeze") → 15,015
-  (Mar 2025) → 12,776 (our API pull, 2026-06-19, after the new federal recount)
-  → 12,964 (second API pull, 2026-08-15: the count is edging back up, +188 in ~8
-  weeks, while the state registry stays ~3,000 higher);
+  (Mar 2025) → [2026-06-19 point, 12,776, dropped 2026-10-12: pull not archived]
+  → 12,964 (API pull, 2026-08-15, publication freeze; the state registry stays
+  ~3,000 higher);
   state 13,976 (SISOVID Mar 2023) → 15,426 (REPD Feb 2025) → 16,064 (end 2025).
   Six event markers 2020–2026. CAVEAT kept in footer: registry definitions differ;
   the 2026 federal drop coincides with the announced recount (A dónde van los

@@ -8,10 +8,10 @@ measured series. Sources (all consulted 2026-07-06):
 - SISOVID (state) 13,976 at 2023-03-31: El Informador 2023-05-09.
 - REPD 15,426 at 2025-02-28 vs RNPDNO 15,015 at 2025-03-13: SinEmbargo / press.
 - REPD 16,064 through end 2025: Grupo Animal (ex Animal Político) verification.
-- RNPDNO 12,776 unresolved at 2026-06-19 and 12,964 at 2026-08-15: our own
-  dashboard-API pulls (data/processed/flow_by_state.csv, desap_y_nollocal).
-  The two federal pulls bracket the post-recount trough: the count is edging
-  back up (+188 in ~8 weeks) while the state registry stays ~3,000 higher.
+- RNPDNO 12,964 unresolved at 2026-08-15: the publication freeze's dashboard-API
+  pull (derived/flow_by_state.csv, desap_y_nollocal).
+  (2026-10-12: a 2026-06-19 point, 12,776, was dropped. That pull was overwritten
+  and never archived, so the value could not be verified.)
 Events: CNB oficio 1349/2020 p.11 n.3; Informador/Animal Político (2022 stop);
 Data Cívica (Dec 2023 censo/borrados); Proceso 2024-01-23 (denial); ZonaDocs
 (Teuchitlán 2025-03-05); A dónde van los desaparecidos 2026-01-08 (new recount).
@@ -27,8 +27,7 @@ st.apply()
 C_FED, C_STATE, C_EVENT = st.RED, st.BLUE, st.INK
 
 fed = [(date(2022, 4, 15), 14944), (date(2023, 5, 6), 15012),
-       (date(2025, 3, 13), 15015), (date(2026, 6, 19), 12776),
-       (date(2026, 8, 15), 12964)]
+       (date(2025, 3, 13), 15015), (date(2026, 8, 15), 12964)]
 sta = [(date(2023, 3, 31), 13976), (date(2025, 2, 28), 15426),
        (date(2025, 12, 31), 16064)]
 
@@ -62,7 +61,7 @@ ax.scatter(*zip(*fed), color=C_FED, marker="o", s=58, zorder=3,
 ax.scatter(*zip(*sta), color=C_STATE, marker="s", s=58, zorder=3,
            label="Jalisco state registry (SISOVID / REPD)")
 
-fed_offsets = [(0, -17)] * (len(fed) - 2) + [(-17, -19), (15, 7)]
+fed_offsets = [(0, -17)] * len(fed)
 for (d, v), off in zip(fed, fed_offsets):
     ax.annotate(f"{v:,}", (d, v), textcoords="offset points", xytext=off,
                 ha="center", fontsize=9, color=C_FED, weight="bold")
@@ -116,7 +115,7 @@ for c, (chunk, x) in enumerate(zip(col, (0.055, 0.53))):
 fig.text(0.055, 0.022,
          "Markers are documented snapshots, not a continuous series, and the two registries define their populations\n"
          "differently, so the gap between them is not a measured undercount. Sources: El Informador (2023-05-09), SinEmbargo\n"
-         "(2025), Grupo Animal (2025), RNPDNO API pulls (2026-06-19, 2026-08-15). Consulted 2026-08-15.",
+         "(2025), Grupo Animal (2025), RNPDNO API pull (2026-08-15). Consulted 2026-08-15.",
          fontsize=7.5, color="#666666", va="bottom")
 
 fig.subplots_adjust(left=0.075, right=0.98, top=0.90, bottom=0.27)

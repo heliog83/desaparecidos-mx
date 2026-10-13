@@ -14,7 +14,7 @@ else is blocking.
 
 ## Gate — must be done before publication
 
-- [ ] **G-1 Author sign-off on the substantive corrections**, especially C-01/C-12
+- [x] **G-1 Author sign-off on the substantive corrections** (given 2026-10-12), especially C-01/C-12
       (the §2 conclusion now says a partial shift of deaths into "still missing"
       *cannot be excluded*), C-05 (§9) and the new §6b paragraph on the March 2026
       reclassification. Read `audit/article_draft_corrections.diff`.
@@ -28,8 +28,8 @@ else is blocking.
 
 ## Strongly recommended before publication
 
-- [ ] **R-1** Decide EN/ES. Preferably publish both, cross-linked (editorial review).
-- [ ] **R-2** Resolve the June-2026 points (CDMX 6,086; Jalisco 12,776): restore the raw
+- [x] **R-1** Language: English (decided 2026-10-12). Nothing in the article needed changing.
+- [x] **R-2** (done 2026-10-12: dropped, A-08) Resolve the June-2026 points (CDMX 6,086; Jalisco 12,776): restore the raw
       pull into a freeze amendment, or drop them from §6b, Fig F and its caption.
 - [ ] **R-3** Re-fetch the external figures not re-verified here: 72,172 bodies;
       Tlachinollan 3,800 / 260 / 69 / 2–6%; HRW >160; Proceso Holy Week; Data Cívica's
