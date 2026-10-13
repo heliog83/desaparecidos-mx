@@ -186,3 +186,48 @@
   stroke:#22201e; stroke-width:2px; opacity:1 !important; outline:none;
 }
 
+
+/* Long option labels must never push a control row past a 320px viewport. */
+.chart-controls select { max-width:100%; }
+/* Focusable bars had only the browser's default ring, which is not drawn reliably
+   on SVG shapes. WCAG 2.4.7 / 2.4.11: give them an explicit, visible state. */
+.chart-canvas rect[tabindex]:focus-visible { outline:none; stroke:#22201e; stroke-width:2.5; }
+
+/* Fig K: dot plot in plain HTML/CSS. No JavaScript, so it is the figure for every
+   reader; text stays at reading size on a 320px screen. */
+.k-shell { padding-bottom:16px; }
+.k-legend { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12.5px; color:#4f5450; margin:0 0 12px; }
+.k-legend span { display:inline-flex; align-items:center; gap:6px; }
+.k-legend .k-dot { position:static; transform:none; }
+.k-legend .k-portal { position:static; transform:none; height:14px; }
+/* Pixel columns, not em: the axis and the rows use different font sizes, and em
+   columns put the tick labels out of line with the tracks. */
+.k-axis, .k-row { display:grid; grid-template-columns:132px 1fr 80px; gap:10px; align-items:center; }
+.k-axis { font-size:11px; color:#5c615c; margin-bottom:2px; }
+.k-ticks { position:relative; height:14px; }
+.k-ticks span { position:absolute; transform:translateX(-50%); white-space:nowrap; }
+.k-ticks span:first-child { transform:none; }
+.k-ticks span:last-child { transform:none; }
+.k-rows { list-style:none; margin:0; padding:0; }
+/* The article's prose-list rules (.sec ul / .sec li) add a flex gap, a 22px indent
+   and a red dash marker. The indent shifted every track against the axis labels. */
+.sec .k-rows { display:block; gap:0; max-width:none; margin:0; }
+.sec .k-rows li { padding-left:0; }
+.sec .k-rows li::before { content:none; }
+.k-row { padding:5px 0; border-top:1px solid #eceeeb; font-size:13px; }
+.k-name { overflow-wrap:anywhere; line-height:1.2; }
+.k-track { position:relative; height:16px; background:linear-gradient(90deg,#eceeeb 1px,transparent 1px) 0 0/25% 100%; }
+.k-bar { position:absolute; top:7px; height:3px; background:#c9c3b8; }
+.k-dot { position:absolute; top:50%; width:12px; height:12px; border-radius:50%; transform:translate(-50%,-50%); display:inline-block; }
+.k-p { background:#2b2b2b; }
+.k-c { background:#fff; border:2.5px solid #7a1f1f; }
+.k-portal { position:absolute; top:50%; width:3px; height:16px; background:#8d918d; transform:translate(-50%,-50%); display:inline-block; }
+.k-vals { font-variant-numeric:tabular-nums; text-align:right; color:#343634; font-size:12.5px; white-space:nowrap; }
+.k-axis .k-vals { white-space:normal; line-height:1.15; color:#5c615c; font-size:11px; }
+@media (max-width:420px) {
+  .k-axis, .k-row { grid-template-columns:68px 1fr 64px; gap:7px; }
+  .k-row { font-size:12px; }
+  .k-vals { font-size:11.5px; }
+  /* 25% and 75% labels collide with their neighbours on a ~150px track. */
+  .k-ticks span:nth-child(2), .k-ticks span:nth-child(4) { display:none; }
+}

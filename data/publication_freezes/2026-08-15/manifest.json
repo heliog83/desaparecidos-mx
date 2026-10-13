@@ -173,19 +173,21 @@
     "sources/rnpdno_api/by_year_no_localizadas.json": "a36540ff3af7304f8a503e21fe0ad5cb261b05aa8286fb38e6363460bc50119f",
     "sources/rnpdno_api/by_year_todos.json": "9b4113d16a27a0c404414066a04fba448b7e3a4f38abb83de6ac136ee1223cc6",
     "sources/rnpdno_api/totales.json": "8562cb6c8770e4dcc596b2e47c549ea8e03a3a5ab95074631edb471e32e843cd",
-    "sources/rnpdno_mirror_2025-12-02.csv": "8da25ae67ea3d0a1dbdecfd781e7b9110fca87136856fc293ac73109f2988038"
+    "sources/rnpdno_mirror_2025-12-02.csv": "8da25ae67ea3d0a1dbdecfd781e7b9110fca87136856fc293ac73109f2988038",
+    "derived/confidential_by_filing_authority.csv": "dcea783a6c11d8400d13e3ad9fed396c8173be1d9951adc31bdd210fb97e892c"
   },
   "article_asset_hashes_sha256": {
     "reports/figures/article/A_outcomes_by_year.png": "531a195318045f4c33d5ccbdbab1d5b2084d79e590eec15924436a2294b3954e",
     "reports/figures/article/B_rate_map.png": "0a0738ea535115ab9340071f551004a425be0f401db0bd27305e0a0e828cd8be",
-    "reports/figures/article/C_confidential_share.png": "80f23d982008a664d283a74b19f4cc790ecd20aa53f349020a2dfa23cb38cf0c",
+    "reports/figures/article/C_confidential_share.png": "97b95c623708f3b4eba8a8678076a79ed8cce5245af8bc2864554026e3cee53f",
     "reports/figures/article/D_redaction_vs_rate.png": "aa9a5e5e6eacd30d3c2b08dfae38cd0f64343e539cae0533c72920e2ba8e563f",
     "reports/figures/article/E_consent_accounting.png": "eaa96c1fcb418cbc5e7e4e12b01a7e08d5141b280fc5c946348d919828bad473",
     "reports/figures/article/F_jalisco_divergence.png": "d029d2ace47c38388ec62db15376f3bd16d9e76395bc18ebe46e64077d356c4e",
-    "reports/figures/article/G_two_modes.png": "4ae2b2371e5376d15c421d536e625149fe420e7b47d0b9328bfcf016f2f0aa89",
+    "reports/figures/article/G_two_modes.png": "862c53d1f2d8b9c5a784746dbeb8847e5030739b34a59da97e385ddcb16afa10",
     "reports/figures/article/H_confidencial_batches.png": "95bf486ad468c2f681b4f43c562f01a0edcb10710761d77f3a59fc5cb9276803",
     "reports/figures/article/I_incidence_vs_homicide.png": "676e763a611da62ab03d753dbb811b665e17330b879567d0d8fb47bfba6dd47d",
-    "reports/figures/article/J_outcome_vs_homicide.png": "a4530ae90e5081d3dc526010c8e54e9a208cbb8939f642a54e4af3671f648828"
+    "reports/figures/article/J_outcome_vs_homicide.png": "e6f734f45df4b94dab14822396fc453f031c6a9b594cf71cc00c0fdc34e6e025",
+    "reports/figures/article/K_filing_authority.png": "d2427d07f14d92dc1a97dfa5f94097a80c009fb590c7cb51632d01450da3da0e"
   },
   "amendments": [
     {
@@ -221,6 +223,25 @@
         "article_asset_hashes_sha256"
       ],
       "note": "These are rendered publication assets, not new source data. No existing publication-data hash was altered. Regenerate figures and deliberately update these hashes only when cutting or amending a publication unit."
+    },
+    {
+      "date": "2026-10-12",
+      "reason": "Publication audit (reports/corrections_log.md C-03, C-04, C-12): three embedded PNGs carried claims the audit found inaccurate — Fig C and G said a confidential record keeps only the state (it also keeps ORIGEN_REPORTE, the filing authority); Fig J described a cohort-size difference as records 'gained' and tested substitution with homicides + found dead instead of homicides + still missing. Captions/titles corrected in src/article_figs.py, src/two_modes.py, src/outcome_vs_homicide.py and re-rendered from this freeze's derived tables.",
+      "replaced_article_asset_hashes": {
+        "reports/figures/article/C_confidential_share.png": "80f23d982008a664d283a74b19f4cc790ecd20aa53f349020a2dfa23cb38cf0c",
+        "reports/figures/article/G_two_modes.png": "4ae2b2371e5376d15c421d536e625149fe420e7b47d0b9328bfcf016f2f0aa89",
+        "reports/figures/article/J_outcome_vs_homicide.png": "a4530ae90e5081d3dc526010c8e54e9a208cbb8939f642a54e4af3671f648828"
+      },
+      "note": "No publication-data hash was altered. Only article_asset_hashes_sha256 entries for these three PNGs changed."
+    },
+    {
+      "date": "2026-10-12",
+      "reason": "Editorial proposal E-3 adopted by the author: §6 now reports confidentiality by filing authority (ORIGEN_REPORTE) and embeds article fig K.",
+      "added": [
+        "derived/confidential_by_filing_authority.csv",
+        "article_asset_hashes_sha256: reports/figures/article/K_filing_authority.png"
+      ],
+      "note": "The table was tabulated by src/filing_authority.py --derive from this freeze's own record-level source, sources/rnpdno_mirror_2025-12-02.csv (hash unchanged), so it is the same 2025-12-02 vintage as every other record-level figure. Fig K is drawn from the table alone. No existing hash was altered."
     }
   ]
 }

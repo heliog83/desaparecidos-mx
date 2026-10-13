@@ -45,3 +45,6 @@ all_in_one/
 notebookLM_packets/
 tmp/
 source_manifest.md
+
+# Audit deliverable (2026-10-12): the claim registry is a reviewed report, not data.
+!reports/claim_registry.csv

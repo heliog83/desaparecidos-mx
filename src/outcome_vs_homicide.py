@@ -2,16 +2,16 @@
 
 Fig I shows homicides falling while recorded disappearances rise. The obvious
 suspicion is substitution — that deaths are being recorded as disappearances so the
-homicide statistic looks better. This chart tests that, and the registry's own
-outcome split does not support it.
+homicide statistic looks better. The registry's outcome split weighs against that
+as the main explanation but cannot rule out part of it.
 
-Between 2019 and 2024 the registry gained 10,905 records for those years. Of that
-growth, 61.7% are people currently recorded as FOUND ALIVE, 36.8% are still
-missing, and 1.4% are found dead. A relabelling of homicide victims would have to
-land in the dead or still-missing columns; instead the growth is dominated by
-people who turned up alive. Homicides plus the registry's own found-dead count also
-fell over the same years (36,638 -> 32,133), where a pure shuffle between the two
-categories would hold that combined total roughly flat.
+The 2024 cohort is 10,905 records larger than the 2019 cohort. Of that difference,
+61.7% is people currently recorded as FOUND ALIVE, 36.8% still missing, and 1.4%
+found dead. A killing recorded as a disappearance would sit in STILL MISSING, not in
+found dead (2026-10 audit correction: an earlier version tested homicides + found
+dead, the wrong pair). Homicides + still missing is nearly flat, 42,970 (2019) ->
+42,326 (2024), so a partial shift cannot be excluded. Found dead is also
+right-censored: the 2024 cohort has had far less time to be identified.
 
 What this does NOT rule out, and the caption says so, has two forms. A body that is
 never found enters neither statistic; that channel is mechanically real and this data
@@ -105,7 +105,7 @@ def build(rows: list[dict]) -> None:
         arrowprops=dict(arrowstyle="-", color=st.INK, lw=0.9, shrinkB=2))
     # Reversed out on its own backing: plain white text straddled the gap between
     # two bars and half of it disappeared against the page.
-    ax.text(2020.5, 5200, "Almost all of the growth is\npeople later found alive",
+    ax.text(2020.5, 5200, "Most of the growth is\npeople later found alive",
             ha="center", va="center", fontsize=10.5, color=st.PAPER, weight="bold",
             bbox=dict(boxstyle="round,pad=0.5", fc=st.BLUE, ec="none", alpha=0.96),
             zorder=6)
@@ -125,24 +125,25 @@ def build(rows: list[dict]) -> None:
 
     st.title(
         ax,
-        "The extra records are not dead people",
+        "Most of the extra records are people found alive",
         "Each bar is one year of disappearance, split by where the case stands now, "
         "with homicide victims for the same year overlaid.",
     )
     st.caption(fig, textwrap.fill(
         "Registry outcomes from the RNPDNO aggregate flow (publication freeze "
         f"{PUBLICATION_FREEZE}); homicide victims from SESNSP, annualised for 2025 from ten "
-        "reported months and drawn detached. Of the 10,905 records the registry gained for "
-        "2019-2024, 61.7% are recorded found alive, 36.8% still missing and 1.4% found dead, "
-        "and homicides plus registry found-dead fell from 36,638 to 32,133 over the same years. "
-        "That is evidence against deaths being relabelled as disappearances. It is not evidence "
-        "that nobody disappears violently. A body never found enters neither statistic; and "
+        "reported months and drawn detached. The 2024 cohort is 10,905 records larger than "
+        "2019's: 61.7% of the difference is recorded found alive, 36.8% still missing and 1.4% "
+        "found dead. A killing recorded as a disappearance would sit in 'still missing'; homicides "
+        "plus still missing barely moved (42,970 to 42,326), so a partial shift cannot be ruled "
+        "out, and recent cohorts have had less time to be identified. A body never found enters "
+        "neither statistic; and "
         "separately, 72,172 bodies entered Mexico's forensic services between 2006 and 2023 "
         "without ever being identified, so they cannot be matched to any registry record either "
         "(Quinto Elemento Lab / A donde van los desaparecidos, 2024-09-24; a floor, since Morelos "
         "did not respond). SESNSP counts victims named in investigation files, not bodies.",
         width=118))
-    fig.tight_layout(rect=(0, 0.13, 1, 1))
+    fig.tight_layout(rect=(0, 0.19, 1, 1))
 
     numbered = ROOT / "reports" / "figures" / "27_outcome_vs_homicide.png"
     fig.savefig(numbered, dpi=200)

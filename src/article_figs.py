@@ -28,10 +28,12 @@ ROOT = Path(__file__).resolve().parents[1]
 FREEZE = ROOT / "data" / "publication_freezes" / "2026-08-15"
 FLOW = FREEZE / "derived" / "flow_by_year.csv"
 TOTALS = FREEZE / "sources" / "rnpdno_api" / "totales.json"
-PARQUET = ROOT / "data" / "processed" / "rnpdno_clean.parquet"
-RATES = ROOT / "data" / "processed" / "state_rates.csv"
+# Read the hash-pinned freeze copies, never the mutable data/processed/ scratch
+# space. The parquet is gitignored; copy it into the freeze from a capture machine.
+PARQUET = FREEZE / "derived" / "rnpdno_clean.parquet"
+RATES = FREEZE / "derived" / "state_rates.csv"
 GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
-ENRICHED = ROOT / "data" / "processed" / "state_opacity_enriched.csv"
+ENRICHED = FREEZE / "derived" / "state_opacity_enriched.csv"
 
 ALIVE = "#8fadc4"  # light tint of article blue for the large found-alive band
 CASE_RED = {"14": "Jalisco", "18": "Nayarit"}      # redaction-mode case states
@@ -257,7 +259,7 @@ def fig_c():
             label.set_color(st.RED); label.set_weight("bold")
         elif label.get_text() in ("Guerrero", "Colima"):
             label.set_color(st.BLUE); label.set_weight("bold")
-    st.caption(fig, "A confidential record keeps one public fact: the state. Red: case states with high redaction;\n"
+    st.caption(fig, "A confidential record keeps only the state and the filing authority. Red: case states with high redaction;\n"
                     "blue: high-violence case states with low redaction. Source: RNPDNO mirror microdata.")
     st.save(fig, "C_confidential_share.png")
 

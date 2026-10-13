@@ -85,7 +85,10 @@ Version audit (fig H) also reproduced exactly: confidential 44,035 → 49,136
 ## 5. Snapshot mismatch — the one real vulnerability
 
 National drift between the Dec-2025 microdata and the Aug-2026 live registry is
-**−0.11%** (133,566 vs 133,416 excluding "se desconoce"), which is reassuring. But
+**−0.11%** (133,566 vs 133,416 excluding "se desconoce"), which is reassuring.
+*(Audit correction 2026-10-12: this compares unlike populations — the 133,566 includes the
+mirror's 2,964 no-state records. Like for like the drift is −0.5% overall and −2.1% for
+state-assigned records, 130,602 vs 133,416. See `reports/corrections_log.md` C-06.)* But
 per-state drift is not uniform:
 
 | State | Mirror (Dec 2025) | Live (Aug 2026) | Drift |

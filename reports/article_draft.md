@@ -17,12 +17,13 @@ Working titles (pick one):
 2. *134,000 people, one third behind a wall*
 3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
 
-Standfirst: *On 15 August 2026 Mexico's official registry counted 134,268 people still
-missing. That live registry publishes only totals, so field-level detail comes from the
-last record-level snapshot, dated 2 December 2025. In it, 63.2% of unresolved records
-carried the ordinary public fields — date, age, sex, municipality, case status. The
-other 36.8% revealed only the state. This is the story of how publication decisions
-shape what the public can see.*
+Standfirst: *On 15 August 2026 Mexico's official registry counted **134,268 people still
+missing**. Its live dashboard publishes only totals. In the last record-level snapshot,
+dated 2 December 2025, **36.8% of unresolved records revealed only two things: the
+state, and which office filed the report.** Ten snapshots taken between April and
+December 2025 show that this blackout does not move one family at a time. It moves in
+batches — about 2,500 records in one state in two months — and in several states the
+share hidden differs by 30 to 60 points depending on which office filed the case.*
 
 ---
 
@@ -49,23 +50,25 @@ the chart's period.
 
 Three things stand out.
 
-- **The registry has grown more than tenfold in eighteen years.** It holds about
-  3,000 records for 2007, the year the militarised drug war began, and 37,124 for
-  2025 [1]. That is growth in *the registry*, which is not the same thing as growth
-  in disappearances — see the next figure.
-- **A third of the people in it are still missing.** 134,268 of 407,253 — and the
-  still-missing share of each year's cohort has barely shifted since 2008, while the
-  cohorts themselves kept growing.
-- **The registry's red band never really empties.** Roughly two-thirds of every
-  post-2008 cohort now sits in a "located" category — 65% of 2008, 75% of 2014, 68%
-  of 2025 — and the remaining third stays where it is, year after year.
+- **The yearly cohorts have grown more than tenfold in eighteen years.** The
+  registry holds about 3,000 records for 2007, the year the militarised drug war
+  began, and 37,124 for 2025 [1]. That is growth in *the registry*, which is not the
+  same thing as growth in disappearances — see the next figure.
+- **A third of the people in it are still missing.** 134,268 of 407,253. Since
+  2015 the still-missing share of each year's cohort has stayed between 29% and 38%,
+  while the cohorts themselves kept growing.
+- **The registry's red band never really empties.** Most cohorts since 2012 now sit
+  roughly two-thirds in a "located" category — 75% of 2014, 68% of 2025 — though not
+  all: the 2010 and 2011 cohorts are only 45% and 54% located. In every cohort a
+  large unresolved remainder stays where it is.
 
 Now the limits, because they change what those numbers mean.
 
 Each bar counts **records the state holds**, not disappearances that happened. Over
 25 years, reporting rates, prosecutorial practice and registry coverage all changed
-enormously, and cases still arrive late: three new 2014 records appeared inside a
-single eight-week window in 2026. The cohorts have also had wildly unequal time to
+enormously, and cases still arrive late: Data Cívica found that the registry's count
+of disappearances up to July 2024 grew by 14,952 records between its July 2024
+consultation and a July 2026 re-extraction [10]. The cohorts have also had wildly unequal time to
 resolve — 2008 has been observed for eighteen years, 2025 for months — so the
 two-thirds figure describes where the register stands today, not how effectively
 anyone searched.
@@ -92,23 +95,29 @@ violent — and for a decade the data support it. Between 2015 and 2018 recorded
 disappearances and homicide victims climb together.
 
 Then they part. From 2019 to 2024, homicide victims fall 13.4%, from 34,721 to
-30,060, while recorded disappearances rise 43.4%, from 25,151 to 36,056. Across the
-complete years 2015–2024, the two series correlate at approximately r = 0.53;
-extending the series through provisional 2025 reduces the correlation to r = 0.28,
-but because 2025 annualises ten months of homicide reporting while recent disappearance
-cohorts are still filling in, the completed-year series is the primary comparison.
-Whatever drove the registry's recent growth, worsening lethal violence does not
-account for it.
+30,060, while recorded disappearances rise 43.4%, from 25,151 to 36,056. With only
+ten complete years, a correlation coefficient adds little here: the two series
+correlate at about r = 0.53 over 2015–2024, a value that ten trending points cannot
+distinguish from no relationship, and their year-to-year changes are essentially
+uncorrelated. The plain comparison is the evidence: after 2019 the lines move in
+opposite directions. Two further cautions apply. The disappearance series counts
+people by the year they went missing, as registered by August 2026, while homicide
+victims are counted when an investigation is opened; and 2025 is provisional in both.
+On national totals, worsening lethal violence does not account for the registry's
+recent growth.
 
 Part of the answer is that the country built the machinery to record more. The 2017
 General Law created local search commissions. Among unresolved records with public
 fields in the 2025-12-02 mirror, 5.0% of cases for 2017 came through a search
-commission, against 47.7% for 2025, with the remainder shifting away from prosecutors
-and toward a public online portal that did not meaningfully exist before 2020 [3].
+commission, against 47.7% for 2025, while the prosecutors' share fell from 94% to
+45%; the CNB's online reporting portal, launched in late 2019, accounts for 8% to
+21% of each cohort since 2020 [3].
 A family that once had to persuade a prosecutor now has somewhere else to go.
 Crucially, this breakdown applies only to unresolved records whose fields are public
 (63.2% of the mirror snapshot); neither the confidential records nor resolved cases
-can be assumed to follow the same intake pattern.
+can be assumed to follow the same intake pattern. That exclusion bites hardest
+exactly where the shift happens: Data Cívica's analysis of a February 2026 extract
+found more confidential than public records for the 2021–2023 cohorts [10].
 
 This does not make the rise an illusion. Two official series moving apart is a fact
 about the two series; falling homicides say nothing about how honestly
@@ -124,15 +133,18 @@ aggregate flow, publication freeze 2026-08-15 [1]; SESNSP [2].*
 
 There is a darker reading of the same divergence: that deaths are being recorded as
 disappearances, so the homicide statistic improves without anything improving. The
-registry's own outcome split does not support it.
+registry's outcome split weighs against that as the whole explanation, but it cannot
+rule it out.
 
-Of the 10,905 records the registry gained for 2019–2024, **61.7% are people it now
-records as found alive.** Another 36.8% are still missing. Just 1.4% — 156 people —
-are found dead. Relabelled homicide victims would have to land in the dead or
-still-missing columns; instead the growth is dominated by people who turned up
-alive. Homicides plus the registry's own found-dead count fell together over those
-years, from 36,638 to 32,133, where a shuffle between the two categories would have
-held that total roughly flat.
+The 2024 cohort is 10,905 records larger than the 2019 cohort. **61.7% of that
+difference is people the registry now records as found alive** — 6,732 more than in
+2019 — which a relabelling of homicides could not produce. But 36.8% of the
+difference, 4,017 records, is people still missing, and that is exactly where an
+uncounted killing would sit. Over the same years homicide victims fell by 4,661. Add
+homicide victims to the registry's still-missing count and the total barely moves —
+42,970 in 2019, 42,326 in 2024. That proves no substitution, but it leaves room for
+some. The found-dead difference, 156, cannot settle it either way: the 2024 cohort has
+had two years to be identified, the 2019 cohort seven.
 
 What this cannot rule out is quieter and more troubling, and it has two forms. A body
 that is never found enters neither statistic — not the homicide count, because no
@@ -152,9 +164,9 @@ counts whole bodies, not the bone fragments that clandestine graves mostly yield
 
 So the gap between the two series on this chart is not simply unknown. Part of it has
 already been counted, by journalists rather than by the state. The claim this section
-can defend stays narrow — the registry's growth is not the homicide count in disguise
-— but the reason the two counts fail to meet is partly a forensic backlog with a
-number attached to it.
+can defend stays narrow — most of the registry's recent growth is not the homicide
+count in disguise, though a partial shift cannot be excluded — and the reason the two
+counts fail to meet is partly a forensic backlog with a number attached to it.
 
 ---
 
@@ -172,7 +184,8 @@ Mexico's disappeared are not distributed the way Mexicans are. Estado de México
 Mexico City register the most cases in absolute terms, which is unsurprising: they
 are where the most people live. Divide by population and the map rearranges itself.
 
-The national rate is 98 unresolved records per 100,000 residents. Tamaulipas, on the
+The national rate is 98 unresolved records per 100,000 residents, counting the
+130,602 records assigned to a state; another 2,964 name no state. Tamaulipas, on the
 northeastern border, runs at 359 — more than four times Estado de México's 82. Behind
 it come Zacatecas (226) and Sinaloa (211). This is a map of the unresolved registry
 stock, not of underlying risk: differences in reporting, resolution and publication
@@ -186,14 +199,16 @@ Hold onto it. The next chart takes it apart.
 **[FIG C — `figures/article/C_confidential_share.png`]**
 *Caption: Share of each state's unresolved records marked CONFIDENCIAL in the public
 registry. National: 36.8%. Jalisco: 66.9%. Nayarit: 66.2%. Guerrero 9.1%, Colima 9.0%.
-A confidential record retains exactly one public fact — the state. Read the bottom of
+A confidential record retains only the state and the authority that filed it. Read the bottom of
 this ranking with care: it measures redaction among records that reached the registry,
 so a short bar means little was hidden, not that little was missed — see §8. Vintage
-2025-12-02 [3].*
+2025-12-02 [3]. A February 2026 extract analysed by Data Cívica gives 38.5% nationally
+and a near-identical ranking [10].*
 
 Here is what "consulting the public registry" actually gets you: for 36.8% of
-unresolved records, every field is redacted — no date, no age, no sex, no
-municipality, no case status. One fact survives: the state. This is why national
+unresolved records, every descriptive field is redacted — no date, no age, no sex, no
+municipality, no case status. Two facts survive: the state, and the name of the
+authority that filed the report. This is why national
 trend charts and state comparisons are built on different denominators, and why
 every chart in this piece says so.
 
@@ -210,18 +225,23 @@ Guerrero, one of the most violent states in the country, redacts one in eleven.
 **[FIG D — `figures/article/D_redaction_vs_rate.png`]**
 *Caption: Confidential share vs cumulative homicide-victim rate, 2015–2025, by
 state. Higher state-level violence is not associated with more confidentiality; the
-relationship is moderately negative (Pearson r = −0.38, all 32 states). This
-ecological comparison is descriptive, not a test of risk in individual cases.
+relationship is weakly negative (Pearson r = −0.38, all 32 states; −0.28 without
+Colima; rank correlation −0.25). This ecological comparison is descriptive, not a
+test of risk in individual cases.
 Redaction 2025-12-02 [3]; homicide victims 2015–2025 cumulative [2].*
 
 There is an innocent explanation for all this redaction, and it deserves a fair test.
+The law itself supplies it: Article 108 lets families ask that a record not be made
+public "for reasons of security" [4].
 
 If statewide danger were the principal explanation for interstate variation in
 confidentiality, states with higher homicide rates should generally redact more.
 
 The data do not show that pattern. Across all 32 states, the correlation between the
 confidential share and the cumulative homicide-victim rate for 2015–2025 is
-*negative* — Pearson r = −0.38 [2]. Several of the most violent states are among
+*negative* — Pearson r = −0.38 [2]. That value leans on Colima and weakens to −0.28
+without it, so the robust finding is the absence of any positive relationship, not
+the negative one. Several of the most violent states are among
 those publishing the largest share of registry detail. Colima has recorded roughly
 950 homicides per 100,000 residents since 2015, the highest rate in the country; it
 redacts 9% of its disappearance records. Guerrero, at 550, redacts 9%. Chihuahua, at
@@ -245,29 +265,32 @@ So what does account for the difference?
 
 **[FIG E — `figures/article/E_consent_accounting.png`]**
 *Caption: The CNB's own accounting of publication consent, Aug 2020 (73,388
-records): for 77.4%, no consent information exists at all. Among the minority of
-family reporters actually asked, 52% declined publication, 47% agreed. Source:
+records): for 77.4%, no consent information exists at all. Among the 14,295 family
+reporters with a recorded preference, 52% declined publication, 47% agreed. Source:
 Oficio SEGOB/CNBP/1349/2020, pp. 5, 11 [4]; universe dated 2020-08-07.*
 
 On paper, the rule is humane and simple. Article 108 of the General Law on
-Disappearances gives families the right to keep their loved one's information out
-of the public registry, and requires that they be told of this right before giving
-information. Redaction, officially, means "the family asked."
+Disappearances lets families ask, for security reasons, that their loved one's
+information be kept out of the public registry, and requires that families be told
+of their data rights before giving information. Redaction, officially, means "the
+family asked."
 
 The government's own paperwork says otherwise. In August 2020 the National Search
 Commission (CNB) wrote to the transparency institute (INAI) asking how to build the
 public registry — and admitted, in its own tables, that **for 77.4% of records
-nobody knew whether the family had consented or not**, largely because the records
-predate the law. In the proceeding, the CNB described a withholding practice
-under which records without affirmative consent paperwork were kept out of public
-versions. And in a footnote, the CNB recorded that the Fiscalía of Jalisco had
+nobody knew whether the family had consented or not** — which the CNB attributed,
+"probably and among other factors," to many records predating the law. In the
+proceedings that followed, the CNB argued that without families' express consent it
+could not release the data — and when a journalist asked for the consent declarations
+it was relying on, it answered that they did not exist [4]. And in a footnote, the CNB recorded that the Fiscalía of Jalisco had
 declared that *everything* it sends to the national registry is non-publishable,
 invoking family refusals without producing any supporting documentation in the
 public proceeding.
 
-When INAI later ordered the CNB to release a public database (resolution RRA
-09082/20), the commission resisted — citing missing consent documentation —
-and eventually delivered 50,204 records out of 175,371, withholding 71% [4].
+When INAI ordered the CNB to release a public database (resolution RRA 09082/20, and
+at least two later resolutions), the commission resisted on those grounds and
+eventually delivered 50,204 records against the 175,371 then registered — about 29%
+[4].
 
 There is a simpler reason the consent paperwork is missing, and it is visible in the
 registry's own fields. When Data Cívica audited the public version the CNB published
@@ -280,12 +303,37 @@ plainly: it ends up looking as though the families are the ones who withheld the
 information. A registry that did not record how to reach seven families in ten cannot
 then explain its silence by saying the families did not speak.
 
+The one field the registry leaves on a confidential record makes a test possible: it
+names the office that filed the report. If redaction reflected what families chose, it
+should not depend much on which office happened to take the case. In several states it
+depends on it enormously. In Estado de México, 3% of the unresolved records
+filed by state prosecutors are confidential, against 36% of those filed by the state's
+search commission. In Nuevo León the figures are 32% and 93%; in Jalisco, 64% and 90%.
+The gap does not even run the same way everywhere — in Puebla and Baja California Sur
+it is the prosecutors who redact more — which is itself the finding: no single rule is
+being applied. In six of the 17 states where both offices filed enough cases to compare,
+the two differ by 30 points or more; in eight, by fewer than 10. Families who report directly through the national commission's online
+portal, meanwhile, end up confidential at a similar rate almost everywhere, between
+about 35% and 41% across the middle half of the states with enough cases to measure
+[3]. This is a description, not a proof: the channels do not receive identical cases,
+and the portal leans toward family self-reports and recent years. But family
+preferences do not obviously change at an office door. Office practice plainly does.
+
+**[FIG K — `figures/article/K_filing_authority.png`]**
+*Caption: Share of each office's unresolved records marked CONFIDENCIAL, in the 17
+states where both the state prosecutor and the state search commission filed at least
+300 records. Grey tick: reports filed by families through the national commission's
+portal. Records filed by the national commission itself or by federal prosecutors are
+excluded. Descriptive, not causal: case mix differs by channel. Vintage 2025-12-02 [3].*
+
 Journalists then closed the loop. In 2024, ZonaDocs found 4,765 cases across six
 states that are marked confidential in the registry *while having active public
 search notices* — posters with names and photographs, issued by the same
-authorities. Officials admitted no risk assessment underlies the classification.
+authorities. In transparency responses, authorities said they produce no context or
+risk analysis for these publication decisions, arguing the law does not require one.
 María de Jesús Solís, whose son disappeared in Zapopan in 2020, said she never
-signed anything and wants maximum visibility. Her son's record is confidential [4].
+signed for his record to be confidential and wants maximum visibility. Her son's
+record is confidential [4].
 
 **The redaction flag mixes genuine family requests, missing consent paperwork and at
 least one blanket state policy — and no public field distinguishes them.**
@@ -303,10 +351,13 @@ If confidentiality were updated one family decision at a time, we might expect i
 move gradually. Instead the published count sometimes jumps. Tamaulipas added ~2,500
 confidential records in two months (May–July 2025) while its total barely moved;
 its redaction share went from 20% to 39%, and every chart in this piece would have
-looked different had we pulled the data in April. Jalisco's confidential count was
-flat all year, then fell by ~1,400 in the last quarter as the state's overall federal
-count also fell — months before the new recount was announced. Tabasco's published
-total fell by a third in a single month.
+looked different had we pulled the data in April. Jalisco's confidential count
+drifted down for most of the year, then fell by about 1,200 in the last quarter as the
+state's overall federal count also fell — before the new recount was announced in
+January 2026. Tabasco's published total fell by a third in a single month. Data
+Cívica, comparing re-extractions a year apart, found that falls of this kind in
+Jalisco and Tabasco were roughly matched by rises in records marked located — while
+noting it cannot confirm they are the same records [10].
 
 The reversals do not stop at the edge of the panel. Mexico City's unresolved count
 climbed steadily all through 2025, from 6,025 in April to 7,242 in December — and
@@ -329,7 +380,7 @@ is alive, or is safe, because the removals came with no case-by-case verificatio
 no notification to families.
 
 Quinto Elemento Lab tested the other side of the same operation. Of the 16,681 people
-the censo declared located, it reconstructed 11,026 names — the remaining 4,607 were
+the censo declared located, it reconstructed 11,026 names — at least 4,607 more were
 published redacted — and crossed them against missing-persons lists held by collectives,
 the FGR's own *¿Has visto a...?* search notices, the UN Committee on Enforced
 Disappearances' urgent actions, and dirty-war case files. That produced 85 candidates.
@@ -358,12 +409,20 @@ Thirty confirmed cases out of 16,681 is not proof that the census was fabricated
 this piece does not claim it was. What those thirty establish is narrower and harder to
 argue with: **"located" is a status the register asserts, not a fact it verifies.** The
 Interior Secretary, Luisa María Alcalde, said of the 16,681 that the government had
-"certainty of their whereabouts", and that no record had been or would be erased. Both
-statements are contradicted by documented cases. Karla Quintana, who resigned as
-National Search Commissioner during the exercise, has said publicly that its purpose was
-to reduce the numbers.
+"certainty of their whereabouts". The documented cases contradict that. Karla Quintana,
+who left the National Search Commission months after the census was announced, has
+said publicly that its purpose was to reduce the numbers [9].
 
-Step changes, flat totals during reclassification, batch deletions: these patterns are
+The exercise has a successor. On 27 March 2026 the federal government presented the
+132,534 people then recorded as missing in three operational groups: 46,742 records it
+said lacked the data needed to search, 40,308 showing administrative activity after
+the disappearance — among which it said it had confirmed 5,338 locations — and 43,128
+with no activity at all [11]. Data Cívica, working from a February 2026 extract, found
+that fewer than 2% of records lack the combination of name, dates and other fields
+needed to identify a person [10]. The same pattern holds: a status is asserted for
+tens of thousands of records at once, and the public cannot check it record by record.
+
+Step changes, flat totals during reclassification, batch removals: these patterns are
 **consistent with administrative processing** — records handled in bulk, by an office,
 on an office's schedule. They are not proof that the underlying consent decisions are
 fabricated. Families do decide, and some of those decisions are surely real; a backlog
@@ -407,7 +466,9 @@ figures."
 
 Jalisco is also where the contradiction from section 6 concentrates. Of the 4,765
 confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
-second only to Estado de México's 2,691, and a ninth of everything Jalisco redacts. The
+second only to Estado de México's 2,691 — equal to about a ninth of the 9,216 Jalisco
+records marked confidential in December 2025, though ZonaDocs counted at an earlier
+date. The
 same investigation found a further 2,137 disappearances between 2019 and mid-2024 that
 state authorities registered locally with official search notices but omitted from the
 federal registry: not redacted inside the national count, but withheld from it entirely.
@@ -419,9 +480,12 @@ backpacks, notebooks, bone fragments. It became a national scandal — not only 
 was on the ranch, but because a group of searching families, rather than the state, was
 what finally established it.
 
-Searching in Jalisco is lethal work. In 2025 Teresa González Murillo was attacked and
-died. María del Carmen Morales, of Guerreros Buscadores, was murdered alongside one son
-while searching for another.
+Searching in Jalisco carries mortal risk. In March 2025 Teresa González Murillo, who
+was searching for her brother, was shot at her home in Guadalajara; she died days
+later. In April 2025 María del Carmen Morales, of Guerreros Buscadores, was shot dead
+in Tlajomulco with one of her sons; she had been searching for another. In both cases
+prosecutors listed the victims' search work among their lines of investigation; no
+motive has been established in court [12].
 
 The state with the most redacted registry in Mexico is also the state where civil
 society keeps producing the evidence its registry lacks. Those are not two facts about
@@ -462,8 +526,8 @@ worth making as an estimate of how many people are missing from that register.
 The human-rights centre Tlachinollan, which has tracked the state for decades,
 describes prosecutors who stall investigations unless families force them open, and a
 forensic service that has effectively collapsed. In Guerrero it documents that between
-2% and 6% of disappearance cases are ever prosecuted; nationally there have been 36
-sentences in the entire country [4].
+2% and 6% of disappearance cases are ever prosecuted. Nationally, the CNB counted 36
+sentences for forced disappearance by the end of 2021 [4].
 
 The modern searching-mothers movement was, in an important sense, born here. When the
 43 students from Ayotzinapa disappeared in September 2014, families searching the hills
@@ -494,9 +558,10 @@ and collective lists have not been linked person by person.
 No chart in this piece supports the sentence "the state deliberately hides its
 disappeared." I looked for it and could not find it, and the honest reason is that
 the public data are not built to answer questions about intent. Every explanation
-that could be tested from outside — that redaction protects families in danger, that
-it tracks corruption, that it tracks state poverty — failed. What is left is not
-proof of a motive. It is the absence of an account.
+that could be tested from outside, state by state — that redaction tracks how
+dangerous a state is, that it tracks corruption, that it tracks state poverty — found
+no support. None of those tests can see inside an individual case. What is left is
+not proof of a motive. It is the absence of an account.
 
 That absence is the finding, and it is specific. The confidentiality flag is
 **unexplained, unaudited, and contradicted in thousands of documented cases by the
@@ -561,8 +626,11 @@ mirror stopped publishing after 2025-12-02**, having released monthly since Apri
 and no comparable record-level extract has appeared since. Our copy is byte-identical
 to the last upstream commit.
 
-Drift between [1] and [3] is small nationally — the mirror sits within 0.5% of the live
-registry, 0.1% across state-attributable records — but **it is not uniform by state**.
+Drift between [1] and [3] is small nationally — the mirror's 133,566 records sit 0.5%
+below the live 134,268 — but larger once records with no state are set aside: 130,602
+state-assigned records in the mirror against 133,416 live (−2.1%), because the mirror
+files 2,964 records under an unknown state against 852 live. **It is not uniform by
+state.**
 Ciudad de México has since fallen 18% and Jalisco 6% against the frozen microdata;
 both carry their live figures in the caption. `src/crosscheck.py` reports the full
 per-state drift table.
@@ -571,14 +639,17 @@ per-state drift table.
 SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07); A dónde van
 los desaparecidos, 2021-04-08, on INAI resolution RRA 09082/20 (December 2020) and the
 two that followed it — the order to publish a public-version database, the CNB's
-inability to produce the consent declarations it cited, and the eventual delivery of
-50,204 of 175,371 records; ZonaDocs,
+answer that the consent declarations it cited did not exist, and the eventual delivery
+of 50,204 records (older RNPED files plus 11,197 newer records) against 175,371
+registered; ZonaDocs,
 "El engaño estadístico", 2024-11-21 (active notices marked confidential; Jalisco
 under-registration); El Informador, 2023-05-09 (Jalisco federal/state divergence);
 Animal Político, 2026-02-09 (Jalisco's halt in federal reporting since 2022 and state registry divergence); Tlachinollan, "Guerrero: territorio de
 personas desaparecidas" (Iguala and Acapulco recoveries, prosecution rates); Human
 Rights Watch, 2019-01-14 (Los Otros Desaparecidos de Iguala); Proceso, 2026-04-03
-(Holy Week searches). Web sources consulted 2026-07-06 unless stated.
+(Holy Week searches); the figure of 36 sentences for forced disappearance is the CNB's
+count to the end of 2021, as reported in the UN Committee on Enforced Disappearances'
+2022 report on Mexico. Web sources consulted 2026-07-06 unless stated.
 
 **[5] Redaction over time — vintage Apr–Dec 2025.** Ten pinned monthly snapshots of
 the mirror, upstream commit SHAs in `src/version_audit.py`.
@@ -617,6 +688,26 @@ files to 85 candidates; 30 confirmed still missing by ten journalists contacting
 families and collectives. Also the source for the October 2023 call-centre log. Named
 individuals and quotations are published in that investigation with their families'
 participation.
+
+**[10] Data Cívica, "A quienes nos faltan: sin datos para encontrarles"** (fifth
+edition, published September 2026, after this piece's data freeze;
+[compendium](https://datacivica.org/a-quienes-nos-faltan-2026/)). Analyses an RNPDNO
+record-level extract taken in February 2026 and received in April 2026, plus
+statistical-version consultations of July 2024, July 2025 and July 2026. Its 38.5%
+confidential share is a different vintage, and possibly a different denominator, from
+this piece's 36.8% (133,566 unresolved records, 2 December 2025); the two are not
+combined. Consulted 2026-10-12.
+
+**[11] Federal registry report, 27 March 2026.** Presented by the SESNSP and the
+Interior Ministry (SEGOB) at the presidential press conference; categories and counts
+as reported by Fabrizio Lorusso, ZonaDocs, 2026-04-13
+([analysis](https://www.zonadocs.mx/2026/04/13/registro-de-personas-desaparecidas-2026-notas-criticas-y-contextos/)).
+Consulted 2026-10-12.
+
+**[12] Killings of searchers, 2025.** Teresa González Murillo: attacked 2025-03-27,
+died 2025-04-02 (ADN40, 2025-04-02). María del Carmen Morales and her son Jaime Daniel
+Ramírez Morales: killed 2025-04-24 in Tlajomulco (El Financiero, 2025-04-24). Consulted
+2026-10-12.
 
 Cross-checks: category sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA moves the
 national count +6.1%, but Zacatecas +42%); confidential records are counted as people

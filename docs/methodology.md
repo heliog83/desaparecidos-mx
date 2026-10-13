@@ -55,6 +55,12 @@ that fear — and largely refuted it:**
   gained for 2019–2024, 61.7% are found alive, 36.8% still missing, 1.4% found dead; and homicides
   plus registry found-dead fell together, 36,638 → 32,133. What this cannot rule out: a body never
   found enters neither statistic, and nothing here sizes that gap.
+  > **Audit correction (2026-10-12, `reports/corrections_log.md` C-01/C-04/C-12):** the test
+  > above used the wrong sum. Deaths recorded as disappearances would sit in *still missing*, and
+  > homicides + still missing is nearly flat (42,970 → 42,326). The 10,905 is also a difference
+  > between cohort sizes, not records gained. Revised reading: most of the growth is people now
+  > recorded found alive, which weighs against substitution as the main story, but a partial shift
+  > cannot be excluded; found dead is right-censored for recent cohorts.
 
 ## 3. Two categories lumped together
 - **Desaparecida** = absence presumed linked to a *crime* (e.g. forced disappearance).
@@ -175,6 +181,6 @@ All correlations reproduce from `src/stat_correlations.py` against
 3. ✅ **RESOLVED (`src/crosscheck.py`).** National drift between the mirror and the live registry is
    **−0.11%** as measured at the 2026-08-15 refresh (see `data-refresh-2026-08-15.md`); an earlier
    check against the 2026-05-27 official figure of 134,481 put it at −0.7%. Either way the mirror is
-   a slightly earlier but recent snapshot, trustworthy as a cross-section. Per-state drift is 0–7%, mostly negative (mirror just behind latest). **Jalisco is
+   a slightly earlier but recent snapshot, trustworthy as a cross-section. *(Audit correction 2026-10-12: the −0.11% compared the mirror's 133,566 rows — including 2,964 with no state — with the live 133,416 state-assigned records. Like for like: −0.5% overall (133,566 vs 134,268) and −2.1% state-assigned (130,602 vs 133,416).)* Per-state drift is 0–7%, mostly negative (mirror just behind latest). **Jalisco is
    the outlier** (ours +7.7% vs the May figure, yet below the June ">15,000" claim): sources disagree
    by thousands, so treat Jalisco's number with explicit care in any output.

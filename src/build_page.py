@@ -44,6 +44,9 @@ STATE_DATA = FREEZE_DERIVED / "state_opacity_enriched.csv"
 STATE_RATES = FREEZE_DERIVED / "state_rates.csv"
 SNAPSHOT_DATA = FREEZE_DERIVED / "confidencial_panel.csv"
 COMPARE_DATA = FREEZE_DERIVED / "incidence_vs_homicide.csv"
+FILING_DATA = FREEZE_DERIVED / "confidential_by_filing_authority.csv"
+# Same threshold as src/filing_authority.py: both state offices must have filed this many.
+FILING_MIN_RECORDS = 300
 
 # Cached SVG state outlines. The 4.8 MB source GeoJSON is gitignored, so the build
 # reads this 64 KB derived cache and a clean checkout needs no external assets.
@@ -53,6 +56,11 @@ MEXICO_GEO = ROOT / "data" / "external" / "assets" / "mexico.json"
 
 TITLE = "The Redacted Crisis"
 SUBTITLE = "What Mexico's public registry leaves unseen"
+DESCRIPTION = (
+    "A data investigation of Mexico's registry of disappeared people: 134,268 still "
+    "missing on 15 August 2026, and 36.8% of unresolved records in the last "
+    "record-level snapshot redacted to the state and the filing authority."
+)
 
 # Field readout for the hero: exactly what the public registry returns for a
 # confidential record. Structure only — no person, no invented identifiers.
@@ -62,6 +70,7 @@ SUBTITLE = "What Mexico's public registry leaves unseen"
 # each carries a gloss underneath.
 HERO_FIELDS = [
     ("ENTIDAD", "State", "JALISCO", False),
+    ("ORIGEN_REPORTE", "Authority that filed the report", "FISCALIA GENERAL DE JALISCO", False),
     ("FECHA_DESAPARICION", "Date of disappearance", "CONFIDENCIAL", True),
     ("SEXO", "Sex", "CONFIDENCIAL", True),
     ("EDAD", "Age", "CONFIDENCIAL", True),
@@ -81,6 +90,7 @@ FIGURE_ALT_TEXT = {
     "G": "Paired bars compare Guerrero's statewide registry count with 623 cases documented by three Iguala collectives; the bars overlap by an unknown amount and are not additive.",
     "H": "Lines across ten 2025 snapshots show confidential registry records changing in state-level batches rather than smoothly over time.",
     "I": "Indexed annual series show recorded disappearances rising from 2019 to 2024 while homicide victims decline; 2025 is provisional.",
+    "K": "Dot plot of 17 states comparing the confidential share of records filed by the state prosecutor with those filed by the state search commission; in six states the two differ by 30 to 60 points, in both directions, while family reports through the national portal cluster around 35 to 41 percent.",
     "J": "Annual disappearance cohorts are split by current outcome beside homicide victims, showing 2019 to 2024 growth is mostly cases now recorded found alive rather than found dead.",
 }
 
@@ -100,6 +110,14 @@ def figure_asset_names(md: str | None = None) -> tuple[str, ...]:
     if missing_alt:
         raise ValueError(f"article figures lack alt text: {missing_alt}")
     return tuple(name for _, name in matches)
+
+
+def img_size(name: str) -> str:
+    """width/height attributes read from the PNG header, so the page reserves the
+    plate's space before the image decodes (no layout shift)."""
+    head = (FIGDIR / name).read_bytes()[:24]
+    w, h = int.from_bytes(head[16:20], "big"), int.from_bytes(head[20:24], "big")
+    return f'width="{w}" height="{h}"'
 
 
 def img_uri(name: str) -> str:
@@ -359,23 +377,86 @@ def national_status(totals: dict[str, int]) -> str:
     </section>"""
 
 
-def standfirst(totals: dict[str, int]) -> str:
-    missing = totals["TotalDesaparecidos"]
-    return (
-        f"On 15 August 2026 Mexico's official registry counted <strong>{missing:,} people "
-        "still missing</strong>. That live registry publishes only totals, so field-level "
-        "detail comes from the last record-level snapshot, dated 2 December 2025. In it, "
-        "63.2% of unresolved records carried the ordinary public fields \u2014 date, age, "
-        "sex, municipality, case status. The other <strong>36.8% revealed only the "
-        "state</strong>. This is the story of how publication decisions shape what the "
-        "public can see."
-    )
+def standfirst(md: str, totals: dict[str, int]) -> str:
+    """The standfirst, read from the draft's "Standfirst:" line.
+
+    It used to be hard-coded here as well, so every edit had to be made twice and the
+    two copies could drift. The draft is now the only copy; the live still-missing
+    total must appear in it, so a new freeze cannot leave a stale number on top.
+    """
+    m = re.search(r"^Standfirst: \*(.+?)\*$", md, flags=re.S | re.M)
+    if not m:
+        raise ValueError("article draft has no 'Standfirst: *...*' paragraph")
+    text = " ".join(m.group(1).split())
+    missing = f"{totals['TotalDesaparecidos']:,}"
+    if missing not in text:
+        raise ValueError(f"standfirst does not state the frozen still-missing total {missing}")
+    return inline(text)
+
+
+def filing_rows() -> list[dict]:
+    """Fig K rows: per state, the confidential share of records filed by the state
+    prosecutor, the state search commission and (where >= 100) the family portal."""
+    by_state: dict[str, dict[str, tuple[int, int]]] = {}
+    with FILING_DATA.open(newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if r["cve_ent"] == "99":
+                continue
+            by_state.setdefault(r["entidad"], {})[r["authority"]] = (int(r["records"]), int(r["confidential"]))
+    rows = []
+    for name, a in by_state.items():
+        p, c, q = a.get("state_prosecutor"), a.get("state_commission"), a.get("portal")
+        if p and c and p[0] >= FILING_MIN_RECORDS and c[0] >= FILING_MIN_RECORDS:
+            rows.append({"label": _state_label(name), "prosecutor": p[1] / p[0],
+                         "commission": c[1] / c[0],
+                         "portal": q[1] / q[0] if q and q[0] >= 100 else None})
+    rows.sort(key=lambda r: -abs(r["commission"] - r["prosecutor"]))
+    return rows
+
+
+def filing_figure(caption: str, image_name: str) -> str:
+    """Fig K as plain HTML/CSS: legible at 320px and complete without JavaScript.
+    The PNG (drawn by src/filing_authority.py from the same table) stays as the
+    optional static version."""
+    pct = lambda v: f"{v * 100:.0f}%"  # noqa: E731
+    items = []
+    for r in filing_rows():
+        p, c, q = r["prosecutor"], r["commission"], r["portal"]
+        lo, hi = min(p, c), max(p, c)
+        label = (f"{r['label']}: state prosecutor {pct(p)}, state search commission {pct(c)}"
+                 + (f", family portal {pct(q)}" if q is not None else ""))
+        portal = f'<span class="k-portal" style="left:{q * 100:.1f}%"></span>' if q is not None else ""
+        items.append(
+            f'<li class="k-row"><span class="k-name">{html.escape(r["label"])}</span>'
+            f'<span class="k-track" role="img" aria-label="{html.escape(label)}">'
+            f'<span class="k-bar" style="left:{lo * 100:.1f}%;width:{(hi - lo) * 100:.1f}%"></span>'
+            f'{portal}<span class="k-dot k-p" style="left:{p * 100:.1f}%"></span>'
+            f'<span class="k-dot k-c" style="left:{c * 100:.1f}%"></span></span>'
+            f'<span class="k-vals" aria-hidden="true">{pct(p)} &middot; {pct(c)}</span></li>'
+        )
+    # The 100% label is anchored with right:0. Placing it at left:100% and pulling it
+    # back with a transform still counted its untransformed box as page width at 320px.
+    ticks = "".join(f'<span style="left:{t}%">{t}%</span>' for t in (0, 25, 50, 75))
+    ticks += '<span style="right:0">100%</span>'
+    return f"""<figure class="interactive-figure k-figure">
+<div class="chart-shell k-shell">
+  <h3 class="chart-heading">Same state, different office, different secrecy</h3>
+  <p class="chart-subtitle">Share of each office&#8217;s unresolved records marked CONFIDENCIAL, December 2025. Widest gaps first.</p>
+  <div class="k-legend" aria-hidden="true"><span><i class="k-dot k-p"></i>State prosecutor</span><span><i class="k-dot k-c"></i>State search commission</span><span><i class="k-portal"></i>Families via national portal</span></div>
+  <div class="k-axis" aria-hidden="true"><span class="k-name"></span><span class="k-ticks">{ticks}</span><span class="k-vals">prosec. &middot; comm.</span></div>
+  <ul class="k-rows">
+{chr(10).join(items)}
+  </ul>
+</div>
+<details class="static-fallback"><summary>Show static version</summary><img src="{img_uri(image_name)}" {img_size(image_name)} alt="{FIGURE_ALT_TEXT['K']}" loading="lazy"></details>
+<figcaption><span class="figlabel">Fig. K</span> {inline(caption)}</figcaption>
+</figure>"""
 
 
 def interactive_figure(letter: str, caption: str, image_name: str) -> str | None:
     fallback = (
-        f'<details class="static-fallback"><summary>Show static version</summary>'
-        f'<img src="{img_uri(image_name)}" alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy"></details>'
+        f'<details class="static-fallback" open><summary>Show static version</summary>'
+        f'<img src="{img_uri(image_name)}" {img_size(image_name)} alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy"></details>'
     )
     if letter == "A":
         return f"""<figure class="interactive-figure" data-chart="outcomes">
@@ -449,8 +530,8 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
     if letter == "C":
         return f"""<figure class="interactive-figure" data-chart="confidential">
 <div class="chart-shell">
-  <h3 class="chart-heading">Confidential share by state — violence does not explain it</h3>
-  <p class="chart-subtitle">Share of each state&#8217;s unresolved records marked CONFIDENCIAL. National median shown as dashed line. Hover or focus for detail.</p>
+  <h3 class="chart-heading">Confidential share of unresolved records, by state</h3>
+  <p class="chart-subtitle">Share of each state&#8217;s unresolved records marked CONFIDENCIAL. Dashed line: the median state. Hover or focus for detail.</p>
   <div class="chart-controls" aria-label="Sort order">
     <button type="button" data-mode="confidential_share" aria-pressed="true">By redaction share</button>
     <button type="button" data-mode="rate" aria-pressed="false">By missing-persons rate</button>
@@ -483,6 +564,8 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
 {fallback}
 <figcaption><span class="figlabel">Fig. D</span> {inline(caption)}</figcaption>
 </figure>"""
+    if letter == "K":
+        return filing_figure(caption, image_name)
     if letter == "H":
         return f"""<figure class="interactive-figure" data-chart="snapshots">
 <div class="chart-shell">
@@ -520,7 +603,7 @@ def inline(t: str) -> str:
 # A citation marker is [1]..[9]. The negative lookahead keeps it from eating the
 # "[label](url)" markdown links inline() has not rewritten yet, and figure markers
 # are letters, not digits, so they are never matched.
-CITATION_RE = re.compile(r"\[([1-9])\](?!\()")
+CITATION_RE = re.compile(r"\[([1-9]\d?)\](?!\()")
 
 # Editorial scaffolding that must never reach a reader. "Ethics line (keep):" once
 # shipped in the published page; this turns that class of leak into a build failure.
@@ -591,7 +674,7 @@ def parse_body(md: str, state: dict | None = None) -> str:
             else:
                 out.append(
                     f'<figure class="plate">\n'
-                    f'<img src="{img_uri(Path(path).name)}" alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy">\n'
+                    f'<img src="{img_uri(Path(path).name)}" {img_size(Path(path).name)} alt="{FIGURE_ALT_TEXT[letter]}" loading="lazy">\n'
                     f'<figcaption><span class="figlabel">Fig. {letter}</span> '
                     f"{inline(cap)}</figcaption>\n</figure>"
                 )
@@ -632,7 +715,7 @@ def parse_methods(md: str, state: dict | None = None) -> str:
     rendered: list[str] = []
     for para in paras:
         block = f"<p>{inline(para)}</p>"
-        m = re.match(r"^<p><strong>\[([1-9])\]", block)
+        m = re.match(r"^<p><strong>\[([1-9]\d?)\]", block)
         if not m:
             rendered.append(linkify_citations(block, state))
             continue
@@ -716,7 +799,7 @@ def build() -> str:
                     f"FAIL: editorial marker {marker!r} would publish in the {where}"
                 )
     cited = set(citations["first"])
-    defined = set(re.findall(r'<p id="source-([1-9])">', methods_html))
+    defined = set(re.findall(r'<p id="source-([1-9]\d?)">', methods_html))
     if cited - defined:
         raise SystemExit(f"FAIL: cited but undefined sources: {sorted(cited - defined)}")
     if defined - cited:
@@ -726,8 +809,9 @@ def build() -> str:
     return ascii_safe(TEMPLATE.format(
         title=TITLE,
         subtitle=SUBTITLE,
+        description=html.escape(DESCRIPTION, quote=True),
         hero=hero_record(),
-        standfirst=standfirst(totals),
+        standfirst=standfirst(md, totals),
         status=national_status(totals),
         body=body_html,
         methods=methods_html,
@@ -738,11 +822,17 @@ def build() -> str:
 
 
 TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
+<meta name="description" content="{description}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{title}: {subtitle}">
+<meta property="og:description" content="{description}">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="light dark">
 <style>
   /* ---- tokens: light is the base, dark redefines tokens only ---- */
   :root {{
@@ -813,7 +903,7 @@ TEMPLATE = """<!DOCTYPE html>
     text-transform:uppercase; overflow-wrap:anywhere;
   }}
   dl.fields .fgloss {{
-    font-family:var(--sans); font-size:12px; color:#9AA09A; letter-spacing:0;
+    font-family:var(--sans); font-size:12px; color:#6B706C; letter-spacing:0;
     text-transform:none;
   }}
   dl.fields dd {{ margin:0; font-family:var(--mono); font-size:13px; letter-spacing:.04em; color:var(--ink); }}
@@ -906,11 +996,18 @@ TEMPLATE = """<!DOCTYPE html>
     figure.plate img {{ padding:9px; }}
   }}
   @media (prefers-reduced-motion:reduce) {{ * {{ animation:none !important; transition:none !important; }} }}
+  .skip-link {{ position:absolute; left:-9999px; top:8px; background:var(--plate); color:var(--ink);
+    padding:8px 12px; border:2px solid var(--redact); z-index:10; font-family:var(--sans); }}
+  .skip-link:focus {{ left:8px; }}
+  /* Without JavaScript the interactive shells are inert: hide them and leave the
+     static fallback (rendered open) as the figure. */
+  .no-js [data-chart] .chart-shell {{ display:none; }}
+  .no-js .static-fallback > summary {{ display:none; }}
 {interactive_css}
 </style>
 </head>
 <body>
-
+<a class="skip-link" href="#main">Skip to the article</a>
 <div class="wrap">
   <header class="mast">
     <p class="kicker">
@@ -937,10 +1034,12 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
     <p class="record-note">The field structure above is illustrative, not one person's
       file. It represents the 36.8% of unresolved records marked confidential in the
-      2 December 2025 record-level snapshot. One public field survives.</p>
+      2 December 2025 record-level snapshot. Two descriptive fields survive, plus an
+      anonymous record ID; birth date, registration date and municipality code are
+      also withheld.</p>
   </header>
 
-  <main>
+  <main id="main">
 {body}
 
     <section class="methods">

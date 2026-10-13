@@ -43,6 +43,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Validate the COMMITTED page against the committed freeze (no rebuild).
+      # Both scripts are standard-library only and run on a clean checkout:
+      # check_article hash-verifies the freeze and the embedded figures and compares
+      # the page's chart data; check_claims recomputes the prose's numeric claims.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate article against the publication freeze
+        run: |
+          set -euo pipefail
+          python3 src/check_article.py
+          python3 src/check_claims.py
+
       - name: Assemble the site
         run: |
           set -euo pipefail

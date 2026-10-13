@@ -60,7 +60,7 @@ ax1.text(JAL_PUBLIC + JAL_CONF / 2, BAR_Y, f"{JAL_CONF:,} redacted\n66.9%",
 ax1.set_title("JALISCO — opacity by redaction, and you can measure it", loc="left",
               fontsize=11.5, weight="bold", color=st.RED, pad=8)
 ax1.text(0, -0.38, "Every one of these 13,766 people is in the registry. For two "
-                   "thirds of them the registry publishes\nonly the state — no date, "
+                   "thirds of them the registry publishes\nonly the state and filing authority — no date, "
                    "age, sex, municipality or case status.",
          fontsize=9.5, color=st.INK, va="top")
 

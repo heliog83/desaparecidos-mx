@@ -1,0 +1,167 @@
+cve_ent,entidad,authority,records,confidential
+01,AGUASCALIENTES,federal,13,3
+01,AGUASCALIENTES,national_commission,15,9
+01,AGUASCALIENTES,portal,34,11
+01,AGUASCALIENTES,state_commission,130,118
+01,AGUASCALIENTES,state_prosecutor,309,89
+02,BAJA CALIFORNIA,federal,64,14
+02,BAJA CALIFORNIA,national_commission,231,105
+02,BAJA CALIFORNIA,portal,466,129
+02,BAJA CALIFORNIA,state_commission,1591,620
+02,BAJA CALIFORNIA,state_prosecutor,2308,701
+03,BAJA CALIFORNIA SUR,federal,3,1
+03,BAJA CALIFORNIA SUR,national_commission,9,3
+03,BAJA CALIFORNIA SUR,portal,35,13
+03,BAJA CALIFORNIA SUR,state_commission,353,119
+03,BAJA CALIFORNIA SUR,state_prosecutor,667,430
+04,CAMPECHE,federal,2,2
+04,CAMPECHE,national_commission,1,1
+04,CAMPECHE,portal,10,4
+04,CAMPECHE,state_commission,82,37
+04,CAMPECHE,state_prosecutor,53,38
+05,COAHUILA,federal,94,24
+05,COAHUILA,national_commission,66,35
+05,COAHUILA,portal,191,105
+05,COAHUILA,state_commission,286,243
+05,COAHUILA,state_prosecutor,3018,667
+06,COLIMA,federal,22,1
+06,COLIMA,national_commission,189,8
+06,COLIMA,portal,85,23
+06,COLIMA,state_commission,175,6
+06,COLIMA,state_prosecutor,969,91
+07,CHIAPAS,federal,27,6
+07,CHIAPAS,national_commission,126,64
+07,CHIAPAS,portal,133,49
+07,CHIAPAS,state_commission,161,55
+07,CHIAPAS,state_prosecutor,1329,178
+08,CHIHUAHUA,federal,49,12
+08,CHIHUAHUA,national_commission,122,52
+08,CHIHUAHUA,portal,246,96
+08,CHIHUAHUA,state_commission,426,53
+08,CHIHUAHUA,state_prosecutor,3290,150
+09,CIUDAD DE MÉXICO,federal,135,19
+09,CIUDAD DE MÉXICO,national_commission,460,130
+09,CIUDAD DE MÉXICO,portal,1190,433
+09,CIUDAD DE MÉXICO,state_commission,1016,834
+09,CIUDAD DE MÉXICO,state_prosecutor,4441,2891
+10,DURANGO,federal,16,5
+10,DURANGO,national_commission,33,9
+10,DURANGO,portal,70,29
+10,DURANGO,state_commission,13,9
+10,DURANGO,state_prosecutor,944,372
+11,GUANAJUATO,federal,12,4
+11,GUANAJUATO,national_commission,115,39
+11,GUANAJUATO,portal,332,120
+11,GUANAJUATO,state_commission,1312,1211
+11,GUANAJUATO,state_prosecutor,3612,1846
+12,GUERRERO,federal,515,76
+12,GUERRERO,national_commission,661,119
+12,GUERRERO,portal,134,55
+12,GUERRERO,state_commission,29,19
+12,GUERRERO,state_prosecutor,3114,134
+13,HIDALGO,federal,9,2
+13,HIDALGO,national_commission,54,16
+13,HIDALGO,portal,75,27
+13,HIDALGO,state_commission,569,45
+13,HIDALGO,state_prosecutor,949,125
+14,JALISCO,federal,62,8
+14,JALISCO,national_commission,376,135
+14,JALISCO,portal,565,164
+14,JALISCO,state_commission,2843,2570
+14,JALISCO,state_prosecutor,9920,6339
+15,ESTADO DE MÉXICO,federal,76,18
+15,ESTADO DE MÉXICO,national_commission,343,102
+15,ESTADO DE MÉXICO,portal,1211,393
+15,ESTADO DE MÉXICO,state_commission,7170,2570
+15,ESTADO DE MÉXICO,state_prosecutor,5779,158
+16,MICHOACÁN,federal,99,20
+16,MICHOACÁN,national_commission,126,48
+16,MICHOACÁN,portal,242,95
+16,MICHOACÁN,state_commission,827,159
+16,MICHOACÁN,state_prosecutor,5940,923
+17,MORELOS,federal,39,6
+17,MORELOS,national_commission,62,22
+17,MORELOS,portal,98,29
+17,MORELOS,state_commission,819,386
+17,MORELOS,state_prosecutor,1045,392
+18,NAYARIT,federal,24,11
+18,NAYARIT,national_commission,65,8
+18,NAYARIT,portal,29,13
+18,NAYARIT,state_commission,459,441
+18,NAYARIT,state_prosecutor,1413,844
+19,NUEVO LEÓN,federal,62,16
+19,NUEVO LEÓN,national_commission,112,67
+19,NUEVO LEÓN,portal,170,109
+19,NUEVO LEÓN,state_commission,1791,1664
+19,NUEVO LEÓN,state_prosecutor,4981,1616
+20,OAXACA,federal,53,5
+20,OAXACA,national_commission,92,36
+20,OAXACA,portal,124,44
+20,OAXACA,state_commission,135,11
+20,OAXACA,state_prosecutor,351,240
+21,PUEBLA,federal,20,9
+21,PUEBLA,national_commission,59,22
+21,PUEBLA,portal,124,50
+21,PUEBLA,state_commission,459,126
+21,PUEBLA,state_prosecutor,2199,1491
+22,QUERÉTARO,federal,9,5
+22,QUERÉTARO,national_commission,37,14
+22,QUERÉTARO,portal,78,26
+22,QUERÉTARO,state_commission,54,21
+22,QUERÉTARO,state_prosecutor,526,50
+23,QUINTANA ROO,federal,27,4
+23,QUINTANA ROO,national_commission,115,31
+23,QUINTANA ROO,portal,445,159
+23,QUINTANA ROO,state_commission,385,134
+23,QUINTANA ROO,state_prosecutor,726,274
+24,SAN LUIS POTOSÍ,federal,31,12
+24,SAN LUIS POTOSÍ,national_commission,45,22
+24,SAN LUIS POTOSÍ,portal,153,64
+24,SAN LUIS POTOSÍ,state_commission,806,337
+24,SAN LUIS POTOSÍ,state_prosecutor,212,69
+25,SINALOA,federal,52,17
+25,SINALOA,national_commission,146,45
+25,SINALOA,portal,127,51
+25,SINALOA,state_commission,1872,463
+25,SINALOA,state_prosecutor,4539,1354
+26,SONORA,federal,43,7
+26,SONORA,national_commission,274,71
+26,SONORA,portal,306,85
+26,SONORA,state_commission,657,113
+26,SONORA,state_prosecutor,4511,995
+27,TABASCO,federal,14,2
+27,TABASCO,national_commission,40,16
+27,TABASCO,portal,147,62
+27,TABASCO,state_commission,79,10
+27,TABASCO,state_prosecutor,1778,287
+28,TAMAULIPAS,federal,372,97
+28,TAMAULIPAS,national_commission,264,121
+28,TAMAULIPAS,portal,437,151
+28,TAMAULIPAS,state_commission,268,110
+28,TAMAULIPAS,state_prosecutor,12119,4760
+29,TLAXCALA,federal,5,1
+29,TLAXCALA,national_commission,24,14
+29,TLAXCALA,portal,37,6
+29,TLAXCALA,state_commission,60,56
+29,TLAXCALA,state_prosecutor,80,3
+30,VERACRUZ,federal,310,94
+30,VERACRUZ,national_commission,160,60
+30,VERACRUZ,portal,241,85
+30,VERACRUZ,state_commission,2429,1036
+30,VERACRUZ,state_prosecutor,3828,1138
+31,YUCATÁN,federal,6,1
+31,YUCATÁN,national_commission,6,2
+31,YUCATÁN,portal,20,8
+31,YUCATÁN,state_commission,20,3
+31,YUCATÁN,state_prosecutor,261,180
+32,ZACATECAS,federal,19,8
+32,ZACATECAS,national_commission,44,17
+32,ZACATECAS,portal,69,28
+32,ZACATECAS,state_commission,46,19
+32,ZACATECAS,state_prosecutor,3689,1460
+99,SE DESCONOCE,federal,100,22
+99,SE DESCONOCE,national_commission,478,50
+99,SE DESCONOCE,portal,1070,221
+99,SE DESCONOCE,state_commission,271,118
+99,SE DESCONOCE,state_prosecutor,473,144
+99,SE DESCONOCE,unknown,572,29

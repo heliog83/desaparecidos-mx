@@ -40,6 +40,7 @@ BUILD_INPUTS = (
     "derived/confidencial_panel.csv",
     "derived/incidence_vs_homicide.csv",
     "derived/map_paths.json",
+    "derived/confidential_by_filing_authority.csv",
 )
 
 ARTICLE_ASSET_HASHES = "article_asset_hashes_sha256"

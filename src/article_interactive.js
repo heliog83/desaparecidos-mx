@@ -1,8 +1,23 @@
 (() => {
   "use strict";
+  document.documentElement.classList.remove("no-js");
   const node = document.getElementById("article-chart-data");
-  if (!node) return;
-  const DATA = JSON.parse(node.textContent);
+  // A chart that cannot draw must fall back to its static image, never to an
+  // empty frame with live-looking controls.
+  const fallBack = (root) => {
+    const shell = root.querySelector(".chart-shell");
+    if (shell) shell.hidden = true;
+    const details = root.querySelector(".static-fallback");
+    if (details) details.open = true;
+  };
+  let DATA = null;
+  try { DATA = node ? JSON.parse(node.textContent) : null; } catch (err) { DATA = null; }
+  if (!DATA) {
+    document.querySelectorAll("[data-chart]").forEach(fallBack);
+    return;
+  }
+  // Names arrive with and without accents (YUCAT\u00C1N); compare on a stripped key.
+  const plain = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
   const NS = "http://www.w3.org/2000/svg";
   const COLORS = { alive: "#3c6e91", dead: "#2b2b2b", missing: "#7a1f1f", muted: "#9a9e9a" };
   const fmt = new Intl.NumberFormat("en-US");
@@ -184,7 +199,10 @@
           const x = margin.left + i * step + (step - bw) / 2;
           const top = y(cumulative + val);
           const bottom = y(cumulative);
-          const rect = svgNode("rect", { x, y: top, width: bw, height: Math.max(0, bottom - top), fill: COLORS[keys[j]], tabindex: 0 });
+          // White hairline between stacked segments: found dead (#2b2b2b) against still
+          // missing (#7a1f1f) is only 1.4:1, so colour alone cannot separate them.
+          const rect = svgNode("rect", { x, y: top, width: bw, height: Math.max(0, bottom - top), fill: COLORS[keys[j]], tabindex: 0,
+            stroke: isSingle ? "none" : "#fff", "stroke-width": isSingle ? 0 : 0.75 });
           rect.setAttribute("aria-label", `${d.year}: ${keys[j]}, ${fmt.format(raw)} people`);
           const tooltipHtml = `<strong>${d.year}</strong><br>Still missing <strong>${fmt.format(d.missing)}</strong> (${pct.format(d.missing / total)})<br>Found alive ${fmt.format(d.alive)} (${pct.format(d.alive / total)})<br>Found dead ${fmt.format(d.dead)} (${pct.format(d.dead / total)})<br>Total reported ${fmt.format(total)}`;
           rect.addEventListener("mouseenter", (e) => { const [px, py] = pointerIn(e, canvas); showTip(tip, tooltipHtml, px, py); });
@@ -200,10 +218,11 @@
         }
       });
 
-      const trendNote = " \u00B7 line = 3-year average";
-      const legendItems = mode === "missing" ? [["Still missing \u2014 each bar starts at zero" + trendNote, COLORS.missing]]
-        : mode === "alive"   ? [["Found alive \u2014 each bar starts at zero" + trendNote, COLORS.alive]]
-        : mode === "dead"    ? [["Found dead \u2014 each bar starts at zero" + trendNote, COLORS.dead]]
+      // The long legend clipped at 320px; the zero-baseline note also lives in the summary.
+      const trendNote = width < 520 ? " \u00B7 line: 3-yr avg" : " \u2014 each bar starts at zero \u00B7 line = 3-year average";
+      const legendItems = mode === "missing" ? [["Still missing" + trendNote, COLORS.missing]]
+        : mode === "alive"   ? [["Found alive" + trendNote, COLORS.alive]]
+        : mode === "dead"    ? [["Found dead" + trendNote, COLORS.dead]]
         : [["Found alive", COLORS.alive], ["Found dead", COLORS.dead], ["Still missing", COLORS.missing]];
       const legendStep = innerW / legendItems.length;
       legendItems.forEach(([label, color], index) => {
@@ -386,6 +405,11 @@
     const tip = tooltipFor(root);
     let sortKey = "confidential_share";
     const HIGHLIGHT = { "JALISCO": true, "GUERRERO": true, "NAYARIT": true, "COLIMA": true, "YUCATAN": true };
+    // The national share counts every unresolved record, including those with no
+    // state, from the same 2 Dec 2025 snapshot \u2014 not a mean of 32 state shares.
+    const latestSnap = DATA.snapshots.reduce((m, d) => (d.snapshot > m ? d.snapshot : m), "");
+    const latestRows = DATA.snapshots.filter((d) => d.snapshot === latestSnap);
+    const natShare = latestRows.reduce((s, d) => s + d.conf, 0) / latestRows.reduce((s, d) => s + d.total, 0);
     // Formatter depends on which metric is being sorted
     const fmtVal = (key, v) => key === "confidential_share" ? pct.format(v) : String(Math.round(v));
 
@@ -402,7 +426,6 @@
       const maxVal = Math.max(...sorted.map((d) => d[sortKey]));
       const medVal = median(sorted.map((d) => d[sortKey]));
       const xv = (v) => margin.left + (v / maxVal) * innerW;
-      const natAvg = DATA.states.reduce((s, d) => s + d.confidential_share, 0) / DATA.states.length;
       const svg = svgNode("svg", { width, height, viewBox: `0 0 ${width} ${height}` });
       svg.setAttribute("role", "img");
       svg.setAttribute("aria-label", "Confidential share of unresolved records by state");
@@ -410,11 +433,11 @@
       // Median reference line
       const medX = xv(medVal);
       svg.append(svgNode("line", { x1: medX, x2: medX, y1: margin.top - 18, y2: margin.top + innerH, stroke: "#585D59", "stroke-width": 1, "stroke-dasharray": "3 3" }));
-      svg.append(svgNode("text", { x: medX + 3, y: margin.top - 6, class: "chart-muted" }, `Median ${fmtVal(sortKey, medVal)}`));
+      svg.append(svgNode("text", { x: medX + 3, y: margin.top - 6, class: "chart-muted" }, `Median state ${fmtVal(sortKey, medVal)}`));
 
       sorted.forEach((d, i) => {
         const yy = margin.top + i * (rowH + gap);
-        const isHi = !!HIGHLIGHT[d.name];
+        const isHi = !!HIGHLIGHT[plain(d.name)];
         const barColor = isHi ? "#7a1f1f" : "#b9b4aa";
         const barW = Math.max(2, (d[sortKey] / maxVal) * innerW);
         svg.append(svgNode("text", {
@@ -433,13 +456,18 @@
         svg.append(svgNode("text", { x: margin.left + barW + 5, y: yy + rowH * 0.7, class: "chart-label" }, fmtVal(sortKey, d[sortKey])));
       });
       // X axis ticks
-      for (let t = 0; t <= 4; t++) {
-        const v = t / 4 * maxVal, tx = xv(v);
+      // Round tick values (10%, 20%... or 50, 100...), as many as the width allows;
+      // quarter-of-max ticks gave 16.7% / 33.5% and collided below ~400px.
+      const maxTicks = Math.max(2, Math.floor(innerW / 48));
+      const steps = sortKey === "confidential_share" ? [0.1, 0.2, 0.25, 0.5] : [10, 20, 25, 50, 100, 200];
+      const tickStep = steps.find((st) => Math.floor(maxVal / st) + 1 <= maxTicks) || steps[steps.length - 1];
+      for (let v = 0; v <= maxVal + 1e-9; v += tickStep) {
+        const tx = xv(v);
         svg.append(svgNode("line", { x1: tx, x2: tx, y1: margin.top + innerH, y2: margin.top + innerH + 4, stroke: "#8d918d", "stroke-width": 1 }));
         svg.append(svgNode("text", { x: tx, y: margin.top + innerH + 14, "text-anchor": "middle", class: "chart-label" }, fmtVal(sortKey, v)));
       }
       canvas.append(svg);
-      summary.innerHTML = `National average: <strong>${pct.format(natAvg)}</strong>. Jalisco (${pct.format(DATA.states.find((d) => d.name === "JALISCO").confidential_share)}) and Nayarit redact the most; Guerrero and Colima the least.`;
+      summary.innerHTML = `National share: <strong>${pct.format(natShare)}</strong> of all unresolved records (${latestSnap}). Jalisco (${pct.format(DATA.states.find((d) => d.name === "JALISCO").confidential_share)}) and Nayarit redact the most; Guerrero and Colima the least.`;
     }
     root.querySelectorAll("button[data-mode]").forEach((b) => b.addEventListener("click", () => {
       sortKey = b.dataset.mode; buttonMode(root, sortKey); draw();
@@ -511,7 +539,7 @@
       // Dots
       states.forEach((d) => {
         const cx = sx(d[xKey]), cy = sy(d.confidential_share);
-        const hiColor = HIGHLIGHT[d.name];
+        const hiColor = HIGHLIGHT[plain(d.name)];
         const fill = hiColor || "#9a9e9a";
         const rdot = hiColor ? 11 : 7.5;
         const circle = svgNode("circle", { cx, cy, r: rdot, fill, opacity: hiColor ? 1 : 0.7, tabindex: 0 });
@@ -529,8 +557,9 @@
       });
       svg.append(svgNode("text", { x: 11, y: margin.top + innerH / 2, "text-anchor": "middle", transform: `rotate(-90,11,${margin.top + innerH / 2})`, class: "chart-muted" }, "Confidential share"));
       canvas.append(svg);
-      const dir = r < 0 ? "negative" : "positive";
-      summary.innerHTML = `Pearson <em>r</em> = <strong>${r.toFixed(2)}</strong> (${dir} association, ${states.length} states). Ecological comparison \u2014 describes states, not individual cases.`;
+      const strength = Math.abs(r) < 0.1 ? "no meaningful" : Math.abs(r) < 0.4 ? "a weak" : Math.abs(r) < 0.6 ? "a moderate" : "a strong";
+      const dir = Math.abs(r) < 0.1 ? "" : (r < 0 ? " negative" : " positive");
+      summary.innerHTML = `Pearson <em>r</em> = <strong>${r.toFixed(2)}</strong>: ${strength}${dir} linear association across ${states.length} states. With 32 points, one state can move <em>r</em> by 0.1. Ecological comparison \u2014 describes states, not individual cases.`;
     }
     if (varSelect) varSelect.addEventListener("change", draw);
     new ResizeObserver(draw).observe(canvas);
@@ -623,7 +652,7 @@
     const tip = root.querySelector(".chart-tooltip");
     const summary = root.querySelector(".chart-summary");
     const rows = DATA.compare;
-    if (!rows || !rows.length) return;
+    if (!rows || !rows.length) throw new Error("no comparison rows");
     const HOM = "#c8791f";
     const FROM = 2019, TO = 2024;
     const at = (y) => rows.find((r) => r.year === y);
@@ -672,11 +701,15 @@
           svg.append(svgNode("text", { x: cx, y: v >= 0 ? y(v) - 8 : y(v) + 17,
             "text-anchor": "middle", class: "chart-label" },
             `${v >= 0 ? "+" : "\u2212"}${fmt.format(Math.abs(v))}`));
-          svg.append(svgNode("text", { x: cx, y: margin.top + innerH + 30,
-            "text-anchor": "middle", class: "chart-label" }, label));
+          // Two-line labels on narrow screens; one line collided below ~400px.
+          const words = width < 520 ? label.split(" ") : [label];
+          const lab = svgNode("text", { x: cx, y: margin.top + innerH + 24,
+            "text-anchor": "middle", class: "chart-label" });
+          words.forEach((w, k) => lab.append(svgNode("tspan", { x: cx, dy: k ? 13 : 0 }, w)));
+          svg.append(lab);
         });
         canvas.append(svg);
-        summary.innerHTML = `Between ${FROM} and ${TO} the registry gained <strong>${fmt.format(growth)}</strong> records for those years: <strong>${pct.format(delta.alive / growth)}</strong> of that growth is people found alive, ${pct.format(delta.missing / growth)} still missing, and <strong>${pct.format(delta.dead / growth)}</strong> found dead. Homicide victims fell by ${fmt.format(Math.abs(delta.homicides))} over the same years. Deaths moving into the disappeared column would have to show up in the dark bar; it barely moves.`;
+        summary.innerHTML = `The ${TO} cohort is <strong>${fmt.format(growth)}</strong> records larger than the ${FROM} cohort: <strong>${pct.format(delta.alive / growth)}</strong> of the difference is people now recorded found alive, <strong>${pct.format(delta.missing / growth)}</strong> still missing and ${pct.format(delta.dead / growth)} found dead. Homicide victims fell by ${fmt.format(Math.abs(delta.homicides))}. A killing recorded as a disappearance would sit in the <strong>still-missing</strong> bar, not the found-dead one \u2014 so these bars weigh against substitution as the main story but cannot rule out part of it.`;
         return;
       }
 
@@ -704,7 +737,7 @@
           const top = y(cumulative + val), bottom = y(cumulative);
           const rect = svgNode("rect", { x, y: top, width: bw,
             height: Math.max(0, bottom - top), fill: COLORS[key],
-            "fill-opacity": dim ? 0.3 : 1, tabindex: 0 });
+            "fill-opacity": dim ? 0.3 : 1, tabindex: 0, stroke: "#fff", "stroke-width": 0.75 });
           const total = d.alive + d.dead + d.missing;
           const html = `<strong>${d.year}</strong>${d.provisional ? " (provisional)" : ""}<br>`
             + `Reported disappeared <strong>${fmt.format(total)}</strong><br>`
@@ -752,7 +785,7 @@
       canvas.append(svg);
       summary.innerHTML = mode === "homicides"
         ? `The orange line is homicide victims, a <strong>separate count of different people</strong> \u2014 it is not part of the bars and the two must never be added. From ${FROM} to ${TO} it falls by ${fmt.format(Math.abs(delta.homicides))} while the bars grow by ${fmt.format(growth)}. 2025 is provisional in both.`
-        : `Each bar is one year of disappearance, split by where those cases stand today. The bars grow, and it is the blue band \u2014 people later found alive \u2014 that grows. Switch to \u201CChange ${FROM}\u2013${TO}\u201D for the size of each movement.`;
+        : `Each bar is one year of disappearance, split by where those cases stand today. The bars grow, mostly in the blue band \u2014 people later found alive \u2014 though the red still-missing band grows too. Switch to \u201CChange ${FROM}\u2013${TO}\u201D for the size of each movement.`;
     }
 
     root.querySelectorAll("button[data-mode]").forEach((b) => b.addEventListener("click", () => {
@@ -762,11 +795,20 @@
     draw();
   }
 
-  document.querySelectorAll('[data-chart="outcomes"]').forEach(initOutcomes);
-  document.querySelectorAll('[data-chart="map"]').forEach(initMap);
-  document.querySelectorAll('[data-chart="states"]').forEach(initStates);
-  document.querySelectorAll('[data-chart="confidential"]').forEach(initConfidential);
-  document.querySelectorAll('[data-chart="scatter"]').forEach(initScatter);
-  document.querySelectorAll('[data-chart="snapshots"]').forEach(initSnapshots);
-  document.querySelectorAll('[data-chart="compare"]').forEach(initCompare);
+  const INIT = { outcomes: initOutcomes, map: initMap, states: initStates,
+    confidential: initConfidential, scatter: initScatter, snapshots: initSnapshots,
+    compare: initCompare };
+  document.querySelectorAll("[data-chart]").forEach((root) => {
+    const init = INIT[root.dataset.chart];
+    try {
+      if (!init) throw new Error(`no renderer for ${root.dataset.chart}`);
+      init(root);
+      // Drawn: the static plate becomes an optional, collapsed alternative.
+      const details = root.querySelector(".static-fallback");
+      if (details) details.open = false;
+    } catch (err) {
+      fallBack(root);
+      if (window.console) console.error("chart failed:", root.dataset.chart, err);
+    }
+  });
 })();
