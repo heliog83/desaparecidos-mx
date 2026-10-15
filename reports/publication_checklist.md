@@ -31,18 +31,18 @@ else is blocking.
 - [x] **R-1** Language: English (decided 2026-10-12). Nothing in the article needed changing.
 - [x] **R-2** (done 2026-10-12: dropped, A-08) Resolve the June-2026 points (CDMX 6,086; Jalisco 12,776): restore the raw
       pull into a freeze amendment, or drop them from §6b, Fig F and its caption.
-- [ ] **R-3** Re-fetch the external figures not re-verified here: 72,172 bodies;
+- [x] **R-3** (done 2026-10-14: all 5 external sources re-fetched and verified verbatim) Re-fetch the external figures not re-verified here: 72,172 bodies;
       Tlachinollan 3,800 / 260 / 69 / 2–6%; HRW >160; Proceso Holy Week; Data Cívica's
       2023 10,953.
 - [ ] **R-4** Screen-reader pass (VoiceOver + NVDA) and Safari/Firefox, iOS and Android
       checks (BLOCKED here).
 - [x] **R-5a** E-3 applied (§6 + Fig K), validated.
 - [x] **R-5b** E-1 applied (standfirst), validated.
-- [ ] **R-5c** Decide on E-2 (compress §2), E-4 (split §6b), E-5 (headline).
+- [x] **R-5c** (done 2026-10-15: E-2 kept §2 intact for claim/chart continuity; E-4 split §6b into §6b and §6c; E-5 locked in *The Redacted Crisis: What Mexico's public registry leaves unseen*) Decide on E-2 (compress §2), E-4 (split §6b), E-5 (headline).
 - [x] **R-6** (done: https://heliog83.github.io/desaparecidos-mx/) Set the canonical URL once the host is chosen: add
       `<link rel="canonical">` and `og:url` in `src/build_page.py`'s template. No URL
       was guessed.
-- [ ] **R-7** Commit the complete unit: draft, build, JS/CSS, figure scripts, 3 PNGs +
+- [x] **R-7** (done 2026-10-15) Commit the complete unit: draft, build, JS/CSS, figure scripts, 3 PNGs +
       2 numbered PNGs, manifest amendment, generated HTML, `check_claims.py`,
       `audit_sensitivity.py`, reports, `.gitignore`, `pages.yml`, docs notes.
 
@@ -82,7 +82,7 @@ Per `AGENTS.md`, never publish through Claude Artifacts.
 | Already correct | All 15 freeze checks; headline totals; Fig A; redaction shares and rankings; rates; panel/version audit; consent accounting; ZonaDocs counts; drift by state |
 | Incorrect or unsupported (now fixed) | Substitution inference (B-1); "only the state" (H-1); "records gained"; §9 overreach; 0.1% drift; Fig C JS national average; Yucatán highlight; §1 cohort descriptions; 8 overstated attributions; uncited killings |
 | Added | §6 filing-authority finding + Fig K (E-3); Data Cívica 2026 (dated, not blended); March 2026 federal reclassification; sources [10]–[12]; `check_claims.py` (53 checks); `audit_sensitivity.py` |
-| Still uncertain | June-2026 values; external figures not re-fetched; the denominator of Data Cívica's 38.5%; the government report cited via a secondary source; filing-authority finding (case-mix confound) |
-| Tests | 24 executed and passing; 3 blocked; 2 not re-verified or out of scope (see validation report) |
-| Blockers | G-1 author sign-off · G-2 private repository links · G-3 licence |
+| Still uncertain | The denominator of Data Cívica's 38.5%; the 2026 government report cited via a secondary source; filing-authority finding (case-mix confound) |
+| Tests | 24 executed and passing; R-3 external figures re-fetched and verified (2026-10-14); 3 browser/screen-reader checks pending (see validation report) |
+| Blockers | Cleared (G-1 author sign-off · G-2 public repository links · G-3 licence all completed) |
 | Decision | **CONDITIONAL GO** |

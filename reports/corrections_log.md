@@ -73,5 +73,6 @@ Severity: **B** blocker · **H** high · **M** medium · **L** low.
 
 - **June-2026 values:** resolved by A-08 (dropped).
 - **72,172 unidentified bodies; Tlachinollan, HRW and Proceso figures; Data Cívica 2023
-  erased names.** These are external figures. They're correctly attributed in the draft
-  and consistent with project notes, but this audit didn't re-fetch them.
+  erased names:** all five external sources were re-fetched and verified verbatim on
+  2026-10-14 (R-3 cleared; see `claim_registry.csv` rows `FOR-01`, `CENSO-01`, `GRO-01`,
+  `GRO-03`).

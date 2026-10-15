@@ -119,11 +119,14 @@ ARIA labels.
   raw series, and `state_rates` counts equal the mirror groupby.
 - **Primary documents.** CNB oficio 1349/2020 was text-extracted and the consent
   figures checked on PDF page 11. The text of Art. 108 was checked in the same document.
-- **External journalism**, re-fetched on 2026-10-12: ZonaDocs 2024-11-21; A dónde van
-  2021-04-08; Quinto Elemento 2024-03-06; Data Cívica 2026 (three pages); ZonaDocs/
-  Lorusso 2026-04-13; news reports on the 2025 killings.
-- **Outcome:** of 59 registry rows, 38 supported, 9 contradicted, 9 ambiguous, 1
-  unverifiable, and 2 "supported per project sourcing, not re-fetched". Every
+- **External journalism**, re-fetched on 2026-10-12 and 2026-10-14: ZonaDocs 2024-11-21; A dónde van
+  2021-04-08, 2024-01-22 and 2024-09-24 (72,172 bodies); Quinto Elemento 2024-03-06; Data Cívica
+  2023/2024 (*Volver a desaparecer*, 10,953 absent names) and 2026 (three pages); Tlachinollan
+  2022-08-30 (Guerrero 3,800; Iguala 623; 260/69; Acapulco 70/55; 2–6%); Human Rights Watch
+  2019-01-15 (Los Otros Desaparecidos >160 bodies); Proceso 2026-04-03 (Holy Week 8 families);
+  ZonaDocs/Lorusso 2026-04-13; news reports on the 2025 killings.
+- **Outcome:** of 59 registry rows, 40 supported, 9 contradicted, 9 ambiguous, and 1
+  unverifiable (June 2026 pull, dropped via A-08). Every
   contradicted or ambiguous row has a logged correction.
 
 **What was already correct.** All 15 freeze claim checks. The headline totals and

@@ -1,7 +1,7 @@
-# DRAFT — The Redacted Crisis: How Mexico's Registry of the Disappeared Hides What It Counts
+# The Redacted Crisis: What Mexico's public registry leaves unseen
 
 Draft v1.1, 2026-08-15 (data refreshed; see `docs/data-refresh-2026-08-15.md`).
-Visual-led web article. ~2,900 words + 8 figures.
+Visual-led web article. ~2,900 words + 11 figures.
 Language: English (author decision, 2026-10-12). A Spanish edition remains a possible
 follow-up.
 Every figure is reproducible from `src/`; every number carries a consultation date in
@@ -12,10 +12,8 @@ generated local output. Do not publish or update this article through Claude Art
 Build with `python3 src/build_page.py`, validate with `python3 src/check_article.py`, and
 preview at `http://127.0.0.1:8794/article.html` using the repository's local server.
 
-Working titles (pick one):
-1. *The Redacted Crisis: what Mexico's registry of the disappeared won't let you see*
-2. *134,000 people, one third behind a wall*
-3. *Two ways to disappear twice: redacted in Jalisco, uncounted in Guerrero*
+Title: *The Redacted Crisis*
+Subtitle: *What Mexico's public registry leaves unseen*
 
 Standfirst: *On 15 August 2026 Mexico's official registry counted **134,268 people still
 missing**. Its live dashboard publishes only totals. In the last record-level snapshot,
@@ -339,7 +337,7 @@ record is confidential [4].
 least one blanket state policy — and no public field distinguishes them.**
 
 
-### 6b. The totals move in batches — and once, somebody checked
+### 6b. The totals move in batches
 
 **[FIG H — `figures/article/H_confidencial_batches.png`]**
 *Caption: CONFIDENCIAL records per state across ten monthly snapshots of the public
@@ -366,6 +364,8 @@ a capital that had been adding cases for a year shed 1,327 of them in eight mont
 roughly one in five. We can see the direction and the size of
 that reversal but not its mechanism: the registry does not say whether those
 records were deleted, reclassified, resolved, or moved.
+
+### 6c. "Located" is a status the register asserts
 
 For one episode, that question has been answered — and not by the registry.
 

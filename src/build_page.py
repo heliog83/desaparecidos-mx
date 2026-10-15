@@ -650,7 +650,7 @@ def parse_body(md: str, state: dict | None = None) -> str:
         if not b:
             continue
 
-        m = re.match(r"^#{2,3}\s+(\d+b?)\.\s+(.+)$", b, flags=re.S)
+        m = re.match(r"^#{2,3}\s+(\d+[bc]?)\.\s+(.+)$", b, flags=re.S)
         if m:
             num, title = m.group(1), " ".join(m.group(2).split())
             out.append(
