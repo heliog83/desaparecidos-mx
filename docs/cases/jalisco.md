@@ -131,7 +131,8 @@ Status: VERIFIED (2026-07-06).
 
 - **Teuchitlán / Rancho Izaguirre (2025-03-05):** Guerreros Buscadores de Jalisco found a
   CJNG recruitment-and-extermination site — clothing, shoes, backpacks, notebooks, bone
-  fragments. A collective, not the state, surfaced it; national scandal about what state
+  fragments. The National Guard had already raided the ranch in Sept 2024 (10 detained);
+  the collective documented the remains six months later; national scandal about what state
   records failed to document. Candidate Stage-2 anchor event.
 - "Jalisco vive un estado de emergencia forense" — Por Amor A Ellxs collective (ZonaDocs
   2023-09-21).

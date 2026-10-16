@@ -121,7 +121,7 @@ This does not make the rise an illusion. Two official series moving apart is a f
 about the two series; falling homicides say nothing about how honestly
 disappearances are recorded, and a disappearance is not a homicide. But it does
 mean the tenfold figure cannot be read as a measure of how much worse the violence
-became. It measures a registry — one whose reach, rules and staffing all changed
+became. It measures a registry — one whose reach and rules both changed
 inside the period it covers.
 
 **[FIG J — `figures/article/J_outcome_vs_homicide.png`]**
@@ -161,7 +161,8 @@ Fiscalía of Morelos declined to answer the transparency requests, and the figur
 counts whole bodies, not the bone fragments that clandestine graves mostly yield.
 
 So the gap between the two series on this chart is not simply unknown. Part of it has
-already been counted, by journalists rather than by the state. The claim this section
+already been counted — compiled by journalists from the state's own forensic services,
+rather than published by the state. The claim this section
 can defend stays narrow — most of the registry's recent growth is not the homicide
 count in disguise, though a partial shift cannot be excluded — and the reason the two
 counts fail to meet is partly a forensic backlog with a number attached to it.
@@ -326,15 +327,15 @@ excluded. Descriptive, not causal: case mix differs by channel. Vintage 2025-12-
 
 Journalists then closed the loop. In 2024, ZonaDocs found 4,765 cases across six
 states that are marked confidential in the registry *while having active public
-search notices* — posters with names and photographs, issued by the same
-authorities. In transparency responses, authorities said they produce no context or
+search notices* — posters with names and photographs. In transparency responses
+reported by ZonaDocs, authorities said they produce no context or
 risk analysis for these publication decisions, arguing the law does not require one.
 María de Jesús Solís, whose son disappeared in Zapopan in 2020, said she never
 signed for his record to be confidential and wants maximum visibility. Her son's
 record is confidential [4].
 
 **The redaction flag mixes genuine family requests, missing consent paperwork and at
-least one blanket state policy — and no public field distinguishes them.**
+least one blanket declaration by a state prosecutor's office — and no public field distinguishes them.**
 
 
 ### 6b. The totals move in batches
@@ -373,11 +374,11 @@ In August 2023 the National Search Commission published a person-level version o
 the register containing 110,964 names. In December, after the federal government's
 *Estrategia Nacional de Búsqueda Generalizada* — the *censo* — the equivalent public
 version held 94,283. Data Cívica compared the two and found **10,953 names present in
-the first and absent from the second** [8]. The official explanation was that most had
-been located. Data Cívica is careful about what its own method can establish: it can
-show that a name left the register, and it cannot show whether the person was found,
-is alive, or is safe, because the removals came with no case-by-case verification and
-no notification to families.
+the first and absent from the second** [8]. The official explanation for the smaller
+register was that people had been located in house-to-house visits [8]. Data Cívica is careful about what its own method can establish: those names
+should belong to people who were located, and if they do not, the person has been
+disappeared a second time. The comparison can show that a name left the register; it
+cannot show whether the person was found, is alive, or is safe.
 
 Quinto Elemento Lab tested the other side of the same operation. Of the 16,681 people
 the censo declared located, it reconstructed 11,026 names — at least 4,607 more were
@@ -391,7 +392,7 @@ the register altogether.
 
 The individual cases show how a location gets recorded. Miguel Ángel Hernández Guzmán
 disappeared in Orizaba, Veracruz, in May 2019, at 27. The men who took him are serving
-sentences for forced disappearance and have never said where he is; the FGR still
+sentences for kidnapping and forced disappearance and have not returned him; the FGR still
 circulates a notice asking whether anyone has seen him; the censo lists him as located.
 His mother, Lorena Guzmán, searches clandestine graves. *"It is not true that my son has
 been located,"* she told the reporters. *"That is a lie."* José Marco Antonio Márquez
@@ -407,11 +408,13 @@ said their relative had not come back — and all four folios appear on the loca
 
 Thirty confirmed cases out of 16,681 is not proof that the census was fabricated, and
 this piece does not claim it was. What those thirty establish is narrower and harder to
-argue with: **"located" is a status the register asserts, not a fact it verifies.** The
-Interior Secretary, Luisa María Alcalde, said of the 16,681 that the government had
-"certainty of their whereabouts". The documented cases contradict that. Karla Quintana,
+argue with: **"located" is a status the register can assert without verifying it.** The
+Interior Secretary, Luisa María Alcalde, said the locations would still have to be
+validated, but also that for the 16,681 the government had "certainty of their
+whereabouts" [9]. The thirty documented cases contradict that certainty. Karla Quintana,
 who left the National Search Commission months after the census was announced, has
-said publicly that its purpose was to reduce the numbers [9].
+accused the exercise of aiming "to reduce the figures of disappeared people, mainly
+under this government" [9].
 
 The exercise has a successor. On 27 March 2026 the federal government presented the
 132,534 people then recorded as missing in three operational groups: 46,742 records it
@@ -427,15 +430,16 @@ Step changes, flat totals during reclassification, batch removals: these pattern
 on an office's schedule. They are not proof that the underlying consent decisions are
 fabricated. Families do decide, and some of those decisions are surely real; a backlog
 of genuine consent forms entered in one batch would look much like this from the
-outside. But the census shows what bulk processing can produce when nobody checks it
-afterwards, and it is the only episode in this period where anyone did check. What the shape of the data does show is that the *timing* of publication is
+outside. But the census shows what bulk processing can produce when it is not checked
+afterwards, and it is the only episode in this period we know of in which anyone
+outside did check. What the shape of the data does show is that the *timing* of publication is
 governed by administrative operations rather than by when families decide, and that
 the two cannot be separated from the public record.
 
 That is the version-history counterpart to section 6. Together they support a claim
 that is narrower than "the state is hiding people" and harder to dismiss: the
 registry's most basic public property — *how much of it you can read* — is rewritten
-in bulk, state by state, with no published log of who authorised a change or why, and
+in bulk, state by state, with no public log we could find of who authorised a change or why, and
 no field that distinguishes a redaction a family asked for from one that a missing form
 produced.
 
@@ -460,25 +464,27 @@ disappearances to the RNPDNO and logged them in its own state registry instead. 
 country now has two official counts of Jalisco's disappeared, kept by two governments,
 and they do not agree with each other. By the article's own comparison of public
 snapshots, the resulting gap now reaches roughly 3,000 people — following earlier
-divergence documented by El Informador [4]. The state government's answer, in January
-2024, was a communiqué titled "Jalisco does not manipulate its registry, nor erase
-figures."
+divergence documented by El Informador [4]. Accused of erasing records, the state
+government answered in January 2024 with a communiqué titled "Jalisco does not manipulate
+its registry, nor erase figures" [4].
 
 Jalisco is also where the contradiction from section 6 concentrates. Of the 4,765
 confidential-yet-publicly-searched-for cases ZonaDocs identified, 1,026 are Jalisco's —
 second only to Estado de México's 2,691 — equal to about a ninth of the 9,216 Jalisco
 records marked confidential in December 2025, though ZonaDocs counted at an earlier
 date. The
-same investigation found a further 2,137 disappearances between 2019 and mid-2024 that
-state authorities registered locally with official search notices but omitted from the
-federal registry: not redacted inside the national count, but withheld from it entirely.
+same investigation reports a further 2,137 disappearances between 2019 and mid-2024 that
+were never registered federally — by its account not redacted inside the national
+count, but absent from it [4].
 
-What the registry would not record, families recorded themselves. On 5 March 2025 the
+What the registry did not record, families recorded themselves. On 5 March 2025 the
 collective Guerreros Buscadores de Jalisco entered Rancho Izaguirre, a property outside
-Teuchitlán, and found a cartel recruitment and extermination site: clothing, shoes,
-backpacks, notebooks, bone fragments. It became a national scandal — not only for what
-was on the ranch, but because a group of searching families, rather than the state, was
-what finally established it.
+Teuchitlán, and found what the collective described as an extermination site and what the
+federal Attorney General later described as a cartel recruitment centre: clothing,
+shoes, backpacks, notebooks, bone fragments [4]. It became a national scandal — not only
+for what was on the ranch, but because the National Guard had raided the same property
+six months earlier, in September 2024, and it took a group of searching families to
+document what was there [4].
 
 Searching in Jalisco carries mortal risk. In March 2025 Teresa González Murillo, who
 was searching for her brother, was shot at her home in Guadalajara; she died days
@@ -488,8 +494,8 @@ prosecutors listed the victims' search work among their lines of investigation; 
 motive has been established in court [12].
 
 The state with the most redacted registry in Mexico is also the state where civil
-society keeps producing the evidence its registry lacks. Those are not two facts about
-Jalisco. They are one fact, seen from two sides.
+society keeps producing the evidence its registry lacks. They may not be two separate
+facts about Jalisco, but one fact seen from two sides.
 
 ## 8. Guerrero: the limits of official counts
 
@@ -539,13 +545,14 @@ Iguala, of which 69 were identified and returned to their families. In Acapulco 
 records a different outcome: 70 people found alive, and 55 identified bodies returned
 [4].
 
-The under-registration is not history. During Holy Week searches in 2026, in Buenavista
+The gap is not history. During Holy Week searches in 2026, in Buenavista
 de Cuéllar and Iguala, eight families approached searching mothers from the collective
 Familiares en Búsqueda María Herrera — five in Buenavista and three in Iguala — to report
-disappearances after official channels had stalled. One woman in Iguala whose father had
-been missing six months recounted that authorities had made no progress and told her to
-stop inquiring. That is the gap happening in real time: families turning to search
-collectives because the state has ceased to look.
+disappearances. One woman in Iguala whose father had
+been missing six months recounted that authorities had reported no progress and told her to
+stop coming by — they would let her know if they found anything [4]. That is the gap
+happening in real time: families bringing their cases to search collectives — at least
+one of them after official channels had stalled.
 
 A low confidential share, then, is not a clean bill of health. Jalisco documents how
 fields can disappear after a record enters the registry. Guerrero's family records
@@ -561,14 +568,15 @@ the public data are not built to answer questions about intent. Every explanatio
 that could be tested from outside, state by state — that redaction tracks how
 dangerous a state is, that it tracks corruption, that it tracks state poverty — found
 no support. None of those tests can see inside an individual case. What is left is
-not proof of a motive. It is the absence of an account.
+not proof of a motive. It is the absence of an account that survives testing.
 
 That absence is the finding, and it is specific. The confidentiality flag is
-**unexplained, unaudited, and contradicted in thousands of documented cases by the
-authorities' own search posters**. It moves in batches, on administrative schedules,
-with no published log of who authorised a change or why. And no public field
+**unexplained record by record, never officially audited in any public source we
+found, and contradicted in thousands of documented cases by public search notices**. It moves in
+batches, on what look like administrative schedules, with no public log we could find
+of who authorised a change or why. And no public field
 distinguishes a redaction a family requested from one produced by a missing form —
-which means the state cannot demonstrate that the humane version of its own rule is
+which means the public record cannot show that the humane version of its own rule is
 what is happening, even where it is.
 
 The practical consequence for anyone using this data: **a cross-state comparison of
@@ -585,7 +593,7 @@ into it.** The first is measurable — we measured it. The second is visible onl
 where families have done the counting themselves, and the registry publishes no
 identifiers that would let anyone reconcile the two. Guerrero's 623 documented Iguala
 cases and its ~3,800 official records cannot be added, subtracted, or matched. That
-is not a gap in our method. It is a gap the state maintains.
+is not a gap in our method. It is a gap in what the public record contains.
 
 Which leaves the part no dataset in this piece can reach. Behind 134,268 records is a
 number of families who learned that the search would be theirs to run — and who, in
@@ -636,20 +644,51 @@ both carry their live figures in the caption. `src/crosscheck.py` reports the fu
 per-state drift table.
 
 **[4] Documentary and journalistic sources**, each with its own date: Oficio
-SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07); A dónde van
-los desaparecidos, 2021-04-08, on INAI resolution RRA 09082/20 (December 2020) and the
-two that followed it — the order to publish a public-version database, the CNB's
+SEGOB/CNBP/1349/2020 (consent accounting, universe dated 2020-08-07; CNB letter to
+INAI, obtained as a PDF and hash-pinned in the publication freeze);
+[A dónde van los desaparecidos, 2021-04-08](https://adondevanlosdesaparecidos.org/2021/04/08/cnbp-incumple-orden-del-inai-de-entregar-base-de-datos-de-personas-desaparecidas/),
+on INAI resolution RRA 09082/20 (December 2020) and the two that followed it — the
+order to publish a public-version database, the CNB's
 answer that the consent declarations it cited did not exist, and the eventual delivery
 of 50,204 records (older RNPED files plus 11,197 newer records) against 175,371
-registered; ZonaDocs,
-"El engaño estadístico", 2024-11-21 (active notices marked confidential; Jalisco
-under-registration); El Informador, 2023-05-09 (Jalisco federal/state divergence);
-Animal Político, 2026-02-09 (Jalisco's halt in federal reporting since 2022 and state registry divergence); Tlachinollan, "Guerrero: territorio de
-personas desaparecidas" (Iguala and Acapulco recoveries, prosecution rates); Human
-Rights Watch, 2019-01-14 (Los Otros Desaparecidos de Iguala); Proceso, 2026-04-03
+registered;
+[ZonaDocs, "El engaño estadístico", 2024-11-21](https://www.zonadocs.mx/2024/11/21/desaparecidos-el-engano-estadistico-de-mexico/)
+(active notices marked confidential; Jalisco under-registration);
+[El Informador, 2023-05-09](https://www.informador.mx/Desaparecidos-Borran-cifras-de-Jalisco-en-el-registro-nacional-l202305090001.html)
+(Jalisco federal/state divergence);
+[Animal Político, 2026-02-09](https://grupoanimal.mx/explicaciones/jalisco-no-reporta-todas-las-desapariciones-en-registro-estatal)
+(Jalisco's halt in federal reporting since 2022 and state registry divergence);
+[Proceso, 2024-01-23](https://www.proceso.com.mx/nacional/2024/1/23/el-gobierno-de-jalisco-niega-que-manipule-las-cifras-de-personas-desaparecidas-322654.html)
+(the Jalisco government's denial);
+[A dónde van los desaparecidos, 2026-01-08](https://adondevanlosdesaparecidos.org/2026/01/08/abandonan-censo-de-amlo-anuncian-nuevo-computo-de-desapariciones/)
+(new federal recount announced);
+[CNN en Español, 2025-04-29](https://cnnespanol.cnn.com/2025/04/29/mexico/fiscal-mexico-rancho-izaguirre-reclutamiento-cartel-jalisco-orix)
+(FGR on Rancho Izaguirre as a recruitment centre);
+[Infobae, 2025-03-13](https://www.infobae.com/mexico/2025/03/13/asi-fue-la-primera-incautacion-del-rancho-izaguirre-en-2024-la-reporto-la-guardia-nacional-en-redes-sociales/)
+(the National Guard's September 2024 operation at the ranch);
+[Tlachinollan, "Guerrero: territorio de personas desaparecidas"](https://www.tlachinollan.org/guerrero-territorio-de-personas-desaparecidas/)
+(Iguala and Acapulco recoveries, prosecution rates);
+[Human Rights Watch, 2019-01-15](https://www.hrw.org/news/2019/01/15/mexico-other-disappeared)
+(Los Otros Desaparecidos de Iguala);
+[Proceso, 2026-04-03](https://www.proceso.com.mx/nacional/estados/2026/4/3/familiares-de-desaparecidos-en-guerrero-salen-buscar-sus-seres-queridos-en-semana-santa-369440.html)
 (Holy Week searches); the figure of 36 sentences for forced disappearance is the CNB's
 count to the end of 2021, as reported in the UN Committee on Enforced Disappearances'
-2022 report on Mexico. Web sources consulted 2026-07-06 unless stated.
+2022 report on Mexico. Web sources consulted 2026-07-06 unless stated; passages re-verified 2026-10-14.
+
+Where this piece says a state "redacts", it means records attributed to that state
+appear as CONFIDENCIAL in the federal public version; except for Jalisco, whose Fiscalía told the CNB in
+2020 that none of what it sends may be published, no public document shows which office's
+decision produces the flag.
+
+**Named individuals.** No one named in this piece was interviewed for it, and no
+individual is identified here from registry data. María de Jesús Solís, the families
+represented by Centro Prodh, and every other person named in these pages appear as they
+appear in the investigations cited — ZonaDocs, Quinto Elemento Lab, Data Cívica and
+Mexican press reports — whose reporters obtained the testimony and published the names.
+Quinto Elemento records that the individuals and quotations in its investigation are
+published with their families' participation [9]. Where a cited investigation does not
+state how consent was obtained, this piece repeats a name only because it is already
+public and makes no claim beyond that.
 
 **[5] Redaction over time — vintage Apr–Dec 2025.** Ten pinned monthly snapshots of
 the mirror, upstream commit SHAs in `src/version_audit.py`.
@@ -657,19 +696,20 @@ the mirror, upstream commit SHAs in `src/version_audit.py`.
 **[6] Unidentified bodies — vintage 2006–2023.** Efraín Tzuc and Mayela Sánchez,
 "Cierra sexenio de AMLO con más de 72,100 cuerpos sin identificar", Quinto Elemento
 Lab / A dónde van los desaparecidos, 2024-09-24
-([investigation](https://quintoelab.org/project/sexenio-amlo-72-mil-cuerpos-crisis-forense); data and
+([investigation](https://adondevanlosdesaparecidos.org/2024/09/24/cierra-sexenio-con-mas-de-72100-cuerpos-sin-identificar/); data and
 [methodology](https://quintoelab.org/project/crisis-forense-2024)). Compiled from
 transparency requests to all 32 state forensic services and the FGR. **A floor, not a
-total:** Morelos refused to respond, and the count covers whole cadavers entering
+total:** Morelos declined to respond, and the count covers whole cadavers entering
 Semefos, excluding unindividuated remains. Not derived from any dataset in this
 repository and not merged with the registry figures — the overlap between the 72,172
 and the 134,268 is unknown and, by construction, unknowable from public data.
 
 **[7] Registry field completeness — vintage 2023-08-23.** Data Cívica, "Volver a
-desaparecer" ([project](https://volveradesaparecer.datacivica.org/)), reported by Sandra Rojas, La
-Cadera de Eva, 2024-03-20. Audit of the 110,964-record public RNPDNO version of
+desaparecer" ([project](https://volveradesaparecer.datacivica.org/)), reported by Sandra Rojas,
+[La Cadera de Eva, 2024-03-20](https://lacaderadeeva.com/actualidad/amlo-borra-11-mil-nombres-de-registro-de-desapariciones-en-mexico/9593). Audit of the 110,964-record public RNPDNO version of
 2023-08-23: reporter contact left blank in 7 of 10 records. Centro Prodh (César
-Contreras) on families whose details were given and never entered.
+Contreras), quoted in the same La Cadera de Eva report, on families whose details were
+given and never entered.
 
 **[8] Erased names — comparison of two 2023 public versions.** Data Cívica, "Volver a
 desaparecer" ([project](https://volveradesaparecer.datacivica.org/); [open data](https://volveradesaparecer.datacivica.org/datos-abiertos)), scraped 2024-03-01; reported by

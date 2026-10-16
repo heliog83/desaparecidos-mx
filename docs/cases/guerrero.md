@@ -116,8 +116,10 @@ buscadoras movement:
   Guerrero No Más Desaparecidos (60 sought); the national Brigadas Nacionales de
   Búsqueda repeatedly deploy in Guerrero (4th Brigade covered by Vice). Searches
   continue (Semana Santa 2026 operations in Iguala/Buenavista de Cuéllar — Proceso,
-  2026-04-03; during which three families reported NEW previously-unreported cases,
-  under-registration happening in real time).
+  2026-04-03; during which eight families — five in Buenavista, three in Iguala — approached
+  the searchers to report cases — Proceso does not say whether they were already officially
+  registered (re-checked 2026-09-22),
+  families bringing cases to collectives in real time).
 - Stage-2 relevance: Iguala/Cerro Gordo find-events are strong candidates for the
   clandestine-finds dataset, with clear collective-led attribution.
 
