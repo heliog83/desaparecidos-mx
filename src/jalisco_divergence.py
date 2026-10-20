@@ -36,7 +36,7 @@ events = [
     (date(2022, 3, 1), "State stops feeding the federal registry"),
     (date(2023, 12, 14), "Federal \u201Ccenso\u201D; erased-names controversy"),
     (date(2024, 1, 23), "\u201CJalisco does not manipulate its registry\u201D (official denial)"),
-    (date(2025, 3, 5), "Teuchitlán extermination site found by Guerreros Buscadores"),
+    (date(2025, 3, 5), "Guerreros Buscadores enter Teuchitlán ranch (\u201Cextermination site\u201D, per the collective)"),
     (date(2026, 1, 8), "New federal recount announced"),
 ]
 

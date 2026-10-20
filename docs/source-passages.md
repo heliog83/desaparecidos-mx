@@ -86,7 +86,7 @@ guaranteed to be character-exact.
   <https://cnnespanol.cnn.com/2025/04/29/mexico/fiscal-mexico-rancho-izaguirre-reclutamiento-cartel-jalisco-orix>
   — the Fiscal General described the ranch as a "centro de reclutamiento" of the CJNG.
   "Extermination site" is the collective's description and is attributed as such in §7.
-  Figure F's baked-in label still says "extermination site" (fix with the next freeze).
+  Figure F's label now attributes it to the collective too (corrected 2026-10-19, C-33).
 
 ## Additions, second pass (2026-09-22)
 

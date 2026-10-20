@@ -1057,7 +1057,8 @@ TEMPLATE = """<!DOCTYPE html>
   <footer>
     <span>Stage 1 of 2</span>
     <span>Figures reproducible from source</span>
-    <span>Data consulted 2026-08-15</span>
+    <span>Data frozen 2026-08-15</span>
+    <span>Last corrected 2026-10-19</span>
     <span>Text &amp; figures <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a> &middot; code MIT</span>
   </footer>
 </div>

@@ -182,7 +182,7 @@
     "reports/figures/article/C_confidential_share.png": "97b95c623708f3b4eba8a8678076a79ed8cce5245af8bc2864554026e3cee53f",
     "reports/figures/article/D_redaction_vs_rate.png": "aa9a5e5e6eacd30d3c2b08dfae38cd0f64343e539cae0533c72920e2ba8e563f",
     "reports/figures/article/E_consent_accounting.png": "eaa96c1fcb418cbc5e7e4e12b01a7e08d5141b280fc5c946348d919828bad473",
-    "reports/figures/article/F_jalisco_divergence.png": "06ba10d20f0d19bffc4d321d94a9d60426ce4a8b7c6bc47b09eb2df104550af9",
+    "reports/figures/article/F_jalisco_divergence.png": "4af3d21b2cf719b0bb0084e4cf85bbc8561b1d43b8e0979579524bf9ca7e1ac9",
     "reports/figures/article/G_two_modes.png": "862c53d1f2d8b9c5a784746dbeb8847e5030739b34a59da97e385ddcb16afa10",
     "reports/figures/article/H_confidencial_batches.png": "95bf486ad468c2f681b4f43c562f01a0edcb10710761d77f3a59fc5cb9276803",
     "reports/figures/article/I_incidence_vs_homicide.png": "676e763a611da62ab03d753dbb811b665e17330b879567d0d8fb47bfba6dd47d",
@@ -248,6 +248,14 @@
       "reason": "Dropped the 2026-06-19 API values (Jalisco 12,776; CDMX 6,086) from fig F and §6b/§7: that pull was overwritten by the 2026-08-15 pull and never archived, so the values could not be verified (corrections_log.md A-08). Fig F re-rendered by src/jalisco_divergence.py without the June marker.",
       "replaced_article_asset_hashes": {
         "reports/figures/article/F_jalisco_divergence.png": "d029d2ace47c38388ec62db15376f3bd16d9e76395bc18ebe46e64077d356c4e"
+      },
+      "note": "No publication-data hash was altered."
+    },
+    {
+      "date": "2026-10-19",
+      "reason": "Post-publication correction C-33 (reports/corrections_log.md): fig F event 5 called Rancho Izaguirre an 'extermination site' without attribution, while §7 attributes that description to the collective (the FGR called it a recruitment centre). Label changed in src/jalisco_divergence.py to attribute it to the collective; re-rendered from this freeze. The unchanged script was first confirmed to reproduce the previous hash byte for byte.",
+      "replaced_article_asset_hashes": {
+        "reports/figures/article/F_jalisco_divergence.png": "06ba10d20f0d19bffc4d321d94a9d60426ce4a8b7c6bc47b09eb2df104550af9"
       },
       "note": "No publication-data hash was altered."
     }

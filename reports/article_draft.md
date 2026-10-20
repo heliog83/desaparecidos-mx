@@ -641,8 +641,12 @@ the public RNPDNO record-level extract via the
 [lapanquecita mirror](https://github.com/lapanquecita/personas-desaparecidas) —
 133,566 records, upstream commit 666b3e7605, max FECHA_REGISTRO 2025-12-01. **This
 mirror stopped publishing after 2025-12-02**, having released monthly since April 2025,
-and no comparable record-level extract has appeared since. Our copy is byte-identical
-to the last upstream commit.
+and no comparable record-level extract has been published in that form since. Data
+Cívica's February 2026 extract [10] is cited for its own findings and not merged with
+this piece's data. Our copy is byte-identical to the last upstream commit. Records in
+both registry categories, DESAPARECIDA and NO LOCALIZADA, are included. Per-capita
+rates divide each state's records, confidential ones included, by CONAPO's 2025
+population figure for that state.
 
 Drift between [1] and [3] is small nationally — the mirror's 133,566 records sit 0.5%
 below the live 134,268 — but larger once records with no state are set aside: 130,602
@@ -752,7 +756,7 @@ combined. Consulted 2026-10-12.
 Interior Ministry (SEGOB) at the presidential press conference; categories and counts
 as reported by Fabrizio Lorusso, ZonaDocs, 2026-04-13
 ([analysis](https://www.zonadocs.mx/2026/04/13/registro-de-personas-desaparecidas-2026-notas-criticas-y-contextos/)).
-Consulted 2026-10-12.
+Consulted 2026-10-12; group totals re-checked 2026-10-19.
 
 **[12] Killings of searchers, 2025.** Teresa González Murillo: attacked 2025-03-27,
 died 2025-04-02 (ADN40, 2025-04-02). María del Carmen Morales and her son Jaime Daniel
@@ -761,9 +765,11 @@ Ramírez Morales: killed 2025-04-24 in Tlajomulco (El Financiero, 2025-04-24). C
 
 Cross-checks: category sensitivity tested (DESAPARECIDA vs +NO LOCALIZADA moves the
 national count +6.1%, but Zacatecas +42%); confidential records are counted as people
-but excluded from every field-level analysis; 15 headline numbers are recomputed
-automatically against the freeze on each build
-(`data/publication_freezes/2026-08-15/derived/automated_claim_checks.csv`). All figures
+but excluded from every field-level analysis; 15 headline numbers were recomputed when the freeze was cut
+(`data/publication_freezes/2026-08-15/derived/automated_claim_checks.csv`); before every
+deployment, `src/check_article.py` hash-verifies the freeze and the embedded chart data
+against it, and `src/check_claims.py` recomputes the article's numeric claims from the
+freeze and confirms each appears in the text. All figures
 reproduce from `src/` in the project repository
 (https://github.com/heliog83/desaparecidos-mx). Full methodology:
 [methodology](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/methodology.md); refresh audit and number-by-number diff:
@@ -777,7 +783,9 @@ March 2026 federal report's three groups total 130,178, not the 132,534 the text
 (§6c). We also narrowed claims that went further than the evidence: what the forensic
 backlog shows about the gap between homicide and disappearance counts (§2), what a blank
 contact field in a published version shows (§6), what state-level correlations rule out
-(§5, §9), and what cross-state comparisons measure (§9). No data changed. Each change is
+(§5, §9), and what cross-state comparisons measure (§9). Figure F now attributes the
+"extermination site" description to the collective, as the text does, and this methods
+note now describes the checks and data dates accurately. No data changed. Each change is
 listed with its evidence in the
 [corrections log](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/corrections_log.md).
 
