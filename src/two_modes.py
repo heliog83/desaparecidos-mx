@@ -15,8 +15,8 @@ health.
   authority.
 
 The design carries the asymmetry: Jalisco's bar is closed because its quantity is
-known, and Guerrero's ends in an open, fading edge because the missing quantity is
-not. The 623 is drawn as a documented fragment beside that edge, deliberately NOT
+known, and Guerrero's ends in a dashed, open edge because the missing quantity is
+not; the unknown is named in text and given no length on the axis. The 623 is drawn as a documented fragment beside that edge, deliberately NOT
 as a segment of it — the two figures may overlap and cannot be netted.
 
 Earlier versions of this figure were panels of text boxes, which read as a diagram
@@ -74,15 +74,15 @@ ax2.annotate(f"{GRO_CONF:,} redacted (9.1%)",
              fontsize=9.5, color=st.RED,
              arrowprops=dict(arrowstyle="-", color=st.RED, lw=0.8))
 
-# The open edge: the quantity beyond the registry is unknown, so the bar must not
-# end in a straight line that implies one.
-for i in range(46):
-    x = GRO_TOTAL + i * 105
-    ax2.add_patch(Rectangle((x, BAR_Y - BAR_H / 2), 105, BAR_H, zorder=2,
-                            facecolor=st.MUTED, edgecolor="none",
-                            alpha=max(0.0, 0.30 * (1 - i / 46))))
-ax2.text(GRO_TOTAL + 2300, BAR_Y, "not in the registry at all\nsize unknown",
-         ha="left", va="center", fontsize=10.5, color="#7b7b7b", style="italic",
+# The open edge: the quantity beyond the registry is unknown, so nothing may be
+# drawn with length along the axis. (Until 2026-10-19 a fading tail ran ~4,800 units
+# past the bar, which read as an estimate; corrections log C-35.) The bar's end is
+# marked open with a dashed line and the unknown is named in text only.
+ax2.plot([GRO_TOTAL, GRO_TOTAL], [BAR_Y - BAR_H / 2 - 0.06, BAR_Y + BAR_H / 2 + 0.06],
+         color=st.INK, lw=1.0, ls=(0, (2, 2)), zorder=4)
+ax2.text(GRO_TOTAL + 450, BAR_Y,
+         "+ people never registered:\nnot counted, size unknown, not drawn to scale",
+         ha="left", va="center", fontsize=10.5, color="#6b6b6b", style="italic",
          zorder=4)
 
 # Iguala: a documented fragment, drawn OUTSIDE the bar so it cannot be read as a
@@ -112,7 +112,7 @@ fig.text(0.055, 0.935,
 
 fig.text(0.055, 0.018,
          "The two panels answer different questions and share only an axis. Jalisco's split is measured inside one registry;\n"
-         "Guerrero's open edge is not a measured quantity, and the Iguala bar is a documented example rather than an estimate\n"
+         "Guerrero's unregistered cases are not measured or drawn to scale, and the Iguala bar is a documented example rather than an estimate\n"
          "of it. Sources: RNPDNO record-level microdata, 2025-12-02 [3]; ZonaDocs (2024-11-21); Tlachinollan; HRW (2019). "
          "Consulted 2026-07-06.",
          fontsize=7.5, color="#666666", va="bottom", linespacing=1.5)

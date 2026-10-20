@@ -183,7 +183,7 @@
     "reports/figures/article/D_redaction_vs_rate.png": "aa9a5e5e6eacd30d3c2b08dfae38cd0f64343e539cae0533c72920e2ba8e563f",
     "reports/figures/article/E_consent_accounting.png": "eaa96c1fcb418cbc5e7e4e12b01a7e08d5141b280fc5c946348d919828bad473",
     "reports/figures/article/F_jalisco_divergence.png": "4af3d21b2cf719b0bb0084e4cf85bbc8561b1d43b8e0979579524bf9ca7e1ac9",
-    "reports/figures/article/G_two_modes.png": "862c53d1f2d8b9c5a784746dbeb8847e5030739b34a59da97e385ddcb16afa10",
+    "reports/figures/article/G_two_modes.png": "c0da7f2ce51c851808d38f4d0636a37e27ff122db12362e80217efa8f84310e9",
     "reports/figures/article/H_confidencial_batches.png": "95bf486ad468c2f681b4f43c562f01a0edcb10710761d77f3a59fc5cb9276803",
     "reports/figures/article/I_incidence_vs_homicide.png": "676e763a611da62ab03d753dbb811b665e17330b879567d0d8fb47bfba6dd47d",
     "reports/figures/article/J_outcome_vs_homicide.png": "e6f734f45df4b94dab14822396fc453f031c6a9b594cf71cc00c0fdc34e6e025",
@@ -256,6 +256,14 @@
       "reason": "Post-publication correction C-33 (reports/corrections_log.md): fig F event 5 called Rancho Izaguirre an 'extermination site' without attribution, while §7 attributes that description to the collective (the FGR called it a recruitment centre). Label changed in src/jalisco_divergence.py to attribute it to the collective; re-rendered from this freeze. The unchanged script was first confirmed to reproduce the previous hash byte for byte.",
       "replaced_article_asset_hashes": {
         "reports/figures/article/F_jalisco_divergence.png": "06ba10d20f0d19bffc4d321d94a9d60426ce4a8b7c6bc47b09eb2df104550af9"
+      },
+      "note": "No publication-data hash was altered."
+    },
+    {
+      "date": "2026-10-19",
+      "reason": "Post-publication correction C-35 (reports/corrections_log.md): fig G drew Guerrero's unregistered cases as a fading tail about 4,800 units long on a numeric axis, which read as an estimate the piece does not have. The tail is replaced by a dashed open edge and a text label with no length on the axis (src/two_modes.py); re-rendered from this freeze. The unchanged script was first confirmed to reproduce the previous hash byte for byte.",
+      "replaced_article_asset_hashes": {
+        "reports/figures/article/G_two_modes.png": "862c53d1f2d8b9c5a784746dbeb8847e5030739b34a59da97e385ddcb16afa10"
       },
       "note": "No publication-data hash was altered."
     }

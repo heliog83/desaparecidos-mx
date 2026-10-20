@@ -411,8 +411,8 @@ said their relative had not come back — and all four folios appear on the loca
 
 Thirty confirmed cases out of 16,681 is not proof that the census was fabricated, and
 this piece does not claim it was. What those thirty establish is narrower and harder to
-argue with: **"located" is a status the register can assert without verifying it.** The
-Interior Secretary, Luisa María Alcalde, said the locations would still have to be
+argue with: **"located" is a status the register can assert without verifying it.** Luisa María
+Alcalde, then Interior Secretary, said the locations would still have to be
 validated, but also that for the 16,681 the government had "certainty of their
 whereabouts" [9]. The thirty documented cases contradict that certainty. Karla Quintana,
 who left the National Search Commission months after the census was announced, has
@@ -454,9 +454,11 @@ produced.
 *Caption: Jalisco's registry conflict, 2020–2026: blanket confidentiality declared
 (2020), the state stops feeding the national registry in favour of its own (2022),
 "erased" names controversy (2023), official denial (2024), Teuchitlán (2025), new
-federal recount (2026) [4]. The two registries move independently and now differ by
-roughly 3,000 people — the federal count stood at 12,964 in August 2026, down from
-15,015 in March 2025, while the state's stood near 16,000 at the end of 2025. Markers are documented
+federal recount (2026) [4]. The two registries move independently. Their latest public
+snapshots are roughly 3,000 apart — the federal count stood at 12,964 in August 2026,
+down from 15,015 in March 2025, while the state's stood near 16,000 at the end of 2025 —
+but they were taken about eight months apart, so the difference is not a measured
+shortfall. Markers are documented
 snapshots, not a continuous series, and the two registries define their counts
 differently.*
 
@@ -468,8 +470,8 @@ From 2022, under then-governor Enrique Alfaro, Jalisco largely stopped reporting
 disappearances to the RNPDNO and logged them in its own state registry instead. The
 country now has two official counts of Jalisco's disappeared, kept by two governments,
 and they do not agree with each other. By the article's own comparison of public
-snapshots, the resulting gap now reaches roughly 3,000 people — following earlier
-divergence documented by El Informador [4]. Accused of erasing records, the state
+snapshots, their two latest figures, taken about eight months apart, differ by roughly 3,000
+people — following earlier divergence documented by El Informador [4]. Accused of erasing records, the state
 government answered in January 2024 with a communiqué titled "Jalisco does not manipulate
 its registry, nor erase figures" [4].
 
@@ -783,7 +785,8 @@ March 2026 federal report's three groups total 130,178, not the 132,534 the text
 (§6c). We also narrowed claims that went further than the evidence: what the forensic
 backlog shows about the gap between homicide and disappearance counts (§2), what a blank
 contact field in a published version shows (§6), what state-level correlations rule out
-(§5, §9), and what cross-state comparisons measure (§9). Figure F now attributes the
+(§5, §9), and what cross-state comparisons measure (§9). Figure G no longer draws
+Guerrero's unregistered cases with a length that could be read as an estimate. Figure F now attributes the
 "extermination site" description to the collective, as the text does, and this methods
 note now describes the checks and data dates accurately. No data changed. Each change is
 listed with its evidence in the
@@ -792,6 +795,9 @@ listed with its evidence in the
 Text and figures are published under CC BY 4.0 and the code under the MIT licence;
 third-party data keep their own terms
 ([licence](https://github.com/heliog83/desaparecidos-mx/blob/main/LICENSE-CONTENT.md)).
+
+Quotations from Spanish-language sources are the author's translations; the
+original sources are listed in this note.
 
 Behind every record is a person and a searching family. This piece reports
 uncertainty as uncertainty and does not present proxies as counts.
