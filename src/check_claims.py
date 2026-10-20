@@ -10,14 +10,23 @@ A claim fails when the recomputed value no longer rounds to the printed token, o
 when the token has been edited out of the prose without updating this registry.
 Claim ids match reports/claim_registry.csv.
 
+A token check only proves a number appears. Relational checks go further: they parse
+what the prose asserts about order ("first", "fourth", "among the lowest", "only X
+and Y sit below it") and composition (parts presented as making up a total) and test
+the assertion itself against the freeze. Any sentence that ranks a state without a
+registered relational check fails, so new ranking language cannot slip in unchecked.
+
 Standard library only, so it runs on a clean checkout:
-    python3 src/check_claims.py
+    python3 src/check_claims.py               # the current draft
+    python3 src/check_claims.py OTHER.md      # e.g. an older draft, for a scratch run
 """
 from __future__ import annotations
 
 import csv
 import math
+import re
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -243,19 +252,336 @@ def build_claims() -> list[tuple[str, str, str]]:
     return out
 
 
+
+
+# ---- relational checks: rank positions ---------------------------------------
+# Added after the 2026-10-19 re-audit (corrections C-25..C-27): the token checks
+# passed while the prose called CDMX a joint leader by count (it is fourth) and
+# Guerrero's share the lowest (it is third-lowest).
+
+ORDINALS = ("first", "second", "third", "fourth", "fifth",
+            "sixth", "seventh", "eighth", "ninth", "tenth")
+AMONG_K = 5  # "among the lowest", "one of the most": within the bottom or top five
+ALIASES = {"CDMX": "CIUDAD DE MEXICO", "Mexico City": "CIUDAD DE MEXICO",
+           "Edomex": "ESTADO DE MEXICO"}
+ORD = "|".join(ORDINALS)
+PHRASE = re.compile(
+    r"(?P<neg>\bnot (?:joint )?)?(?:"
+    r"(?P<behind>\bbehind (?:it|them) comes?\b)"
+    r"|(?P<only>\bonly (?P<set>[^—;.]+?) sits? (?P<side>below|above) (?:it|them)\b)"
+    rf"|\b(?P<ordn>{ORD})-(?P<odir>lowest|highest)\b"
+    r"|\b(?:among|one of) the (?P<adir>lowest|highest|most|least|largest|smallest)\b"
+    r"|(?P<sonly>\bsecond only to\b)"
+    rf"|(?<!\ba )\b(?P<ord>{ORD})\b"  # not fractions: "a third"
+    r"|\bthe (?P<sup>lowest|highest|most|least|largest|smallest)\b"
+    r"|\b(?P<lead>lead(?:s|ers?|ing)?)\b"
+    r")", re.I)
+ASCENDING = {"lowest", "least", "smallest"}
+# First keyword found after a rank phrase picks the metric; otherwise the previous
+# phrase's metric, otherwise the registered default. Bare "rate" is ambiguous.
+METRIC_WORDS = (("hom", (r"homicides?", "violent")),
+                ("rate", ("unresolved-record rate", "by rate", "per 100,000")),
+                ("count", ("absolute", r"counts?", "cases")),
+                ("conf", ("confidential", r"redact\w*", r"bars?")))
+METRIC_LABEL = {"count": "unresolved records (state_rates.csv)",
+                "rate": "unresolved per 100k (state_rates.csv)",
+                "conf": "confidential share (state_opacity_enriched.csv)",
+                "hom": "homicide victims 2015-2025 per 100k (state_opacity_enriched.csv)"}
+
+# (check id, regex locating the ranking passage, default metric, subject of a
+# leading "behind it"). The regex keys on stable subject text, not on the ranking
+# words, so a rewritten predicate is still found and evaluated.
+RANK_CLAIMS = (
+    ("RANK-FIGB", r"Tamaulipas \(359\), Zacatecas \(226\) and Sinaloa \(211\).*?fall to around 80",
+     "rate", None),
+    ("RANK-S3-COUNT", r"Estado de México (?:and Mexico City )?register.*?(?=, which is unsurprising)",
+     "count", None),
+    ("RANK-S3-RATE", r"Behind it come [^.;]*", "rate", "Tamaulipas"),
+    ("RANK-S4-GRO", r"Guerrero's 9\.1% is [^.]*", "conf", None),
+    ("RANK-S4-VIOL", r"Guerrero, one of the most violent states in the country", "hom", None),
+    ("RANK-S5-COL", r"Colima has recorded roughly 950 homicides[^;.]*", "hom", None),
+    ("RANK-S5-YUC", r"Yucatán has both the lowest homicide rate and the lowest unresolved-record rate",
+     "hom", None),
+    ("RANK-CORR", r"Mexico City is fourth by absolute count.*?not the lowest", "count", None),
+)
+# Sentences that rank a state on figures outside the freeze. Each needs a reason.
+RANK_EXEMPT = (
+    ("second only to Estado de México's 2,691", "ZonaDocs case counts [4], not in the freeze"),
+)
+# Ordering words PHRASE does not evaluate; a sentence using them with a state must
+# be registered (and its grammar added) or exempted.
+RANK_WORDS = re.compile(r"\b(?:tops?|bottom of|ahead of|behind|sits? (?:below|above)|ranks?(?! correlation)|ranked|"
+                        r"outranks?|trails?)\b", re.I)
+
+
+def norm(name: str) -> str:
+    s = unicodedata.normalize("NFD", name)
+    return "".join(c for c in s if not unicodedata.combining(c)).upper().strip()
+
+
+def state_metrics() -> tuple[dict[str, dict[str, float]], dict[str, str]]:
+    m: dict[str, dict[str, float]] = {k: {} for k in METRIC_LABEL}
+    names: dict[str, str] = {}
+    for r in rows("state_rates.csv"):
+        k = norm(r["entidad"])
+        names[r["entidad"]] = k
+        m["count"][k], m["rate"][k] = num(r["desaparecidos"]), num(r["tasa_100k"])
+    for r in rows("state_opacity_enriched.csv"):
+        k = norm(r["entidad"])
+        m["conf"][k] = num(r["confidential_share"])
+        m["hom"][k] = num(r["homicide_victims_2015_2025_per100k"])
+    for metric, vals in m.items():
+        assert len(vals) == 32, (metric, len(vals))
+    names.update(ALIASES)
+    return m, names
+
+
+def state_pattern(names: dict[str, str]) -> re.Pattern:
+    alts = sorted(names, key=len, reverse=True)
+    return re.compile(r"\b(?:" + "|".join(re.escape(a) for a in alts) + r")\b")
+
+
+def rank(vals: dict[str, float], state: str, asc: bool) -> int:
+    v = vals[state]
+    return 1 + sum((x < v) if asc else (x > v) for x in vals.values())
+
+
+def evaluate_ranking(span: str, default: str, prev: str | None,
+                     m: dict, names: dict, spat: re.Pattern) -> list[str]:
+    """Parse the rank assertions in one passage and test each against the freeze."""
+    errors: list[str] = []
+    phrases = list(PHRASE.finditer(span))
+    events = sorted([(p.start(), "phrase", p) for p in phrases]
+                    + [(s.start(), "state", s) for s in spat.finditer(span)]
+                    + [(i, "break", None) for i, c in enumerate(span) if c == ";"],
+                    key=lambda e: e[0])
+    group: list[str] = []
+    subject: list[str] = [names[prev]] if prev else []
+    metric = default
+    pending: tuple[int, str] | None = None  # (rank of subject, metric) for "behind it come"
+    consumed: list[tuple[int, int]] = []
+
+    def show(states):
+        return " and ".join(s.title() for s in states)
+
+    def table(met, asc, n):
+        order = sorted(m[met], key=lambda k: m[met][k], reverse=not asc)[:n]
+        return ", ".join(f"{k.title()} {m[met][k]:g}" for k in order)
+
+    def close_behind():
+        nonlocal pending
+        if pending is None:
+            return
+        base, met = pending
+        got = [rank(m[met], s, False) for s in group]
+        if got != list(range(base + 1, base + 1 + len(group))):
+            errors.append(f"'behind it come {show(group)}' asserts ranks {base + 1}..{base + len(group)} "
+                          f"by {METRIC_LABEL[met]}; data: {got} (top: {table(met, False, base + 3)})")
+        pending = None
+
+    for pos, kind, obj in events:
+        if any(a <= pos < b for a, b in consumed):
+            continue
+        if kind == "state":
+            group.append(names[obj.group(0)])
+            continue
+        if kind == "break":
+            close_behind()
+            group = []
+            continue
+        p = obj
+        close_behind()
+        nxt = min([q.start() for q in phrases if q.start() > p.end()] + [len(span), p.end() + 50])
+        window = span[p.end():nxt].split(";")[0].lower()
+        metric = next((met for met, words in METRIC_WORDS
+                       if any(re.search(rf"\b{w}\b", window) for w in words)), metric)
+        if group:
+            subject = group
+        group = []
+        neg = bool(p.group("neg"))
+        text = " ".join(p.group(0).split())
+        if p.group("behind"):
+            pending = (rank(m[metric], subject[-1], False), metric)
+            continue
+        if p.group("only"):
+            consumed.append((p.start(), p.end()))
+            asc = p.group("side").lower() == "below"
+            named = {names[x.group(0)] for x in spat.finditer(p.group("set"))}
+            s = subject[-1]
+            actual = {k for k, v in m[metric].items() if (v < m[metric][s] if asc else v > m[metric][s])}
+            ok = named == actual
+            claim = f"'{text}' ({show(subject)})"
+        else:
+            if p.group("ordn"):
+                asc, want, mode = p.group("odir").lower() in ASCENDING, ORDINALS.index(p.group("ordn").lower()) + 1, "eq"
+            elif p.group("adir"):
+                asc, want, mode = p.group("adir").lower() in ASCENDING, AMONG_K, "le"
+            elif p.group("sonly"):
+                asc, want, mode = False, 2, "eq"
+            elif p.group("ord"):
+                asc, want, mode = False, ORDINALS.index(p.group("ord").lower()) + 1, "eq"
+            else:  # superlative or lead: the subject group is exactly the top k
+                asc, want, mode = (p.group("sup") or "").lower() in ASCENDING, len(subject), "set"
+            got = [rank(m[metric], s, asc) for s in subject]
+            if mode == "eq":
+                ok = len(subject) == 1 and got[0] == want
+            elif mode == "le":
+                ok = all(g <= want for g in got)
+            else:
+                ok = sorted(got) == list(range(1, len(subject) + 1))
+            claim = f"{show(subject)} '{text}'"
+            actual = got
+        if ok == neg:
+            direction = "lowest" if asc else "highest"
+            errors.append(f"{claim} by {METRIC_LABEL[metric]} is false; data rank(s) from {direction}: "
+                          f"{sorted(actual) if isinstance(actual, set) else actual} "
+                          f"({direction} first: {table(metric, asc, max(5, len(subject) + 2))})")
+    close_behind()
+    return errors
+
+
+# ---- relational checks: parts and totals -------------------------------------
+# (check id, regex with groups total and p1..pn; total=None takes it from `freeze`)
+PART_WHOLE = (
+    ("SUM-SEGOB-2026",
+     r"(?P<total>[\d,]+) people then recorded as missing .*?groups: (?P<p1>[\d,]+) .*?, "
+     r"(?P<p2>[\d,]+) showing .*?and (?P<p3>[\d,]+) with no activity"),
+    ("SUM-FLOW-TOTALS",
+     r"Totals: (?P<total>[\d,]+) records — (?P<p1>[\d,]+) recorded found alive, "
+     r"(?P<p2>[\d,]+) found dead, (?P<p3>[\d,]+) disappeared or not located"),
+    ("SUM-MIRROR",
+     r"the mirror's (?P<total>[\d,]+) records .*? (?P<p1>[\d,]+) state-assigned records in the mirror "
+     r".*?the mirror files (?P<p2>[\d,]+) records under an unknown state"),
+    ("SUM-LIVE",
+     r"below the live (?P<total>[\d,]+) .*? against (?P<p1>[\d,]+) live .*?unknown state against "
+     r"(?P<p2>[\d,]+) live"),
+)
+SUM_WORDS = re.compile(r"\b(?:adds? up|add up|groups?|made up of|split into|broken down|"
+                       r"consists? of|comprises?|in total|sum)\b", re.I)
+
+
+def freeze_totals() -> dict[str, int]:
+    t = {r[""]: r["0"] for r in rows("flow_totales.csv")}
+    panel = rows("confidencial_panel.csv")
+    last = max(r["snapshot"] for r in panel)
+    latest = [r for r in panel if r["snapshot"] == last]
+    live = {r[""].strip(): int(num(r["desap_y_nollocal"])) for r in rows("flow_by_state.csv")}
+    return {
+        "SUM-FLOW-TOTALS": [int(t["TotalGlobal"]), int(t["TotalLocalizadosCV"]),
+                            int(t["TotalLocalizadosSV"]), int(t["TotalDesaparecidos"])],
+        "SUM-MIRROR": [sum(int(r["total"]) for r in latest),
+                       sum(int(num(r["desaparecidos"])) for r in rows("state_rates.csv")),
+                       sum(int(r["total"]) for r in latest if r["ENTIDAD"] == "SE DESCONOCE") or None],
+        "SUM-LIVE": [int(t["TotalDesaparecidos"]),
+                     sum(v for k, v in live.items() if k != "SE DESCONOCE"), live["SE DESCONOCE"]],
+    }
+
+
+def check_part_whole(paras: list[str]) -> tuple[list[str], list[tuple[int, int, int]], int]:
+    """Parts presented as making up a total must sum to it, or the paragraph must
+    print the actual sum and the shortfall. Where the freeze holds the figures, the
+    prose numbers must also equal it."""
+    errors, spans, ok = [], [], 0
+    expected = freeze_totals()
+    for cid, pat in PART_WHOLE:
+        hits = [(i, mt) for i, para in enumerate(paras) for mt in [re.search(pat, para)] if mt]
+        if not hits:
+            errors.append(f"  {cid}: passage not found — rewritten? update PART_WHOLE")
+            continue
+        i, mt = hits[0]
+        spans.append((i, mt.start(), mt.end()))
+        total = int(mt.group("total").replace(",", ""))
+        parts = [int(v.replace(",", "")) for k, v in sorted(mt.groupdict().items()) if k.startswith("p")]
+        if cid in expected:
+            want = expected[cid]
+            got = [total] + parts
+            bad = [f"{g:,} vs freeze {w:,}" for g, w in zip(got, want) if w is not None and g != w]
+            if bad:
+                errors.append(f"  {cid}: prose figures differ from the freeze: {'; '.join(bad)}")
+                continue
+        s = sum(parts)
+        if s == total:
+            ok += 1
+            continue
+        gap = total - s
+        flagged = f"{s:,}" in paras[i] and f"{abs(gap):,}" in paras[i]
+        if flagged:
+            ok += 1
+        else:
+            errors.append(f"  {cid}: {' + '.join(f'{p:,}' for p in parts)} = {s:,}, presented as making up "
+                          f"{total:,} ({gap:+,}); the paragraph must state {s:,} and the {abs(gap):,} gap")
+    return errors, spans, ok
+
+
+# ---- sweep for unregistered relational language ------------------------------
+
+def scope_paragraphs(prose: str) -> list[str]:
+    """Published text: everything before the internal decision and production notes."""
+    published = prose.split("## DECISION", 1)[0]
+    return [" ".join(p.split()) for p in re.split(r"\n\s*\n", published) if p.strip()]
+
+
+def sentences(para: str):
+    start = 0
+    for mt in re.finditer(r"(?<=[.!?])\s+(?=[A-Z*\[(])", para):
+        yield start, mt.start()
+        start = mt.end()
+    yield start, len(para)
+
+
+def check_relations(prose: str) -> tuple[list[str], int, int]:
+    m, names = state_metrics()
+    spat = state_pattern(names)
+    paras = scope_paragraphs(prose)
+    errors: list[str] = []
+    covered: list[tuple[int, int, int]] = []
+    n_rank = 0
+    for cid, pat, default, prev in RANK_CLAIMS:
+        hits = [(i, mt) for i, para in enumerate(paras) for mt in [re.search(pat, para)] if mt]
+        if not hits:
+            errors.append(f"  {cid}: ranking passage not found — rewritten? update RANK_CLAIMS")
+            continue
+        i, mt = hits[0]
+        covered.append((i, mt.start(), mt.end()))
+        errs = evaluate_ranking(mt.group(0), default, prev, m, names, spat)
+        errors.extend(f"  {cid}: {e}" for e in errs)
+        n_rank += not errs
+    sum_errors, sum_spans, n_sum = check_part_whole(paras)
+    errors.extend(sum_errors)
+    for i, para in enumerate(paras):
+        for a, b in sentences(para):
+            sent = para[a:b]
+            inside = lambda spans: any(j == i and s < b and e > a for j, s, e in spans)  # noqa: E731
+            if spat.search(sent) and (RANK_WORDS.search(sent) or PHRASE.search(sent)) \
+                    and not inside(covered) and not any(x in sent for x, _ in RANK_EXEMPT):
+                errors.append(f"  RANK-SWEEP: unregistered ranking sentence: '{sent[:160]}'")
+            nums = re.findall(r"\b\d{1,3}(?:,\d{3})+\b", sent)
+            if SUM_WORDS.search(sent) and len(nums) >= 3 and not any(j == i for j, _, _ in sum_spans):
+                errors.append(f"  SUM-SWEEP: unregistered part-whole sentence: '{sent[:160]}'")
+    return errors, n_rank, n_sum
+
+
 def main() -> None:
-    prose = DRAFT.read_text(encoding="utf-8")
+    draft = Path(sys.argv[1]) if len(sys.argv) > 1 else DRAFT
+    prose = draft.read_text(encoding="utf-8")
     flat = " ".join(prose.split())
     failures = []
     claims = build_claims()
     for cid, token, desc in claims:
         if " ".join(token.split()) not in flat:
             failures.append(f"  {cid}: '{' '.join(token.split())}' ({desc}) not found in prose")
+    rel_failures, n_rank, n_sum = check_relations(prose)
     if failures:
-        print("FAIL: recomputed claims absent from reports/article_draft.md")
+        print(f"FAIL: recomputed claims absent from {draft.name}")
         print("\n".join(failures))
+    if rel_failures:
+        print(f"FAIL: rank or part-whole assertions in {draft.name} contradict the freeze")
+        print("\n".join(rel_failures))
+    if failures or rel_failures:
         raise SystemExit(1)
     print(f"PASS: {len(claims)} numeric claims recomputed from freeze and found in the prose.")
+    print(f"PASS: {n_rank} ranking passages and {n_sum} part-whole sums checked against the freeze; "
+          "no unregistered ranking or part-whole sentences.")
 
 
 if __name__ == "__main__":

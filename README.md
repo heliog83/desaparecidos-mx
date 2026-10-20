@@ -80,7 +80,7 @@ can run:
 ```bash
 python3 src/build_page.py     # -> reports/article.html
 python3 src/check_article.py  # hash-verifies the freeze, then the HTML against it
-python3 src/check_claims.py   # recomputes 64 numbers in the prose from the freeze
+python3 src/check_claims.py   # recomputes 64 numbers, state rankings and part-whole sums in the prose from the freeze
 ```
 
 That reproduces the committed `reports/article.html` byte for byte.
