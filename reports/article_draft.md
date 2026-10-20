@@ -818,6 +818,39 @@ Consequence for the follow-up: the madres buscadoras piece (Stage 2) is a genuin
 sequel built on new data — find-events, collective attribution — not a spin-off of
 material removed from this one. §9's closing line already sets that up.
 
+## DECISION — no right of reply, no byline, no contact channel (settled 2026-10-19)
+
+The author decided **not** to send right-of-reply letters to the CNB, the Jalisco
+Fiscalía or SEGOB, and **not** to add a byline or a contact address to the page. The
+reason is the author's personal safety: writing to those institutions, or publishing a
+name and contact, would identify the author to the offices this piece criticises, and
+the author will not take that risk for this article. Recorded here so it is not
+reopened.
+
+Why the piece stands without it:
+
+- Every claim about an institution rests on a published document or an on-record
+  public statement (the CNB oficio to INAI, INAI resolutions, the Jalisco government's
+  2024 denial, federal press-conference figures), each cited with its date.
+- The piece already reports the institutions' own positions where they exist — the
+  CNB's stated reasons, the Jalisco denial, the FGR's description of Rancho Izaguirre.
+- Right of reply is standard practice, not a legal requirement for this kind of
+  publication, and the piece makes no allegation drawn from private sources that the
+  institutions have had no public chance to address.
+
+Consequences:
+
+- The draft letters (kept outside Git in `docs/right-of-reply/`) stay unsent and
+  uncommitted. They also contain known errors (the CNB letter says only the state
+  survives on a confidential record; the Jalisco letter uses the withdrawn 12,776) and
+  must not be reused as they stand.
+- The republished-names removal offer, which needed a `[CONTACT]`, stays out of the
+  build. The existing "Named individuals" paragraph in the methods note remains.
+- No text in the article may claim that institutions were asked to comment, or that
+  they declined.
+- Agents must not propose sending the letters, adding a byline or adding a contact
+  channel. If the author's situation changes, the author reopens this, nobody else.
+
 ## FIGURE PRODUCTION NOTES (the data-viz workplan)
 
 STYLE PASS DONE (updated 2026-08-16): all 8 publication figures live in
