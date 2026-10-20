@@ -485,7 +485,7 @@ def interactive_figure(letter: str, caption: str, image_name: str) -> str | None
 <div class="chart-shell">
   <h3 class="chart-heading">Did the missing deaths become disappearances?</h3>
   <p class="chart-subtitle">Each bar is one year of disappearance, split by where the case stands <em>now</em>. Homicide victims for the same year are a separate count, shown for comparison.</p>
-  <p class="chart-note"><strong>These two counts are not added, and neither contains the other.</strong> The bars count people reported disappeared. The homicide line counts victims named in homicide investigation files. A person can be in both only if they were reported missing <em>and</em> later found dead <em>and</em> investigated as a homicide — at most the dark band, and the true overlap is not published.</p>
+  <p class="chart-note"><strong>These two counts are not added, and neither contains the other.</strong> The bars count people reported disappeared. The homicide line counts victims named in homicide investigation files. A person can be in both only if they were reported missing <em>and</em> later found dead <em>and</em> investigated as a homicide — which should place them in the dark band, though registry statuses are not always updated, and the true overlap is not published.</p>
   <div class="chart-controls" aria-label="Comparison chart display">
     <span class="chart-control-label">View</span>
     <button type="button" data-mode="growth" aria-pressed="true">Where the growth went</button>

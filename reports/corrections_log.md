@@ -76,3 +76,21 @@ Severity: **B** blocker · **H** high · **M** medium · **L** low.
   erased names:** all five external sources were re-fetched and verified verbatim on
   2026-10-14 (R-3 cleared; see `claim_registry.csv` rows `FOR-01`, `CENSO-01`, `GRO-01`,
   `GRO-03`).
+
+## Post-publication corrections — 2026-10-19
+
+Published 2026-10-12. These were found by a readiness re-audit on 2026-10-19
+(`reports/publication_readiness_2026-10-19.md` in the main checkout, findings 1–5) and
+re-checked against the 2026-08-15 freeze. A dated note in the Methods box lists them for
+readers. No data changed.
+
+| id | sev | where | was | now | evidence |
+|---|---|---|---|---|---|
+| C-25 | H | §3 Fig B caption and body | Estado de México and CDMX "the leaders in absolute counts" / "register the most cases" | Estado de México first, CDMX fourth | Freeze `derived/state_rates.csv`: Edomex 14,579; Jalisco 13,766; Tamaulipas 13,460; CDMX 7,242 |
+| C-26 | H | §4 | Guerrero's 9.1% "is the lowest bar on the chart" | "among the lowest bars … only Chihuahua and Colima sit below it" | Freeze `derived/state_opacity_enriched.csv`: Chihuahua 8.78%, Colima 8.96%, Guerrero 9.05% |
+| C-27 | H | §6c | 132,534 presented "in three operational groups" | The three groups add up to 130,178, 2,356 short; the presentation separately counted 2,356 pre-2006 records but does not say whether they are the difference | 46,742 + 40,308 + 43,128 = 130,178. ZonaDocs [11] Nota 4 lists the pre-2006 cases separately and does not reconcile them (consulted 2026-10-19) |
+| C-28 | H | §9; methodology §4 | Cross-state comparison "measures institutional publication practice at least as much as it measures disappearance"; methodology: a state "can rank high partly because its prosecutor redacts more" | Cross-state comparison is also a comparison of registration and publication practice, which the public data cannot separate; redaction removes fields, not people, from a state's count | Confidential records keep `ENTIDAD` and are included in Fig B counts. "At least as much" was never measured |
+| C-29 | M | §5, §6, §9; methodology §7 | "rules out the simplest version"; "no single rule is being applied"; three explanations "found no support"; methodology "rules out the three most obvious structural explanations" | "counts against"; "the same rule does not produce the same result from one office to the next"; homicide: redaction does not rise with violence; corruption and GDP: nulls of limited power at n = 32, GDP a rough proxy | Homicide vs confidential share: r = −0.38, n = 32. Corruption and GDP: p > 0.18. A null at n = 32 cannot exclude moderate associations |
+| C-30 | M | §2 | A body never found misses the homicide count "because no victim is ever named"; the gap between the series "is partly a forensic backlog with a number attached" | Probably misses the homicide count because no death is established; the 72,172 unidentified bodies are not linked to either series, so their share of the gap cannot be stated | No person-level link between the forensic count [6] and either series |
+| C-31 | M | Fig J chart note (`src/build_page.py`) | Overlap of homicides and disappearances is "at most the dark band" | "which should place them in the dark band, though registry statuses are not always updated" | The article itself documents status lag (§6c); a hard upper bound does not hold under lag |
+| C-32 | M | §6 | "There is a simpler reason the consent paperwork is missing"; "A registry that did not record how to reach seven families in ten cannot then explain its silence" | "There may be a simpler reason some of the consent paperwork is missing"; a blank in a published version does not show what is held internally, and it postdates the 2020 accounting; the conclusion is limited to cases like those Centro Prodh documents | Data Cívica's 70% figure is for the Aug-2023 published version [7]; the consent accounting is Aug 2020 [4] |

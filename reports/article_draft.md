@@ -145,9 +145,10 @@ some. The found-dead difference, 156, cannot settle it either way: the 2024 coho
 had two years to be identified, the 2019 cohort seven.
 
 What this cannot rule out is quieter and more troubling, and it has two forms. A body
-that is never found enters neither statistic — not the homicide count, because no
-victim is ever named, and not the registry's found-dead column, because nobody is
-ever found. That channel is real, and Teuchitlán is what it looks like when one
+that is never found is unlikely to enter either statistic — not the registry's
+found-dead column, because nobody is found, and probably not the homicide count, which
+tallies victims in homicide investigations rather than people whose death was never
+established. That channel is real, and Teuchitlán is what it looks like when one
 instance of it surfaces.
 
 The second form is not unmeasured at all. Between 2006 and 2023, **72,172 bodies
@@ -160,12 +161,13 @@ cases, anywhere a searching family can reach. The count is a floor, not a total:
 Fiscalía of Morelos declined to answer the transparency requests, and the figure
 counts whole bodies, not the bone fragments that clandestine graves mostly yield.
 
-So the gap between the two series on this chart is not simply unknown. Part of it has
+So not everything outside the two series on this chart is unknown. One part has
 already been counted — compiled by journalists from the state's own forensic services,
-rather than published by the state. The claim this section
-can defend stays narrow — most of the registry's recent growth is not the homicide
-count in disguise, though a partial shift cannot be excluded — and the reason the two
-counts fail to meet is partly a forensic backlog with a number attached to it.
+rather than published by the state. But no one has linked those bodies, person by
+person, to either series, so how much of the gap between them the backlog accounts for
+cannot be said. The claim this section can defend stays narrow: most of the registry's
+recent growth is not the homicide count in disguise, though a partial shift cannot be
+excluded.
 
 ---
 
@@ -174,14 +176,14 @@ counts fail to meet is partly a forensic backlog with a number attached to it.
 **[FIG B — `figures/article/B_rate_map.png`]**
 *Caption: Unresolved disappearances per 100,000 residents by state, from the
 record-level registry snapshot of 2025-12-02. Tamaulipas (359), Zacatecas (226)
-and Sinaloa (211) lead by rate; Estado de México (82) and CDMX (79), the leaders
-in absolute counts, fall to around 80. Note: on the live registry consulted
+and Sinaloa (211) lead by rate; Estado de México (82), first by absolute count, and CDMX (79),
+fourth, fall to around 80. Note: on the live registry consulted
 2026-08-15, CDMX's unresolved count has since fallen by ~1,300 (a rate of ~64) —
 see §6b. Microdata vintage 2025-12-02 [3]; live comparison [1].*
 
-Mexico's disappeared are not distributed the way Mexicans are. Estado de México and
-Mexico City register the most cases in absolute terms, which is unsurprising: they
-are where the most people live. Divide by population and the map rearranges itself.
+Mexico's disappeared are not distributed the way Mexicans are. Estado de México
+registers the most cases in absolute terms and Mexico City the fourth most, which is
+unsurprising: they are where the most people live. Divide by population and the map rearranges itself.
 
 The national rate is 98 unresolved records per 100,000 residents, counting the
 130,602 records assigned to a state; another 2,964 name no state. Tamaulipas, on the
@@ -213,8 +215,8 @@ every chart in this piece says so.
 
 The top of this ranking is the easier half to read. The bottom is the trap. A state
 sits low here when it redacts little of what it holds — which says nothing at all
-about how much it holds. Guerrero's 9.1% is the lowest bar on the chart and the
-weakest evidence of openness in this piece; §8 is about why.
+about how much it holds. Guerrero's 9.1% is among the lowest bars on the chart — only
+Chihuahua and Colima sit below it — and the weakest evidence of openness in this piece; §8 is about why.
 
 The redaction is not evenly spread. Jalisco redacts two of every three records.
 Guerrero, one of the most violent states in the country, redacts one in eleven.
@@ -254,9 +256,9 @@ unresolved-record rate in Mexico — 18 and 12.5 per 100,000 respectively — ye
 The narrow conclusion, and the only one this supports: **state-level homicide rates
 do not explain state-level differences in confidentiality.** This is an ecological
 comparison between states; it does not measure risk in any individual case, and it
-cannot rule out case-by-case risk assessments, which no public field records. What it
-does rule out is the simplest version of the official rationale — that redaction
-tracks danger — as the explanation for why Jalisco sits at 67% and Guerrero at 9%.
+cannot rule out case-by-case risk assessments, which no public field records. What it does count against is the simplest version of the official
+rationale — that redaction tracks danger — as the explanation for why Jalisco sits at
+67% and Guerrero at 9%: across states, more violence does not come with more redaction.
 
 So what does account for the difference?
 
@@ -291,16 +293,17 @@ at least two later resolutions), the commission resisted on those grounds and
 eventually delivered 50,204 records against the 175,371 then registered — about 29%
 [4].
 
-There is a simpler reason the consent paperwork is missing, and it is visible in the
-registry's own fields. When Data Cívica audited the public version the CNB published
-in August 2023 — 110,964 records — it found that the contact details of the person
-who reported the disappearance had been left blank in **seven of every ten cases**
-[7]. That is the field an authority would need in order to ask a family anything at
-all. Lawyers at Centro Prodh report families who gave their details to authorities in
+There may be a simpler reason some of the consent paperwork is missing. When Data
+Cívica audited the public version the CNB published in August 2023 — 110,964 records —
+it found that the contact details of the person who reported the disappearance had
+been left blank in **seven of every ten cases** [7]. That is the field an authority
+would need in order to ask a family anything at all — though a blank in a published
+version does not show what the authority holds internally, and that version postdates
+the 2020 consent accounting by three years. Lawyers at Centro Prodh report families who gave their details to authorities in
 2017 and 2020 and were never entered into the system, and put the consequence
 plainly: it ends up looking as though the families are the ones who withheld the
-information. A registry that did not record how to reach seven families in ten cannot
-then explain its silence by saying the families did not speak.
+information. Where that happened, a registry cannot explain its
+silence by saying the families did not speak.
 
 The one field the registry leaves on a confidential record makes a test possible: it
 names the office that filed the report. If redaction reflected what families chose, it
@@ -309,8 +312,8 @@ depends on it enormously. In Estado de México, 3% of the unresolved records
 filed by state prosecutors are confidential, against 36% of those filed by the state's
 search commission. In Nuevo León the figures are 32% and 93%; in Jalisco, 64% and 90%.
 The gap does not even run the same way everywhere — in Puebla and Baja California Sur
-it is the prosecutors who redact more — which is itself the finding: no single rule is
-being applied. In six of the 17 states where both offices filed enough cases to compare,
+it is the prosecutors who redact more — which is itself the finding: the same rule does not produce the same
+result from one office to the next. In six of the 17 states where both offices filed enough cases to compare,
 the two differ by 30 points or more; in eight, by fewer than 10. Families who report directly through the national commission's online
 portal, meanwhile, end up confidential at a similar rate almost everywhere, between
 about 35% and 41% across the middle half of the states with enough cases to measure
@@ -417,10 +420,12 @@ accused the exercise of aiming "to reduce the figures of disappeared people, mai
 under this government" [9].
 
 The exercise has a successor. On 27 March 2026 the federal government presented the
-132,534 people then recorded as missing in three operational groups: 46,742 records it
-said lacked the data needed to search, 40,308 showing administrative activity after
-the disappearance — among which it said it had confirmed 5,338 locations — and 43,128
-with no activity at all [11]. Data Cívica, working from a February 2026 extract, found
+132,534 people then recorded as missing and sorted records into three operational
+groups: 46,742 it said lacked the data needed to search, 40,308 showing administrative
+activity after the disappearance — among which it said it had confirmed 5,338
+locations — and 43,128 with no activity at all [11]. The three groups add up to
+130,178, 2,356 short of the total; the presentation separately counted 2,356 records
+from before 2006, but as reported it does not say whether those are the difference. Data Cívica, working from a February 2026 extract, found
 that fewer than 2% of records lack the combination of name, dates and other fields
 needed to identify a person [10]. The same pattern holds: a status is asserted for
 tens of thousands of records at once, and the public cannot check it record by record.
@@ -564,11 +569,13 @@ and collective lists have not been linked person by person.
 
 No chart in this piece supports the sentence "the state deliberately hides its
 disappeared." I looked for it and could not find it, and the honest reason is that
-the public data are not built to answer questions about intent. Every explanation
-that could be tested from outside, state by state — that redaction tracks how
-dangerous a state is, that it tracks corruption, that it tracks state poverty — found
-no support. None of those tests can see inside an individual case. What is left is
-not proof of a motive. It is the absence of an account that survives testing.
+the public data are not built to answer questions about intent. I tested three explanations that
+can be checked from outside, state by state. Redaction does not rise with a state's
+homicide rate. It shows no clear relationship with reported corruption or with output
+per resident — though with 32 states those two tests could only have detected a strong
+pattern, and output per resident is a rough stand-in for state capacity, not a measure
+of it. None of those tests can see inside an individual case. What is left is not
+proof of a motive. It is the absence of a public account that survives testing.
 
 That absence is the finding, and it is specific. The confidentiality flag is
 **unexplained record by record, never officially audited in any public source we
@@ -580,11 +587,14 @@ which means the public record cannot show that the humane version of its own rul
 what is happening, even where it is.
 
 The practical consequence for anyone using this data: **a cross-state comparison of
-the RNPDNO measures institutional publication practice at least as much as it
-measures disappearance.** Jalisco redacts seven times as much of its register as
+the RNPDNO is also a comparison of how each state registers and publishes its cases,
+and the public data cannot separate the two.** Redaction does not remove anyone from a
+state's count — confidential records keep their state — but it strips the dates, ages
+and statuses any finer comparison needs, and how completely a state feeds the registry
+at all varies too (§7, §8). Jalisco redacts seven times as much of its register as
 Guerrero while recording less than half Guerrero's homicide rate — the publication gap
-runs opposite to the violence gap, not alongside it. Any map, ranking or model built on
-those numbers without saying so is describing bureaucracies while appearing to describe
+runs opposite to the violence gap, not alongside it. Any map, ranking or model built on those
+numbers without saying so risks describing bureaucracies as if it were describing
 victims.
 
 And there are two different ways to vanish from the record, which the same chart
@@ -759,6 +769,17 @@ reproduce from `src/` in the project repository
 [methodology](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/methodology.md); refresh audit and number-by-number diff:
 [data refresh audit](https://github.com/heliog83/desaparecidos-mx/blob/main/docs/data-refresh-2026-08-15.md); source audit:
 [source audit](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/publication_data_audit_2026-08-15.md).
+
+**Corrections, 2026-10-19.** After publication on 2026-10-12 we corrected three
+errors: Mexico City is fourth by absolute count, not joint leader with Estado de México
+(§3); Guerrero has the third-lowest confidential share, not the lowest (§4); and the
+March 2026 federal report's three groups total 130,178, not the 132,534 the text implied
+(§6c). We also narrowed claims that went further than the evidence: what the forensic
+backlog shows about the gap between homicide and disappearance counts (§2), what a blank
+contact field in a published version shows (§6), what state-level correlations rule out
+(§5, §9), and what cross-state comparisons measure (§9). No data changed. Each change is
+listed with its evidence in the
+[corrections log](https://github.com/heliog83/desaparecidos-mx/blob/main/reports/corrections_log.md).
 
 Text and figures are published under CC BY 4.0 and the code under the MIT licence;
 third-party data keep their own terms

@@ -98,9 +98,14 @@ Sources: [Fundar — "el juego de las cifras"](https://fundar.org.mx/la-cndh-al-
 Consequences:
 - Charts use **different denominators**: state counts/rates use all 133k; year/age/sex charts
   use only the ~84k non-confidential (and ~90% of those with a usable date). Always state the base.
-- **Cross-state comparison is confounded by redaction practice.** A state can rank "high" partly
-  because its prosecutor redacts more (Jalisco 66.9%, Nayarit 66.2% vs national 36.8%), not only because
-  more people vanish there. Redaction share is itself a transparency variable, not noise.
+- **Cross-state comparison of anything finer than the count is confounded by redaction practice.**
+  Confidential records keep their state, so state counts and rates include them; but every
+  date-, age-, sex- or status-based comparison by state uses only the published records, and
+  states publish very different shares (Jalisco 66.9%, Nayarit 66.2% confidential vs national
+  36.8%). Counts themselves are separately affected by how completely each state feeds the
+  registry (see `docs/cases/`). Redaction share is itself a transparency variable, not noise.
+  (Corrected 2026-10-19: an earlier version said redaction could raise a state's rank; it
+  cannot, since redacted records are still counted.)
 
 ## 5. The two date fields are effectively one
 `FECHA_REGISTRO` ≈ `FECHA_DESAPARICION` (registration lag: median 0 days, 99.5% same year), so
@@ -128,14 +133,15 @@ registry growth reflects reporting expansion — is not answerable from this fie
 
 To investigate whether the high rates of redaction (`CONFIDENCIAL`) are simply a byproduct of low state capacity or general administrative corruption, we ran a negative control test. We merged the state-level redaction rates with the INEGI ENCIG 2025 (Corruption Prevalence) and PIBE 2024 (Economic Capacity/GDP per capita) datasets.
 
-The statistical correlations demonstrate that redaction rates are **not driven by baseline economic size or citizens' experience with general corruption**:
+The correlations show **no detectable association between redaction rates and economic output per capita or citizens' experience with general corruption** (with n = 32, only strong associations were detectable, and GDP per capita is a rough proxy for capacity, not a measure of it):
 - **Corruption Prevalence:** Very weak negative correlation (Pearson *r* = -0.1917, p-value = 0.2933; Spearman ρ = -0.2416, p-value = 0.1829). The relationship is not statistically significant.
 - **Economic Capacity:** Very weak positive correlation with Pearson (*r* = 0.2237, p-value = 0.2184) and essentially zero rank correlation (Spearman ρ = 0.0517, p-value = 0.7788). Both are statistically insignificant.
 
-**Conclusion:** Neither general corruption experience nor economic capacity explains how much
-of a state's registry is published. Together with the homicide-rate result (Pearson *r* = −0.38
-across all 32 states), this rules out the three most obvious structural explanations — violence,
-corruption, and state wealth — for why publication practice varies so widely between states.
+**Conclusion:** Neither general corruption experience nor economic output per capita shows a
+detectable association with how much of a state's registry is published. Together with the homicide-rate result (Pearson *r* = −0.38
+across all 32 states), this finds no support at state level for the three most obvious structural explanations —
+violence, corruption, and state wealth — for why publication practice varies so widely between
+states. Redaction does not rise with violence; the other two are nulls of limited power.
 
 Two limits on what that licenses:
 
